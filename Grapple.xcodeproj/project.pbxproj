@@ -1,0 +1,551 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A528A2612037FA410062D60A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2602037FA410062D60A /* AppDelegate.m */; };
+		A528A2642037FA410062D60A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2632037FA410062D60A /* ViewController.m */; };
+		A528A2672037FA410062D60A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A528A2652037FA410062D60A /* Main.storyboard */; };
+		A528A2692037FA410062D60A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A528A2682037FA410062D60A /* Assets.xcassets */; };
+		A528A26C2037FA410062D60A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A528A26A2037FA410062D60A /* LaunchScreen.storyboard */; };
+		A528A26F2037FA410062D60A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A26E2037FA410062D60A /* main.m */; };
+		A528A2792037FA410062D60A /* GrappleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2782037FA410062D60A /* GrappleTests.m */; };
+		A528A2842037FA410062D60A /* GrappleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2832037FA410062D60A /* GrappleUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A528A2752037FA410062D60A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A528A2542037FA400062D60A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A528A25B2037FA400062D60A;
+			remoteInfo = Grapple;
+		};
+		A528A2802037FA410062D60A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A528A2542037FA400062D60A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A528A25B2037FA400062D60A;
+			remoteInfo = Grapple;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A528A25C2037FA400062D60A /* Grapple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grapple.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A528A25F2037FA410062D60A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A528A2602037FA410062D60A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A528A2622037FA410062D60A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A528A2632037FA410062D60A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A528A2662037FA410062D60A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A528A2682037FA410062D60A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A528A26B2037FA410062D60A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A528A26D2037FA410062D60A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A528A26E2037FA410062D60A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A528A2742037FA410062D60A /* GrappleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrappleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A528A2782037FA410062D60A /* GrappleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GrappleTests.m; sourceTree = "<group>"; };
+		A528A27A2037FA410062D60A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A528A27F2037FA410062D60A /* GrappleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrappleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A528A2832037FA410062D60A /* GrappleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GrappleUITests.m; sourceTree = "<group>"; };
+		A528A2852037FA410062D60A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A528A2592037FA400062D60A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A528A2712037FA410062D60A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A528A27C2037FA410062D60A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A528A2532037FA400062D60A = {
+			isa = PBXGroup;
+			children = (
+				A528A25E2037FA400062D60A /* Grapple */,
+				A528A2772037FA410062D60A /* GrappleTests */,
+				A528A2822037FA410062D60A /* GrappleUITests */,
+				A528A25D2037FA400062D60A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A528A25D2037FA400062D60A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A528A25C2037FA400062D60A /* Grapple.app */,
+				A528A2742037FA410062D60A /* GrappleTests.xctest */,
+				A528A27F2037FA410062D60A /* GrappleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A528A25E2037FA400062D60A /* Grapple */ = {
+			isa = PBXGroup;
+			children = (
+				A528A25F2037FA410062D60A /* AppDelegate.h */,
+				A528A2602037FA410062D60A /* AppDelegate.m */,
+				A528A2622037FA410062D60A /* ViewController.h */,
+				A528A2632037FA410062D60A /* ViewController.m */,
+				A528A2652037FA410062D60A /* Main.storyboard */,
+				A528A2682037FA410062D60A /* Assets.xcassets */,
+				A528A26A2037FA410062D60A /* LaunchScreen.storyboard */,
+				A528A26D2037FA410062D60A /* Info.plist */,
+				A528A26E2037FA410062D60A /* main.m */,
+			);
+			path = Grapple;
+			sourceTree = "<group>";
+		};
+		A528A2772037FA410062D60A /* GrappleTests */ = {
+			isa = PBXGroup;
+			children = (
+				A528A2782037FA410062D60A /* GrappleTests.m */,
+				A528A27A2037FA410062D60A /* Info.plist */,
+			);
+			path = GrappleTests;
+			sourceTree = "<group>";
+		};
+		A528A2822037FA410062D60A /* GrappleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A528A2832037FA410062D60A /* GrappleUITests.m */,
+				A528A2852037FA410062D60A /* Info.plist */,
+			);
+			path = GrappleUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A528A25B2037FA400062D60A /* Grapple */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A528A2882037FA410062D60A /* Build configuration list for PBXNativeTarget "Grapple" */;
+			buildPhases = (
+				A528A2582037FA400062D60A /* Sources */,
+				A528A2592037FA400062D60A /* Frameworks */,
+				A528A25A2037FA400062D60A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Grapple;
+			productName = Grapple;
+			productReference = A528A25C2037FA400062D60A /* Grapple.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A528A2732037FA410062D60A /* GrappleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A528A28B2037FA410062D60A /* Build configuration list for PBXNativeTarget "GrappleTests" */;
+			buildPhases = (
+				A528A2702037FA410062D60A /* Sources */,
+				A528A2712037FA410062D60A /* Frameworks */,
+				A528A2722037FA410062D60A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A528A2762037FA410062D60A /* PBXTargetDependency */,
+			);
+			name = GrappleTests;
+			productName = GrappleTests;
+			productReference = A528A2742037FA410062D60A /* GrappleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A528A27E2037FA410062D60A /* GrappleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A528A28E2037FA410062D60A /* Build configuration list for PBXNativeTarget "GrappleUITests" */;
+			buildPhases = (
+				A528A27B2037FA410062D60A /* Sources */,
+				A528A27C2037FA410062D60A /* Frameworks */,
+				A528A27D2037FA410062D60A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A528A2812037FA410062D60A /* PBXTargetDependency */,
+			);
+			name = GrappleUITests;
+			productName = GrappleUITests;
+			productReference = A528A27F2037FA410062D60A /* GrappleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A528A2542037FA400062D60A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Penguin Interactive";
+				TargetAttributes = {
+					A528A25B2037FA400062D60A = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					A528A2732037FA410062D60A = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = A528A25B2037FA400062D60A;
+					};
+					A528A27E2037FA410062D60A = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = A528A25B2037FA400062D60A;
+					};
+				};
+			};
+			buildConfigurationList = A528A2572037FA400062D60A /* Build configuration list for PBXProject "Grapple" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A528A2532037FA400062D60A;
+			productRefGroup = A528A25D2037FA400062D60A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A528A25B2037FA400062D60A /* Grapple */,
+				A528A2732037FA410062D60A /* GrappleTests */,
+				A528A27E2037FA410062D60A /* GrappleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A528A25A2037FA400062D60A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A528A26C2037FA410062D60A /* LaunchScreen.storyboard in Resources */,
+				A528A2692037FA410062D60A /* Assets.xcassets in Resources */,
+				A528A2672037FA410062D60A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A528A2722037FA410062D60A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A528A27D2037FA410062D60A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A528A2582037FA400062D60A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A528A2642037FA410062D60A /* ViewController.m in Sources */,
+				A528A26F2037FA410062D60A /* main.m in Sources */,
+				A528A2612037FA410062D60A /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A528A2702037FA410062D60A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A528A2792037FA410062D60A /* GrappleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A528A27B2037FA410062D60A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A528A2842037FA410062D60A /* GrappleUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A528A2762037FA410062D60A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A528A25B2037FA400062D60A /* Grapple */;
+			targetProxy = A528A2752037FA410062D60A /* PBXContainerItemProxy */;
+		};
+		A528A2812037FA410062D60A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A528A25B2037FA400062D60A /* Grapple */;
+			targetProxy = A528A2802037FA410062D60A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A528A2652037FA410062D60A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A528A2662037FA410062D60A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A528A26A2037FA410062D60A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A528A26B2037FA410062D60A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A528A2862037FA410062D60A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A528A2872037FA410062D60A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A528A2892037FA410062D60A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Grapple/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = PI.Grapple;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A528A28A2037FA410062D60A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Grapple/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = PI.Grapple;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A528A28C2037FA410062D60A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = GrappleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = PI.GrappleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grapple.app/Grapple";
+			};
+			name = Debug;
+		};
+		A528A28D2037FA410062D60A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = GrappleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = PI.GrappleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grapple.app/Grapple";
+			};
+			name = Release;
+		};
+		A528A28F2037FA410062D60A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = GrappleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = PI.GrappleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Grapple;
+			};
+			name = Debug;
+		};
+		A528A2902037FA410062D60A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = GrappleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = PI.GrappleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Grapple;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A528A2572037FA400062D60A /* Build configuration list for PBXProject "Grapple" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A528A2862037FA410062D60A /* Debug */,
+				A528A2872037FA410062D60A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A528A2882037FA410062D60A /* Build configuration list for PBXNativeTarget "Grapple" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A528A2892037FA410062D60A /* Debug */,
+				A528A28A2037FA410062D60A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A528A28B2037FA410062D60A /* Build configuration list for PBXNativeTarget "GrappleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A528A28C2037FA410062D60A /* Debug */,
+				A528A28D2037FA410062D60A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A528A28E2037FA410062D60A /* Build configuration list for PBXNativeTarget "GrappleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A528A28F2037FA410062D60A /* Debug */,
+				A528A2902037FA410062D60A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A528A2542037FA400062D60A /* Project object */;
+}
