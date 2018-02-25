@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B5736AA2042D0D000F8B398 /* Generator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B5736A92042D0D000F8B398 /* Generator.m */; };
 		A528A2612037FA410062D60A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2602037FA410062D60A /* AppDelegate.m */; };
 		A528A2642037FA410062D60A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2632037FA410062D60A /* ViewController.m */; };
 		A528A2672037FA410062D60A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A528A2652037FA410062D60A /* Main.storyboard */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B5736A82042D0C300F8B398 /* Generator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = "<group>"; };
+		1B5736A92042D0D000F8B398 /* Generator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Generator.m; sourceTree = "<group>"; };
 		A528A25C2037FA400062D60A /* Grapple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grapple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A528A25F2037FA410062D60A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A528A2602037FA410062D60A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 				A528A26A2037FA410062D60A /* LaunchScreen.storyboard */,
 				A528A26D2037FA410062D60A /* Info.plist */,
 				A528A26E2037FA410062D60A /* main.m */,
+				1B5736A82042D0C300F8B398 /* Generator.h */,
+				1B5736A92042D0D000F8B398 /* Generator.m */,
 			);
 			path = Grapple;
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 				A528A2642037FA410062D60A /* ViewController.m in Sources */,
 				A528A26F2037FA410062D60A /* main.m in Sources */,
 				A528A2612037FA410062D60A /* AppDelegate.m in Sources */,
+				1B5736AA2042D0D000F8B398 /* Generator.m in Sources */,
 				C168DE6D20427C950055988B /* Game.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
