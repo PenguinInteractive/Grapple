@@ -30,7 +30,8 @@
     [glesRenderer setup:view];
     
     gm = [[Game alloc] init];
-    //[myGame setRenderer:glesRenderer] pass the renderer to the game please
+    //[gm setRenderer:glesRenderer] or [gm setup:glesRenderer]
+    //or something pass the renderer to the game please
     [_PauseMenu setHidden:true];
     [gm setIsPaused:false];
 }
@@ -48,10 +49,9 @@
 - (IBAction)OnTap:(id)sender {
     if(![gm isPaused]){
         [gm increaseScore];
-                _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
+        _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
     }
 }
-
 
 - (void)update
 {
@@ -60,3 +60,4 @@
 }
 
 @end
+
