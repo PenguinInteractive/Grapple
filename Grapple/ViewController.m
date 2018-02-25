@@ -11,7 +11,9 @@
 
 @interface ViewController (){
     Game *gm;
+    Renderer* glesRenderer;
 }
+
 @property (weak, nonatomic) IBOutlet UILabel *Score;
 @property (weak, nonatomic) IBOutlet UIView *PauseMenu;
 
@@ -21,10 +23,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //Setup the renderer object
+    glesRenderer = [[Renderer alloc] init];
+    GLKView* view = (GLKView*)self.view;
+    [glesRenderer setup:view];
+    
     gm = [[Game alloc] init];
+    //[myGame setRenderer:glesRenderer] pass the renderer to the game please
     [_PauseMenu setHidden:true];
     [gm setIsPaused:false];
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
 
@@ -45,5 +53,10 @@
 }
 
 
+- (void)update
+{
+    //Pass update call onto Renderer
+    [glesRenderer update];
+}
 
 @end
