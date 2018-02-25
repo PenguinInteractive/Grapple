@@ -7,8 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "Game.h"
 
-@interface ViewController ()
+@interface ViewController (){
+    Game *gm;
+}
+@property (weak, nonatomic) IBOutlet UILabel *Score;
+@property (weak, nonatomic) IBOutlet UIView *PauseMenu;
 
 @end
 
@@ -16,6 +21,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    gm = [[Game alloc] init];
+    [_PauseMenu setHidden:true];
+    [gm setIsPaused:false];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -24,6 +32,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)Pause:(id)sender {
+    [gm setIsPaused:![gm isPaused]];
+    [_PauseMenu setHidden:![_PauseMenu isHidden]];
+    
+}
+- (IBAction)OnTap:(id)sender {
+    if(![gm isPaused]){
+        [gm increaseScore];
+                _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
+    }
+}
+
 
 
 @end
