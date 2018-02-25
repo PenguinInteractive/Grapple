@@ -15,12 +15,9 @@
 		A528A26F2037FA410062D60A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A26E2037FA410062D60A /* main.m */; };
 		A528A2792037FA410062D60A /* GrappleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2782037FA410062D60A /* GrappleTests.m */; };
 		A528A2842037FA410062D60A /* GrappleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2832037FA410062D60A /* GrappleUITests.m */; };
-<<<<<<< HEAD
 		A591326A204365B700C18577 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5913269204365B700C18577 /* Renderer.m */; };
-=======
 		C168DE6B204275690055988B /* GameScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C168DE6A204275690055988B /* GameScreen.storyboard */; };
 		C168DE6D20427C950055988B /* Game.mm in Sources */ = {isa = PBXBuildFile; fileRef = C168DE6C20427C950055988B /* Game.mm */; };
->>>>>>> cb4c1a488197e864aaee7e4297cae534751860ec
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,14 +54,11 @@
 		A528A27F2037FA410062D60A /* GrappleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrappleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A528A2832037FA410062D60A /* GrappleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GrappleUITests.m; sourceTree = "<group>"; };
 		A528A2852037FA410062D60A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		A5913268204365B700C18577 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		A5913269204365B700C18577 /* Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
-=======
 		C168DE6A204275690055988B /* GameScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GameScreen.storyboard; sourceTree = "<group>"; };
 		C168DE6C20427C950055988B /* Game.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Game.mm; sourceTree = "<group>"; };
 		C168DE6E20427CA20055988B /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
->>>>>>> cb4c1a488197e864aaee7e4297cae534751860ec
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
