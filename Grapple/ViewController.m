@@ -7,12 +7,16 @@
 //
 
 #import "ViewController.h"
+#import "Game.h"
 
-@interface ViewController ()
-{
+@interface ViewController (){
+    Game *gm;
     Renderer* glesRenderer;
-    //Game* myGame;
 }
+
+@property (weak, nonatomic) IBOutlet UILabel *Score;
+@property (weak, nonatomic) IBOutlet UIView *PauseMenu;
+
 @end
 
 @implementation ViewController
@@ -25,9 +29,10 @@
     GLKView* view = (GLKView*)self.view;
     [glesRenderer setup:view];
     
-    //Create the game and send it to the renderer
-    //myGame = [[Game alloc] init];
-    //[myGame setRenderer:glesRenderer]
+    gm = [[Game alloc] init];
+    //[myGame setRenderer:glesRenderer] pass the renderer to the game please
+    [_PauseMenu setHidden:true];
+    [gm setIsPaused:false];
 }
 
 
@@ -35,6 +40,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)Pause:(id)sender {
+    [gm setIsPaused:![gm isPaused]];
+    [_PauseMenu setHidden:![_PauseMenu isHidden]];
+    
+}
+- (IBAction)OnTap:(id)sender {
+    if(![gm isPaused]){
+        [gm increaseScore];
+                _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
+    }
+}
+
 
 - (void)update
 {
