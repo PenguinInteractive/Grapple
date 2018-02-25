@@ -8,6 +8,17 @@
 
 #ifndef Game_h
 #define Game_h
-
-
+#import "Generator.h"
 #endif /* Game_h */
+@interface Game : NSObject
+
+
+-(void) startGame;
+
+-(void) setTimeelapsed : (float) te;
+-(float) timeElapsed;
+
+
+
+
+@end

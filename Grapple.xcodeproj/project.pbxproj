@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BD3102C20428BA70068F066 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3102B20428BA70068F066 /* Game.m */; };
+		1BD3102E20428BB80068F066 /* Generator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3102D20428BB80068F066 /* Generator.m */; };
 		A528A2612037FA410062D60A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2602037FA410062D60A /* AppDelegate.m */; };
 		A528A2642037FA410062D60A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2632037FA410062D60A /* ViewController.m */; };
 		A528A2672037FA410062D60A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A528A2652037FA410062D60A /* Main.storyboard */; };
@@ -35,6 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1BD3102B20428BA70068F066 /* Game.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
+		1BD3102D20428BB80068F066 /* Generator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Generator.m; sourceTree = "<group>"; };
+		1BD3102F20428BC20068F066 /* Generator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = "<group>"; };
+		1BD3103020428BCD0068F066 /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		A528A25C2037FA400062D60A /* Grapple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grapple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A528A25F2037FA410062D60A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A528A2602037FA410062D60A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -110,6 +116,10 @@
 				A528A26A2037FA410062D60A /* LaunchScreen.storyboard */,
 				A528A26D2037FA410062D60A /* Info.plist */,
 				A528A26E2037FA410062D60A /* main.m */,
+				1BD3102B20428BA70068F066 /* Game.m */,
+				1BD3102D20428BB80068F066 /* Generator.m */,
+				1BD3102F20428BC20068F066 /* Generator.h */,
+				1BD3103020428BCD0068F066 /* Game.h */,
 			);
 			path = Grapple;
 			sourceTree = "<group>";
@@ -268,6 +278,8 @@
 				A528A2642037FA410062D60A /* ViewController.m in Sources */,
 				A528A26F2037FA410062D60A /* main.m in Sources */,
 				A528A2612037FA410062D60A /* AppDelegate.m in Sources */,
+				1BD3102E20428BB80068F066 /* Generator.m in Sources */,
+				1BD3102C20428BA70068F066 /* Game.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

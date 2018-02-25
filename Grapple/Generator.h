@@ -11,3 +11,15 @@
 
 
 #endif /* Generator_h */
+
+@interface Generator : NSObject
+
+
+-(void)generatePlatforms;
+
+-(void) setXpos : (float) xp;
+-(void) setYpos : (float) yp;
+
+-(float) xpos;
+-(float) ypos;
+@end
