@@ -9,14 +9,25 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+{
+    Renderer* glesRenderer;
+    //Game* myGame;
+}
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    //Setup the renderer object
+    glesRenderer = [[Renderer alloc] init];
+    GLKView* view = (GLKView*)self.view;
+    [glesRenderer setup:view];
+    
+    //Create the game and send it to the renderer
+    //myGame = [[Game alloc] init];
+    //[myGame setRenderer:glesRenderer]
 }
 
 
@@ -25,5 +36,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)update
+{
+    //Pass update call onto Renderer
+    [glesRenderer update];
+}
 
 @end

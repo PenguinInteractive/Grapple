@@ -1,0 +1,260 @@
+//
+//  Renderer.m
+//  Grapple
+//
+//  Created by Colt King on 2018-02-23.
+//  Copyright © 2018 Penguin Interactive. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "Renderer.h"
+#import <GLKit/GLKit.h>
+
+enum
+{
+    UNIFORM_MODELVIEWPROJECTION_MATRIX,
+    UNIFORM_NORMAL_MATRIX,
+    UNIFORM_PASSTHROUGH,
+    UNIFORM_SHADEINFRAG,
+    NUM_UNIFORMS
+};
+GLint uniforms[NUM_UNIFORMS];
+
+float cameraDistance = 5.0f;
+float fov = 80.0f;
+float frontClip = 1.0f;
+float backClip = 20.0f;
+
+@interface Renderer ()
+
+@end
+
+@implementation Renderer
+{
+    GLKView* myView;
+    GLuint programObject;
+    
+    //Product of the model, view, and projection matrices
+    GLKMatrix4 mvp;
+    GLKMatrix3 normalMatrix;
+}
+
+- (void)setup:(GLKView*)view
+{
+    //Give the view a OpenGL 3.0 context
+    view.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+    
+    if(!view.context)
+    {
+        //Perhaps check for 2.0 later
+        NSLog(@"Failed to create the context");
+    }
+    
+    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    
+    //Store the view and link its context to OpenGL
+    myView = view;
+    [EAGLContext setCurrentContext:view.context];
+    
+    //Setup the shaders
+    /*if(![self setupShaders])
+    {
+        NSLog(@"Failed to setup shaders");
+        return;
+    }*/
+    
+    //Makes the default background color white
+    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+    
+    //Enables the depth test
+    glEnable(GL_DEPTH_TEST);
+}
+
+- (void)update
+{
+    //Perspective Transformations
+    mvp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -cameraDistance);
+    normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvp), NULL);
+    
+    //Get the apect ratio of the window
+    float aspect = (float)myView.drawableWidth / (float)myView.drawableHeight;
+    GLKMatrix4 perspective = GLKMatrix4MakePerspective(fov * M_PI /180.0f, aspect, frontClip, backClip);
+    
+    mvp = GLKMatrix4Multiply(perspective, mvp);
+}
+
+- (void)render:(NSString*)objFile position:(GLKMatrix3)pos
+{
+    //Updates the uniform values based on the matrices
+    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
+    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
+    glUniform1i(uniforms[UNIFORM_PASSTHROUGH], false);
+    glUniform1i(uniforms[UNIFORM_SHADEINFRAG], true);
+    
+    //Sets the boundaries of the viewport
+    glViewport(0, 0, (int)myView.drawableWidth, (int)myView.drawableHeight);
+    //Clears the screen leaving only the default clear colour
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //Gives OpenGL the program object
+    glUseProgram(programObject);
+    
+    float *vertices, *normals;
+    int *indices, numIndices = 0;
+    
+    //Get the info from the obj file
+    //[self readObj:vertices norms:normals ind:indices numInd:numIndices];
+    
+    //Attribute 0: Vertices
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), vertices);
+    glEnableVertexAttribArray(0); //Enable array
+    
+    //Attribute 1: Colour?
+    glVertexAttrib4f(1, 1.0f, 0.0f, 0.0f, 1.0f);
+    
+    //Attribute 2: Normals
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), normals);
+    glEnableVertexAttribArray(2); //Enable array
+    
+    //Duplicate line? Is this necessary?
+    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
+    
+    //Draw the indices and fill the triangles between them
+    glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, indices);
+}
+
+- (void)renderCube:(GLKMatrix3)pos
+{
+    //Updates the uniform values based on the matrices
+    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
+    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
+    glUniform1i(uniforms[UNIFORM_PASSTHROUGH], false);
+    glUniform1i(uniforms[UNIFORM_SHADEINFRAG], true);
+    
+    //Sets the boundaries of the viewport
+    glViewport(0, 0, (int)myView.drawableWidth, (int)myView.drawableHeight);
+    //Clears the screen leaving only the default clear colour
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //Gives OpenGL the program object
+    glUseProgram(programObject);
+    
+    float vertices[] =
+    {
+        -0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f, -0.5f,
+        -0.5f,  0.5f, -0.5f,
+        -0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f,
+        -0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f, 0.5f,
+        -0.5f,  0.5f, 0.5f,
+        0.5f,  0.5f, 0.5f,
+        0.5f, -0.5f, 0.5f,
+        -0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f, -0.5f,
+    };
+    
+    float normals[] =
+    {
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        0.0f, -1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, -1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        -1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+    };
+    
+    /*float texCoords[] =
+    {
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
+        0.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f,
+    };*/
+    
+    GLuint indices[] =
+    {
+        0, 2, 1,
+        0, 3, 2,
+        4, 5, 6,
+        4, 6, 7,
+        8, 9, 10,
+        8, 10, 11,
+        12, 15, 14,
+        12, 14, 13,
+        16, 17, 18,
+        16, 18, 19,
+        20, 23, 22,
+        20, 22, 21
+    };
+    
+    //Attribute 0: Vertices
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), vertices);
+    glEnableVertexAttribArray(0); //Enable array
+    
+    //Attribute 1: Colour?
+    glVertexAttrib4f(1, 1.0f, 0.0f, 0.0f, 1.0f);
+    
+    //Attribute 2: Normals
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), normals);
+    glEnableVertexAttribArray(2); //Enable array
+    
+    //Duplicate line? Is this necessary?
+    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
+    
+    //Draw the indices and fill the triangles between them
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
+}
+
+//- (void)readObj:(float*)
+
+@end

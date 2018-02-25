@@ -15,6 +15,7 @@
 		A528A26F2037FA410062D60A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A26E2037FA410062D60A /* main.m */; };
 		A528A2792037FA410062D60A /* GrappleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2782037FA410062D60A /* GrappleTests.m */; };
 		A528A2842037FA410062D60A /* GrappleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2832037FA410062D60A /* GrappleUITests.m */; };
+		A591326A204365B700C18577 /* Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5913269204365B700C18577 /* Renderer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		A528A27F2037FA410062D60A /* GrappleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrappleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A528A2832037FA410062D60A /* GrappleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GrappleUITests.m; sourceTree = "<group>"; };
 		A528A2852037FA410062D60A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5913268204365B700C18577 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		A5913269204365B700C18577 /* Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Renderer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 		A528A25E2037FA400062D60A /* Grapple */ = {
 			isa = PBXGroup;
 			children = (
+				A5913268204365B700C18577 /* Renderer.h */,
+				A5913269204365B700C18577 /* Renderer.m */,
 				A528A25F2037FA410062D60A /* AppDelegate.h */,
 				A528A2602037FA410062D60A /* AppDelegate.m */,
 				A528A2622037FA410062D60A /* ViewController.h */,
@@ -265,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A591326A204365B700C18577 /* Renderer.m in Sources */,
 				A528A2642037FA410062D60A /* ViewController.m in Sources */,
 				A528A26F2037FA410062D60A /* main.m in Sources */,
 				A528A2612037FA410062D60A /* AppDelegate.m in Sources */,

@@ -7,9 +7,9 @@
 //
 
 #import <GLKit/GLKit.h>
+#import "Renderer.h"
 
 @interface ViewController : GLKViewController
-
 
 @end
 
