@@ -15,6 +15,7 @@
 - (void)update;
 - (void)setup:view;
 - (void)render:(NSString*)objFile position:(GLKMatrix3)pos;
+- (int)readObj:(NSString*)objFile vert:(float**)vertices tex:(float**)texCoords norm:(float**)normals ind:(int**)indices;
 
 @end
 
