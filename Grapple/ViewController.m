@@ -11,7 +11,9 @@
 
 @interface ViewController (){
     Game *gm;
+    Renderer* glesRenderer;
 }
+
 @property (weak, nonatomic) IBOutlet UILabel *Score;
 @property (weak, nonatomic) IBOutlet UIView *PauseMenu;
 
@@ -21,7 +23,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //Setup the renderer object
+    glesRenderer = [[Renderer alloc] init];
+    GLKView* view = (GLKView*)self.view;
+    [glesRenderer setup:view];
+    
     gm = [[Game alloc] init];
+    //[gm setRenderer:glesRenderer] or [gm setup:glesRenderer]
+    //or something pass the renderer to the game please
     [_PauseMenu setHidden:true];
     [gm setIsPaused:false];
     
@@ -41,11 +51,21 @@
 }
 - (IBAction)OnTap:(id)sender {
     if(![gm isPaused]){
-        [gm increaseScore];
-                _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
+
     }
 }
 
+- (void)update
+{
+    //Pass update call onto Renderer
+    if(![gm isPaused]){
+        [glesRenderer update];
+        [gm increaseScore];
 
+        _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
+    }
+    
+}
 
 @end
+
