@@ -24,7 +24,8 @@
     gm = [[Game alloc] init];
     [_PauseMenu setHidden:true];
     [gm setIsPaused:false];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    [gm startGame];
 }
 
 
@@ -32,6 +33,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (IBAction)Pause:(id)sender {
     [gm setIsPaused:![gm isPaused]];
     [_PauseMenu setHidden:![_PauseMenu isHidden]];
