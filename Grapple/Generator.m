@@ -9,15 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "Generator.h"
 #import "Game.h"
-
+#import <GLKit/GLKit.h>
 
 
 
 
 @interface Generator(){
     
-    Game *game;
     //Renderer *render;
+    NSArray *platforms;
 }
 @end
 
@@ -28,9 +28,26 @@
 float xpos; // the X-axis position of the platform
 float ypos; // the Y-axis position of the platform
 
--(void) generatePlatforms{
-    Game *game =[[Game alloc] init];
-    xpos = 0.1 * game.timeElapsed;
+
+//setup function here
+//initialize platforms array as an array of vector2s
+
+
+-(void) Generate:(float)deltaTime{
+    
+    //determine if platforms should be spawned
+        //if you need a new platform call SpawnPlatform or something
+    
+    [self movePlatform:deltaTime];
+    
+    //for each platform in array
+        //[renderer renderCube:platforms[i]] //idk if this is how you get an item in an array in obj c
+}
+
+
+-(void) movePlatform:(float)deltaTime{
+//loop through platforms array and modify their x position
+    xpos = 0.1 * deltaTime;
     if(xpos <= -10){
         
         
@@ -47,6 +64,10 @@ float ypos; // the Y-axis position of the platform
         
     }
 }
+
+
+//SpawnPlatform will pick a random y value then add a new vector2 with the xposition equal to the right side of the screen and yposition equal to the random y
+//Store it in the array
 
 -(void)setXpos:(float)xp {
     xpos = xp;

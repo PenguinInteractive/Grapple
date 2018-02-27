@@ -14,7 +14,8 @@
 @interface Generator : NSObject
 
 
--(void)generatePlatforms;
+-(void)movePlatform:(float)deltaTime;
+-(void)Generate:(float)deltaTime;
 
 -(void) setXpos : (float) xp;
 -(void) setYpos : (float) yp;
