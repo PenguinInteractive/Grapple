@@ -48,7 +48,6 @@
 }
 - (IBAction)OnTap:(id)sender {
     if(![gm isPaused]){
-        [gm increaseScore];
 
     }
 }
@@ -58,6 +57,8 @@
     //Pass update call onto Renderer
     if(![gm isPaused]){
         [glesRenderer update];
+        [gm increaseScore];
+
         _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
     }
     
