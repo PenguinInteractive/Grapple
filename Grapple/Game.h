@@ -10,6 +10,7 @@
 #define Game_h
 #import <GLKit/GLKit.h>
 #import "Generator.h"
+#import "Renderer.h"
 
 @interface Game : NSObject
 

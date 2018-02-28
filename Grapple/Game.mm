@@ -14,6 +14,7 @@
     std::chrono::time_point<std::chrono::steady_clock> lastTime;
     
     Generator *generate;
+    Renderer *render;
     float timeElapsed;
 }
 
@@ -27,6 +28,7 @@
     lastTime = currentTime;
     _mult=2;
     
+    [render renderCube:(GLKVector2Make(0.0f,0.0f))]; //testing platforms
     [generate Generate:timeElapsed];
 }
 
