@@ -85,7 +85,7 @@ float backClip = 20.0f;
     mvp = GLKMatrix4Multiply(perspective, mvp);
 }
 
-- (void)render:(NSString*)objPath position:(GLKMatrix3)pos
+- (void)render:(NSString*)objPath position:(GLKVector2)pos
 {
     //Updates the uniform values based on the matrices
     glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
@@ -167,7 +167,7 @@ float backClip = 20.0f;
     return 1; //return numIndices
 }
 
-- (void)renderCube:(GLKMatrix3)pos
+- (void)renderCube:(GLKVector2)pos
 {
     //Updates the uniform values based on the matrices
     glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
