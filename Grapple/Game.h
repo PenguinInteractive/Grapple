@@ -10,6 +10,7 @@
 #define Game_h
 #import <GLKit/GLKit.h>
 #import "Generator.h"
+#import "Renderer.h"
 
 @interface Game : NSObject
 
@@ -19,9 +20,8 @@
 
 - (void) update;
 - (void) pause;
-- (void) increaseScore;
 
--(void) startGame;
+-(void) startGame:(Renderer*)render;
 
 -(void) setTimeelapsed : (float) te;
 -(float) timeElapsed;

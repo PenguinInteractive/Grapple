@@ -30,12 +30,11 @@
     [glesRenderer setup:view];
     
     gm = [[Game alloc] init];
-    //[gm setRenderer:glesRenderer] or [gm setup:glesRenderer]
-    //or something pass the renderer to the game please
+    
     [_PauseMenu setHidden:true];
     [gm setIsPaused:false];
     
-    [gm startGame];
+    [gm startGame:glesRenderer];
 }
 
 
@@ -59,8 +58,7 @@
 {
     //Pass update call onto Renderer
     if(![gm isPaused]){
-        [glesRenderer update];
-        [gm increaseScore];
+        [gm update];
 
         _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
     }

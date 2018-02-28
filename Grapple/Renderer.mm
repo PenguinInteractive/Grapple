@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Renderer.h"
 #import <GLKit/GLKit.h>
+#include "GLESRenderer.hpp"
 
 enum
 {
@@ -22,22 +23,23 @@ GLint uniforms[NUM_UNIFORMS];
 
 float cameraDistance = 5.0f;
 float fov = 80.0f;
-float frontClip = 1.0f;
-float backClip = 20.0f;
+float frontClip = 0.0f;
+float backClip = 40.0f;
 
 @interface Renderer ()
-
-@end
-
-@implementation Renderer
 {
     GLKView* myView;
     GLuint programObject;
+    GLESRenderer gles;
     
     //Product of the model, view, and projection matrices
     GLKMatrix4 mvp;
     GLKMatrix3 normalMatrix;
 }
+
+@end
+
+@implementation Renderer
 
 - (void)setup:(GLKView*)view
 {
@@ -57,14 +59,14 @@ float backClip = 20.0f;
     [EAGLContext setCurrentContext:view.context];
     
     //Setup the shaders
-    /*if(![self setupShaders])
+    if(![self setupShaders])
     {
         NSLog(@"Failed to setup shaders");
         return;
-    }*/
+    }
     
-    //Makes the default background color green
-    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+    //Makes the default background color red
+    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
     
     //Enables the depth test
     glEnable(GL_DEPTH_TEST);
@@ -75,7 +77,7 @@ float backClip = 20.0f;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     //Perspective Transformations
-    mvp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -cameraDistance);
+    mvp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, cameraDistance);
     normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvp), NULL);
     
     //Get the apect ratio of the window
@@ -85,7 +87,7 @@ float backClip = 20.0f;
     mvp = GLKMatrix4Multiply(perspective, mvp);
 }
 
-- (void)render:(NSString*)objPath position:(GLKVector2)pos
+- (void)render:(NSString*)objPath xPos:(float)x yPos:(float)y
 {
     //Updates the uniform values based on the matrices
     glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
@@ -95,8 +97,7 @@ float backClip = 20.0f;
     
     //Sets the boundaries of the viewport
     glViewport(0, 0, (int)myView.drawableWidth, (int)myView.drawableHeight);
-    //Clears the screen leaving only the default clear colour
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     //Gives OpenGL the program object
     glUseProgram(programObject);
     
@@ -167,8 +168,10 @@ float backClip = 20.0f;
     return 1; //return numIndices
 }
 
-- (void)renderCube:(GLKVector2)pos
+- (void)renderCube:(float)x yPos:(float)y
 {
+    NSLog([NSString stringWithFormat:@"x=%1.2f y=%1.2f", x, y]);
+    
     //Updates the uniform values based on the matrices
     glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
     glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
@@ -298,5 +301,25 @@ float backClip = 20.0f;
     //Draw the indices and fill the triangles between them
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
 }
+
+- (bool)setupShaders
+{
+    // Load shaders
+    char *vShaderStr = gles.LoadShaderFile([[[NSBundle mainBundle] pathForResource:[[NSString stringWithUTF8String:"Shader.vsh"] stringByDeletingPathExtension] ofType:[[NSString stringWithUTF8String:"Shader.vsh"] pathExtension]] cStringUsingEncoding:1]);
+    char *fShaderStr = gles.LoadShaderFile([[[NSBundle mainBundle] pathForResource:[[NSString stringWithUTF8String:"Shader.fsh"] stringByDeletingPathExtension] ofType:[[NSString stringWithUTF8String:"Shader.fsh"] pathExtension]] cStringUsingEncoding:1]);
+    programObject = gles.LoadProgram(vShaderStr, fShaderStr);
+    if (programObject == 0)
+        return false;
+    
+    // Set up uniform variables
+    uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(programObject, "modelViewProjectionMatrix");
+    uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(programObject, "normalMatrix");
+    uniforms[UNIFORM_PASSTHROUGH] = glGetUniformLocation(programObject, "passThrough");
+    uniforms[UNIFORM_SHADEINFRAG] = glGetUniformLocation(programObject, "shadeInFrag");
+    
+    return true;
+}
+
+
 
 @end

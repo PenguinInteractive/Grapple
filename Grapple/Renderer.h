@@ -14,9 +14,8 @@
 
 - (void)update;
 - (void)setup:view;
-- (void)render:(NSString*)objFile position:(GLKVector2)pos;
-- (void)renderCube:(GLKVector2)pos;
-- (int)readObj:(NSString*)objFile vert:(float**)vertices tex:(float**)texCoords norm:(float**)normals ind:(int**)indices;
+- (void)render:(NSString*)objFile xPos:(float)x yPos:(float)y;
+- (void)renderCube:(float)x yPos:(float)y;
 
 @end
 
