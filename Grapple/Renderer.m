@@ -63,7 +63,7 @@ float backClip = 20.0f;
         return;
     }*/
     
-    //Makes the default background color white
+    //Makes the default background color green
     glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     
     //Enables the depth test
@@ -72,6 +72,8 @@ float backClip = 20.0f;
 
 - (void)update
 {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     //Perspective Transformations
     mvp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -cameraDistance);
     normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvp), NULL);
@@ -83,7 +85,7 @@ float backClip = 20.0f;
     mvp = GLKMatrix4Multiply(perspective, mvp);
 }
 
-- (void)render:(NSString*)objFile position:(GLKMatrix3)pos
+- (void)render:(NSString*)objPath position:(GLKVector2)pos
 {
     //Updates the uniform values based on the matrices
     glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
@@ -98,11 +100,12 @@ float backClip = 20.0f;
     //Gives OpenGL the program object
     glUseProgram(programObject);
     
-    float *vertices, *normals;
-    int *indices, numIndices = 0;
+    float *vertices, *texCoords, *normals;
+    int *indices;
+    int numIndices;
     
     //Get the info from the obj file
-    //[self readObj:vertices norms:normals ind:indices numInd:numIndices];
+    numIndices = [self readObj:objPath vert:&vertices tex:&texCoords norm:&normals ind:&indices];
     
     //Attribute 0: Vertices
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), vertices);
@@ -122,7 +125,49 @@ float backClip = 20.0f;
     glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, indices);
 }
 
-- (void)renderCube:(GLKMatrix3)pos
+- (int)readObj:(NSString*)objPath vert:(float**)vertices tex:(float**)texCoords norm:(float**)normals ind:(int**)indices
+{
+    //Puts the data from the OBJ file into a string
+    NSString* content = [NSString stringWithContentsOfFile:objPath encoding:NSUTF8StringEncoding error:NULL];
+    
+    //Separates the file into lines
+    NSArray* lines = [content componentsSeparatedByString:@"\n"];
+    NSMutableArray* tokens = [NSMutableArray arrayWithCapacity:[lines count]];
+    
+    //Separates the lines into tokens
+    for(int i = 0; i < [lines count]; i++)
+    {
+        tokens[i] = [lines[i] componentsSeparatedByString:@" "];
+    }
+    
+    //Skip lines 0-2
+    //i = 3
+    //while (token[0] is v)
+    //read tokens 1-3 into vertices array
+    //i++
+    
+    //while (token[0] is vt)
+    //read tokens 1-3 into texCoords array
+    //i++
+    
+    //while (token[0] is vn)
+    //read tokens 1-3 into normals array
+    //i++
+    
+    //read in the other lines (I don't remember what they do)
+    //i++ for each one
+    
+    //while (token[0] is f)
+    //read tokens 1-3 into indices array
+    //i++
+    
+    //something else needs to be done with the indices
+    //figure that out later
+    
+    return 1; //return numIndices
+}
+
+- (void)renderCube:(GLKVector2)pos
 {
     //Updates the uniform values based on the matrices
     glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
@@ -132,8 +177,7 @@ float backClip = 20.0f;
     
     //Sets the boundaries of the viewport
     glViewport(0, 0, (int)myView.drawableWidth, (int)myView.drawableHeight);
-    //Clears the screen leaving only the default clear colour
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     //Gives OpenGL the program object
     glUseProgram(programObject);
     
@@ -254,7 +298,5 @@ float backClip = 20.0f;
     //Draw the indices and fill the triangles between them
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
 }
-
-//- (void)readObj:(float*)
 
 @end
