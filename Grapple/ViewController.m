@@ -34,6 +34,8 @@
     //or something pass the renderer to the game please
     [_PauseMenu setHidden:true];
     [gm setIsPaused:false];
+    
+    [gm startGame];
 }
 
 
@@ -41,6 +43,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (IBAction)Pause:(id)sender {
     [gm setIsPaused:![gm isPaused]];
     [_PauseMenu setHidden:![_PauseMenu isHidden]];
@@ -48,15 +51,20 @@
 }
 - (IBAction)OnTap:(id)sender {
     if(![gm isPaused]){
-        [gm increaseScore];
-        _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
+
     }
 }
 
 - (void)update
 {
     //Pass update call onto Renderer
-    [glesRenderer update];
+    if(![gm isPaused]){
+        [glesRenderer update];
+        [gm increaseScore];
+
+        _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
+    }
+    
 }
 
 @end

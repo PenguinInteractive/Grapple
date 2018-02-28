@@ -14,25 +14,20 @@
     std::chrono::time_point<std::chrono::steady_clock> lastTime;
     
     Generator *generate;
-    
-    BOOL gameStarted;
-    
+    float timeElapsed;
 }
 
 @end
 
 @implementation Game
 
-
-float timeElapsed;
-float currentTime =0;
-float newTime = 0;
-
 - (void) update {
     auto currentTime = std::chrono::steady_clock::now();
-    auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime-lastTime).count();
-    lastTime=currentTime;
+    timeElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime-lastTime).count();
+    lastTime = currentTime;
     _mult=2;
+    
+    [generate Generate:timeElapsed];
 }
 
 - (void) pause {
@@ -55,18 +50,7 @@ float newTime = 0;
 
 - (void) startGame{
     
-    generate = [[Generator alloc] init];    gameStarted = true;
-    while (gameStarted == true) {
-        
-        
-        newTime = currentTime += 0.001;
-        //NSLog(@"%.3f", timeElapsed);
-        [self setTimeelapsed:newTime];
-        [generate generatePlatforms];
-    }
-    
-    
-    
+    generate = [[Generator alloc] init];
 }
 @end
 
