@@ -9,6 +9,10 @@
 #ifndef Game_h
 #define Game_h
 #import <GLKit/GLKit.h>
+<<<<<<< HEAD
+=======
+#import "Generator.h"
+>>>>>>> parent of 78ffca3... Testing Addition
 
 @interface Game : NSObject
 

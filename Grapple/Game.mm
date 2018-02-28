@@ -13,6 +13,11 @@
 @interface Game() {
     std::chrono::time_point<std::chrono::steady_clock> lastTime;
     
+<<<<<<< HEAD
+=======
+    Generator *generate;
+    float timeElapsed;
+>>>>>>> parent of 78ffca3... Testing Addition
 }
 
 @end
@@ -24,6 +29,11 @@
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime-lastTime).count();
     lastTime=currentTime;
     _mult=2;
+<<<<<<< HEAD
+=======
+    
+    [generate Generate:timeElapsed];
+>>>>>>> parent of 78ffca3... Testing Addition
 }
 
 - (void) pause {
