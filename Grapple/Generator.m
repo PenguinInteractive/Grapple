@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Generator.h"
-#import "Game.h"
+#import "Renderer.h"
 #import <GLKit/GLKit.h>
 
 
@@ -16,75 +16,57 @@
 
 @interface Generator(){
     
-    //Renderer *render;
-    NSArray *platforms;
+    Renderer *render;
+    NSMutableArray *platformsX;
+    NSMutableArray *platformsY;
 }
 @end
 
 
 @implementation Generator
 
-
-float xpos; // the X-axis position of the platform
-float ypos; // the Y-axis position of the platform
-
-
-//setup function here
-//initialize platforms array as an array of vector2s
-
+//Setup platforms with a reasonable capacity later
+- (void)setup:(Renderer*)renderer
+{
+    render = renderer;
+    
+    platformsX = [[NSMutableArray alloc] initWithCapacity:2];
+    platformsY = [[NSMutableArray alloc] initWithCapacity:2];
+    
+    //I'm just going to hardcode this for now
+    [platformsX addObject:[[NSNumber alloc] initWithFloat:0]];
+    [platformsY addObject:[[NSNumber alloc] initWithFloat:0]];
+    [platformsX addObject:[[NSNumber alloc] initWithFloat:0]];
+    [platformsY addObject:[[NSNumber alloc] initWithFloat:0.1f]];
+}
 
 -(void) Generate:(float)deltaTime{
     
     //determine if platforms should be spawned
         //if you need a new platform call SpawnPlatform or something
     
-    [self movePlatform:deltaTime];
+    //[self movePlatforms:deltaTime];
     
-    //for each platform in array
-        //[renderer renderCube:platforms[i]] //idk if this is how you get an item in an array in obj c
-}
-
-
--(void) movePlatform:(float)deltaTime{
-//loop through platforms array and modify their x position
-    xpos = 0.1 * deltaTime;
-    if(xpos <= -10){
-        
-        
-        
-        
-        xpos = 10;
-        ypos = arc4random_uniform(3);
-        
-        //[render position: xpos, ypos]    }
-        
-        
-        
-        
-        
+    for(int i = 0; i < [platformsX count]; i++)
+    {
+        //NSLog([NSString stringWithFormat:@"x=%1.2f y=%1.2f", [platformsX[i] floatValue], [platformsY[i] floatValue]]);
+        [render renderCube:[platformsX[i] floatValue] yPos:[platformsY[i] floatValue]];
     }
 }
 
 
-//SpawnPlatform will pick a random y value then add a new vector2 with the xposition equal to the right side of the screen and yposition equal to the random y
-//Store it in the array
-
--(void)setXpos:(float)xp {
-    xpos = xp;
-    
-}
--(float) xpos {
-    return xpos;
+-(void) movePlatforms:(float)deltaTime
+{
+    for(int i = 0; i < [platformsX count]; i++)
+    {
+        platformsX[i] = [[NSNumber alloc] initWithFloat:[platformsX[i] floatValue]+(0.1f*deltaTime)];
+    }
 }
 
--(void)setYpos:(float)yp {
-    ypos = yp;
+- (void)spawnPlatform
+{
+    //SpawnPlatform will pick a random y value then add a new vector2 with the xposition equal to the right side of the screen and yposition equal to the random y
+    //Store it in the array
 }
-
--(float) ypos {
-    return ypos;
-}
-
-
 
 @end

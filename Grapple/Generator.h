@@ -8,18 +8,13 @@
 
 #ifndef Generator_h
 #define Generator_h
+#import "Renderer.h"
 
-
-#endif /* Generator_h */
 @interface Generator : NSObject
 
-
--(void)movePlatform:(float)deltaTime;
+-(void)setup:(Renderer*)renderer;
 -(void)Generate:(float)deltaTime;
 
--(void) setXpos : (float) xp;
--(void) setYpos : (float) yp;
-
--(float) xpos;
--(float) ypos;
 @end
+
+#endif /* Generator_h */
