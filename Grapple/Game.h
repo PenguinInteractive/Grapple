@@ -20,9 +20,8 @@
 
 - (void) update;
 - (void) pause;
-- (void) increaseScore;
 
--(void) startGame;
+-(void) startGame:(Renderer*)render;
 
 -(void) setTimeelapsed : (float) te;
 -(float) timeElapsed;

@@ -8,13 +8,15 @@
 
 #include <stdio.h>
 #import "Game.h"
+#import "Renderer.h"
+#import "Player.h"
 #include <chrono>
 
 @interface Game() {
     std::chrono::time_point<std::chrono::steady_clock> lastTime;
-    
+    Renderer* render;
     Generator *generate;
-    Renderer *render;
+    Player* player;
     float timeElapsed;
 }
 
@@ -28,8 +30,12 @@
     lastTime = currentTime;
     _mult=2;
     
-    [render renderCube:(GLKVector2Make(0.0f,0.0f))]; //testing platforms
+    [self increaseScore];
+    
+    [player movePlayer:timeElapsed];
     [generate Generate:timeElapsed];
+    
+    [render update];
 }
 
 - (void) pause {
@@ -50,9 +56,15 @@
     return timeElapsed;
 }
 
-- (void) startGame{
-    
+- (void) startGame:(Renderer*)renderer
+{
     generate = [[Generator alloc] init];
+    [generate setup:renderer];
+    
+    player = [[Player alloc] init];
+    [player setup:renderer];
+    
+    render = renderer;
 }
 @end
 
