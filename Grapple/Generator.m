@@ -49,7 +49,7 @@
     
     for(int i = 0; i < [platformsX count]; i++)
     {
-        //NSLog([NSString stringWithFormat:@"x=%1.2f y=%1.2f", [platformsX[i] floatValue], [platformsY[i] floatValue]]);
+        
         [render renderCube:[platformsX[i] floatValue] yPos:[platformsY[i] floatValue]];
     }
 }

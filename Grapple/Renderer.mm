@@ -23,8 +23,8 @@ GLint uniforms[NUM_UNIFORMS];
 
 float cameraDistance = 5.0f;
 float fov = 80.0f;
-float frontClip = 0.0f;
-float backClip = 40.0f;
+float frontClip = 1.0f;
+float backClip = 20.0f;
 
 @interface Renderer ()
 {
@@ -35,6 +35,9 @@ float backClip = 40.0f;
     //Product of the model, view, and projection matrices
     GLKMatrix4 mvp;
     GLKMatrix3 normalMatrix;
+    
+    float *vertices, *normals, *texCoords;
+    int *indices, numIndices;
 }
 
 @end
@@ -70,6 +73,8 @@ float backClip = 40.0f;
     
     //Enables the depth test
     glEnable(GL_DEPTH_TEST);
+    
+    numIndices = gles.GenCube(1.0f, &vertices, &normals, &texCoords, &indices);
 }
 
 - (void)update
@@ -77,7 +82,7 @@ float backClip = 40.0f;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     //Perspective Transformations
-    mvp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, cameraDistance);
+    mvp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -cameraDistance);
     normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvp), NULL);
     
     //Get the apect ratio of the window
@@ -168,6 +173,8 @@ float backClip = 40.0f;
     return 1; //return numIndices
 }
 
+//YOU NEED TO MAKE A MODEL MATRIX AND PUT THE X AND Y IN IT, THEN MULTIPLY IT WITH THE MVP
+
 - (void)renderCube:(float)x yPos:(float)y
 {
     NSLog([NSString stringWithFormat:@"x=%1.2f y=%1.2f", x, y]);
@@ -184,7 +191,7 @@ float backClip = 40.0f;
     //Gives OpenGL the program object
     glUseProgram(programObject);
     
-    float vertices[] =
+    /*float vertices[] =
     {
         -0.5f, -0.5f, -0.5f,
         -0.5f, -0.5f,  0.5f,
@@ -240,7 +247,7 @@ float backClip = 40.0f;
         1.0f, 0.0f, 0.0f,
     };
     
-    /*float texCoords[] =
+    float texCoords[] =
     {
         0.0f, 0.0f,
         0.0f, 1.0f,
@@ -266,7 +273,7 @@ float backClip = 40.0f;
         0.0f, 1.0f,
         1.0f, 1.0f,
         1.0f, 0.0f,
-    };*/
+    };
     
     GLuint indices[] =
     {
@@ -282,7 +289,7 @@ float backClip = 40.0f;
         16, 18, 19,
         20, 23, 22,
         20, 22, 21
-    };
+    };*/
     
     //Attribute 0: Vertices
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), vertices);
