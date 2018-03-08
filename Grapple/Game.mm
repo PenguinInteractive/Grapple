@@ -32,10 +32,10 @@
     
     [self increaseScore];
     
+    [render update];
+    
     [player movePlayer:timeElapsed];
     [generate Generate:timeElapsed];
-    
-    [render update];
 }
 
 - (void) pause {
