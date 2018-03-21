@@ -16,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *Score;
 @property (weak, nonatomic) IBOutlet UIView *PauseMenu;
+@property (strong, nonatomic) IBOutlet UILabel *Multiplier;
 
 @end
 
@@ -61,8 +62,18 @@
         [gm update];
 
         _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
+        _Multiplier.text=[NSString stringWithFormat:@"%c%i",'x',[gm mult]];
     }
     
+}
+- (IBAction)CG:(id)sender {
+    [gm collectGrapple];
+    
+}
+
+
+- (IBAction)DS:(id)sender {
+    [gm grappleSpawn];
 }
 
 @end
