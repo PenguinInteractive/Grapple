@@ -80,7 +80,7 @@
                         <viewLayoutGuide key="safeArea" id="2yH-bw-iy2"/>
                         <connections>
                             <outlet property="delegate" destination="p70-3A-sOf" id="dyM-Ly-YtH"/>
-                            <outletCollection property="gestureRecognizers" destination="lHm-he-CS6" appends="YES" id="laC-Ak-yjb"/>
+                            <outletCollection property="gestureRecognizers" destination="5iG-gi-FaG" appends="YES" id="Ea7-By-FZq"/>
                         </connections>
                     </glkView>
                     <connections>
@@ -91,9 +91,9 @@
                 </glkViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5GD-Oa-pbS" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="w2Q-HZ-Xqr" userLabel="Exit" sceneMemberID="exit"/>
-                <tapGestureRecognizer id="lHm-he-CS6">
+                <tapGestureRecognizer id="5iG-gi-FaG">
                     <connections>
-                        <action selector="OnTap:" destination="p70-3A-sOf" id="Ptz-qz-lPc"/>
+                        <action selector="OnTap:" destination="p70-3A-sOf" id="yJg-Br-qvZ"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

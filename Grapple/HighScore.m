@@ -12,11 +12,12 @@
 
 - (void) addScore:(int)score{
     NSLog(@"8");
-    [[NSFileManager defaultManager] createFileAtPath:@"/Users/a00951134/Desktop/hi/test.txt" contents:nil attributes:nil];
+    NSString *docPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/test.txt"];
+    NSString *dataFile = [NSString stringWithContentsOfFile:docPath usedEncoding:NSUTF8StringEncoding error:NULL];
     
-    NSString *str = [NSString stringWithFormat:@"%d",score];
+    [dataFile writeToFile:docPath atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+//    NSString *str = [NSString stringWithFormat:@"%d",score];
     
-    [str writeToFile:@"/Users/a00951134/Desktop/test.txt" atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 - (void) sortScore{

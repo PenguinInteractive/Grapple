@@ -18,6 +18,8 @@
 @property bool isPaused;
 @property int playerScore;
 @property int mult;
+@property float tapX;
+@property float tapY;
 
 - (void) update;
 - (void) pause;

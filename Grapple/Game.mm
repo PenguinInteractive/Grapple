@@ -33,7 +33,10 @@
     
     [render update];
     
+    
     [player movePlayer:timeElapsed];
+    [player fireTongue:_tapX yPos:_tapY];
+    [player grapple];
     [generate Generate:timeElapsed];
 }
 
@@ -75,9 +78,11 @@
 
 - (void) startGame:(Renderer*)renderer
 {
+    auto currentTime = std::chrono::steady_clock::now();
+    lastTime = currentTime;
+    
     generate = [[Generator alloc] init];
     [generate setup:renderer];
-    
     player = [[Player alloc] init];
     [player setup:renderer];
     _mult=1;

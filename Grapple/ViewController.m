@@ -49,11 +49,7 @@
     [_PauseMenu setHidden:![_PauseMenu isHidden]];
     
 }
-- (IBAction)OnTap:(id)sender {
-    if(![gm isPaused]){
 
-    }
-}
 
 - (void)update
 {
@@ -66,6 +62,20 @@
     }
     
 }
+- (IBAction)OnTap:(id)sender {
+    NSLog(@"F");
+    if(![gm isPaused]){
+        
+        CGPoint point = [sender locationInView:self.view];
+        NSLog(@"Tap X = %f Y = %f", point.x, point.y);
+        [gm setTapX:point.x];
+        [gm setTapY:point.y];
+        
+        
+        
+    }
+}
+
 - (IBAction)CG:(id)sender {
     [gm collectGrapple];
     
