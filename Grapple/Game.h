@@ -11,12 +11,15 @@
 #import <GLKit/GLKit.h>
 #import "Generator.h"
 #import "Renderer.h"
+#import "HighScore.h"
 
 @interface Game : NSObject
 
 @property bool isPaused;
 @property int playerScore;
 @property int mult;
+@property float tapX;
+@property float tapY;
 
 - (void) update;
 - (void) pause;
@@ -25,6 +28,11 @@
 
 -(void) setTimeelapsed : (float) te;
 -(float) timeElapsed;
+
+-(void) increaseScore;
+-(void) grappleSpawn;
+-(void) collectGrapple;
+
 @end
 #endif /* Game_h */
 

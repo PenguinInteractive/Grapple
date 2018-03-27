@@ -16,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *Score;
 @property (weak, nonatomic) IBOutlet UIView *PauseMenu;
+@property (strong, nonatomic) IBOutlet UILabel *Multiplier;
 
 @end
 
@@ -48,11 +49,7 @@
     [_PauseMenu setHidden:![_PauseMenu isHidden]];
     
 }
-- (IBAction)OnTap:(id)sender {
-    if(![gm isPaused]){
 
-    }
-}
 
 - (void)update
 {
@@ -61,8 +58,32 @@
         [gm update];
 
         _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
+        _Multiplier.text=[NSString stringWithFormat:@"%c%i",'x',[gm mult]];
     }
     
+}
+- (IBAction)OnTap:(id)sender {
+    NSLog(@"F");
+    if(![gm isPaused]){
+        
+        CGPoint point = [sender locationInView:self.view];
+        NSLog(@"Tap X = %f Y = %f", point.x, point.y);
+        [gm setTapX:point.x];
+        [gm setTapY:point.y];
+        
+        
+        
+    }
+}
+
+- (IBAction)CG:(id)sender {
+    [gm collectGrapple];
+    
+}
+
+
+- (IBAction)DS:(id)sender {
+    [gm grappleSpawn];
 }
 
 @end

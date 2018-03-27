@@ -10,6 +10,7 @@
 #import "Game.h"
 #import "Renderer.h"
 #import "Player.h"
+#import "HighScore.h"
 #include <chrono>
 
 @interface Game() {
@@ -17,6 +18,7 @@
     Renderer* render;
     Generator *generate;
     Player* player;
+    HighScore* hs;
     float timeElapsed;
 }
 
@@ -28,13 +30,13 @@
     auto currentTime = std::chrono::steady_clock::now();
     timeElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime-lastTime).count();
     lastTime = currentTime;
-    _mult=2;
-    
-    [self increaseScore];
     
     [render update];
     
+    
     [player movePlayer:timeElapsed];
+    [player fireTongue:_tapX yPos:_tapY];
+    [player grapple];
     [generate Generate:timeElapsed];
 }
 
@@ -44,8 +46,26 @@
 
 -(void) increaseScore {
     if(!_isPaused){
-        _playerScore++;
+        _playerScore+=(20*_mult);
     }
+}
+
+-(void) grappleSpawn{
+    /*
+     if gapple is offscrean
+     mult=1;
+     */
+    _mult=1;
+    [hs addScore:_playerScore];
+}
+
+-(void) collectGrapple{
+    [self increaseScore];
+    if(_mult<5){
+        _mult++;
+    }
+    NSLog(@"%i",_mult);
+
 }
 
 -(void) setTimeelapsed : (float) te {
@@ -58,12 +78,14 @@
 
 - (void) startGame:(Renderer*)renderer
 {
+    auto currentTime = std::chrono::steady_clock::now();
+    lastTime = currentTime;
+    
     generate = [[Generator alloc] init];
     [generate setup:renderer];
-    
     player = [[Player alloc] init];
     [player setup:renderer];
-    
+    _mult=1;
     render = renderer;
 }
 @end
