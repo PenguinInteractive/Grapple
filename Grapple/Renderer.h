@@ -16,6 +16,7 @@
 - (void)update;
 - (void)setup:(GLKView*)view;
 - (void)render:(Model*)m;
+- (Model*)genCube;
 
 @end
 

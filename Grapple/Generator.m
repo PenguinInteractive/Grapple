@@ -34,13 +34,24 @@
     platforms = [[NSMutableArray alloc] initWithCapacity:2];
     grapples = [[NSMutableArray alloc] initWithCapacity:2];
     
-    /*
     //Generate a cube with the genCube function in Model once that works
-    [platforms addObject:firstPlatform];
-    [platforms addObject:secondPlatform];
-    [grapples addObject:firstGrapple];
-    [grapples addObject:secondGrapple];
-    */
+    Model* model = [renderer genCube];
+    [platforms addObject:model];
+    model = [renderer genCube];
+    [platforms addObject:model];
+    model = [renderer genCube];
+    [grapples addObject:model];
+    model = [renderer genCube];
+    [grapples addObject:model];
+    
+    [model setMMatrix:GLKMatrix4Translate(GLKMatrix4Identity, 0, 0, 5)];
+    [renderer render:model];
+    [model setMMatrix:GLKMatrix4Translate(GLKMatrix4Identity, 0, 0, -5)];
+    [renderer render:model];
+    [model setMMatrix:GLKMatrix4Translate(GLKMatrix4Identity, 0.5, 0.5, 5)];
+    [renderer render:model];
+    [model setMMatrix:GLKMatrix4Translate(GLKMatrix4Identity, 0.5, 0.5, -5)];
+    [renderer render:model];
 }
 
 -(void) Generate:(float)deltaTime tX:(float)tapX tY:(float)tapY

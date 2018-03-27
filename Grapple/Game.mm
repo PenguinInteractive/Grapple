@@ -25,7 +25,21 @@
 
 @implementation Game
 
-- (void) update {
+- (void) startGame:(Renderer*)renderer
+{
+    auto currentTime = std::chrono::steady_clock::now();
+    lastTime = currentTime;
+    
+    generate = [[Generator alloc] init];
+    [generate setup:renderer];
+    
+    _mult=1;
+    
+    render = renderer;
+}
+
+- (void) update
+{
     auto currentTime = std::chrono::steady_clock::now();
     timeElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime-lastTime).count();
     lastTime = currentTime;
@@ -39,13 +53,13 @@
     _isPaused = !_isPaused;
 }
 
--(void) increaseScore {
+- (void) increaseScore {
     if(!_isPaused){
         _playerScore+=(20*_mult);
     }
 }
 
--(void) grappleSpawn{
+- (void) grappleSpawn{
     /*
      if gapple is offscrean
      mult=1;
@@ -54,7 +68,7 @@
     [hs addScore:_playerScore];
 }
 
--(void) collectGrapple{
+- (void) collectGrapple{
     [self increaseScore];
     if(_mult<5){
         _mult++;
@@ -63,25 +77,13 @@
 
 }
 
--(void) setTimeelapsed : (float) te {
+- (void) setTimeelapsed : (float) te {
     timeElapsed = te;
 }
 
--(float) timeElapsed{
+- (float) timeElapsed{
     return timeElapsed;
 }
 
-- (void) startGame:(Renderer*)renderer
-{
-    auto currentTime = std::chrono::steady_clock::now();
-    lastTime = currentTime;
-    
-    generate = [[Generator alloc] init];
-    [generate setup:renderer];
-    
-    _mult=1;
-    
-    render = renderer;
-}
 @end
 
