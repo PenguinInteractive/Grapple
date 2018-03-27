@@ -10,6 +10,7 @@
 #define Generator_h
 #import "Renderer.h"
 #import "Player.h"
+#import "Model.h"
 
 @interface Generator : NSObject
 

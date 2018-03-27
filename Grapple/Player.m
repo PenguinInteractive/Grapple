@@ -25,7 +25,8 @@
 {
     renderer = render;
     
-    //USE CREATE CUBE FUNCTION IN MODEL TO INITIALIZE PLAYER AND TONGUE
+    player = [renderer genCube];
+    tongue = [renderer genCube];
     
     target = GLKVector2Make(0, 0);
     curDir = GLKVector2Make(0, 0);
@@ -35,11 +36,11 @@
 - (void)movePlayer:(float)deltaTime
 {
     float screenShift = -0.001f * deltaTime;
-    NSLog(@"Time: %f", deltaTime);
-    //NSLog([NSString stringWithFormat:@"Tounge1: x=%f y=%f", tongue.x, tongue.y]);
+    //NSLog(@"Time: %f", deltaTime);
+    
     //Shift everything to the left
-    //player.x += screenShift; DO THIS TO MMATRICES
-    //tongue.x += screenShift;
+    [player setMMatrix:GLKMatrix4Translate(player.mMatrix, -screenShift, 0, 0)];
+    [tongue setMMatrix:GLKMatrix4Translate(tongue.mMatrix, -screenShift, 0, 0)];
     target.x += screenShift;
     
     /*

@@ -31,13 +31,12 @@ float backClip = 20.0f;
     GLKView* myView;
     GLuint programObject;
     GLESRenderer gles;
+    GLKMatrix3 normalMatrix;
     
     //Product of the model, view, and projection matrices
     GLKMatrix4 vp;
-    GLKMatrix3 normalMatrix;
     
-    float *vertices, *normals, *texCoords;
-    int *indices, numIndices;
+    Model* tempModel;
 }
 
 @end
@@ -68,20 +67,33 @@ float backClip = 20.0f;
         return;
     }
     
-    //Makes the default background color red
-    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    //Makes the default background grey
+    glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
     
     //Enables the depth test
     glEnable(GL_DEPTH_TEST);
     
-    //Perspective Transformations
-    vp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -cameraDistance);
-    normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(vp), NULL);
+    float* vertices;
+    float* normals;
+    float* texCoords;
+    int* indices;
+    
+    tempModel = [[Model alloc] init];
+    [tempModel setNumIndices:(gles.GenCube(1.0f, &vertices, &normals, &texCoords, &indices))];
+    [tempModel setVertices:vertices];
+    [tempModel setNormals:normals];
+    [tempModel setTexCoords:texCoords];
+    [tempModel setIndices:indices];
+    [tempModel setMMatrix:GLKMatrix4Identity];
 }
 
 - (void)update
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    //Perspective Transformations
+    vp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -cameraDistance);
+    normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(vp), NULL);
     
     //Get the apect ratio of the window
     float aspect = (float)myView.drawableWidth / (float)myView.drawableHeight;
@@ -107,31 +119,19 @@ float backClip = 20.0f;
     //Gives OpenGL the program object
     glUseProgram(programObject);
     
-    float *vertices, *texCoords, *normals;
-    int *indices;
-    int numIndices;
-    
-    //Get the info from the obj file
-    numIndices = [self readModel:m vert:&vertices tex:&texCoords norm:&normals ind:&indices];
-    
     //Attribute 0: Vertices
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), vertices);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), m.vertices);
     glEnableVertexAttribArray(0); //Enable array
     
-    //Attribute 1: Colour?
+    //Attribute 1: Colour (red)
     glVertexAttrib4f(1, 1.0f, 0.0f, 0.0f, 1.0f);
     
     //Attribute 2: Normals
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), normals);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), m.normals);
     glEnableVertexAttribArray(2); //Enable array
     
     //Draw the indices and fill the triangles between them
-    glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, indices);
-}
-
-- (int)readModel:(Model*)m vert:(float**)vertices tex:(float**)texCoords norm:(float**)normals ind:(int**)indices
-{
-    return 1;
+    glDrawElements(GL_TRIANGLES, m.numIndices, GL_UNSIGNED_INT, m.indices);
 }
 
 - (bool)setupShaders
@@ -150,6 +150,24 @@ float backClip = 20.0f;
     uniforms[UNIFORM_SHADEINFRAG] = glGetUniformLocation(programObject, "shadeInFrag");
     
     return true;
+}
+
+- (Model*)genCube
+{
+    Model* m = [[Model alloc] init];
+    float* vertices;
+    float* normals;
+    float* texCoords;
+    int* indices;
+    
+    m = [[Model alloc] init];
+    [m setNumIndices:(gles.GenCube(1.0f, &vertices, &normals, &texCoords, &indices))];
+    [m setVertices:vertices];
+    [m setNormals:normals];
+    [m setTexCoords:texCoords];
+    [m setIndices:indices];
+    
+    return m;
 }
 
 @end

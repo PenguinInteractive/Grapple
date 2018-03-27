@@ -11,6 +11,7 @@
 
 #import <GLKit/GLKit.h>
 #import "Renderer.h"
+#import "Model.h"
 
 @interface Player : NSObject
 
