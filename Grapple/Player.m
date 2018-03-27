@@ -10,7 +10,7 @@
 
 @interface Player()
 {
-    GLKVector2 target, curDir, momentum;
+    GLKVector3 target, curDir, momentum;
     Renderer* renderer;
     
     Model* player;
@@ -28,53 +28,52 @@
     player = [renderer genCube];
     tongue = [renderer genCube];
     
-    [player setMMatrix:GLKMatrix4Translate(player.mMatrix, 0.4, 0, 0)];
-    [tongue setMMatrix:GLKMatrix4Translate(tongue.mMatrix, 0.35, -0.2, 0)];
+    [player translate:0.4 y:0 z:0];
+    [tongue translate:0.35 y:-0.2 z:0];
     
-    target = GLKVector2Make(0, 0);
-    curDir = GLKVector2Make(0, 0);
-    momentum = GLKVector2Make(0,0);
-    
-    
+    target = GLKVector3Make(0, 0, 0);
+    curDir = GLKVector3Make(0, 0, 0);
+    momentum = GLKVector3Make(0, 0, 0);
 }
 
 - (void)movePlayer:(float)deltaTime
 {
     float screenShift = -0.001f * deltaTime;
-    //NSLog(@"Time: %f", deltaTime);
+    NSLog(@"Screenshift: %f", screenShift);
     
     //Shift everything to the left
-    [player setMMatrix:GLKMatrix4Translate(player.mMatrix, screenShift, 0, 0)];
-    [tongue setMMatrix:GLKMatrix4Translate(tongue.mMatrix, screenShift, 0, 0)];
+    [player translate:screenShift y:0 z:0];
+    NSLog(@"player: %f, %f, %f", player.position.x, player.position.y, player.position.z);
+    [tongue translate:screenShift y:0 z:0];
+    NSLog(@"tongue: %f, %f, %f", tongue.position.x, tongue.position.y, tongue.position.z);
     target.x += screenShift;
     
-    /*
-    if(tongue.x != target.x || tongue.y != target.y){
+    if(tongue.position.x != target.x || tongue.position.y != target.y){
         NSLog(@"A");
-        if(tongue.x - target.x <= 0.1f && tongue.x - target.x >= -0.1f){
-            tongue.x = target.x;
+        if(tongue.position.x - target.x <= 0.1f && tongue.position.x - target.x >= -0.1f){
+            [tongue translate:target.x-tongue.position.x y:0 z:0];
         }
-        if(tongue.y - target.y <= 0.1f && tongue.y - target.y >= -0.1f){
-            tongue.y = target.y;
+        if(tongue.position.y - target.y <= 0.1f && tongue.position.y - target.y >= -0.1f){
+            [tongue translate:0 y:target.y-tongue.position.y z:0];
         }
     }
-    else if(player.x != target.x || player.y != target.y){
+    else if(player.position.x != target.x || player.position.y != target.y){
         NSLog(@"B");
-        if(player.x - target.x <= 0.1f && player.x - target.x >= -0.1f)
-            player.x = target.x;
-        if(player.y - target.y <= 0.1f && player.y - target.y >= -0.1f)
-            player.y = target.y;
+        if(player.position.x - target.x <= 0.1f && player.position.x - target.x >= -0.1f)
+            [player translate:target.x-player.position.x y:0 z:0];
+        if(player.position.y - target.y <= 0.1f && player.position.y - target.y >= -0.1f)
+            [player translate:0 y:target.y-player.position.y z:0];
         //find unit vector of player to tongue and multiply by speed
-        GLKVector2 direction = GLKVector2Normalize(GLKVector2Subtract(target, player));
-        direction = GLKVector2MultiplyScalar(direction, 0.1f);
+        GLKVector3 direction = GLKVector3Normalize(GLKVector3Subtract(target, player.position));
+        direction = GLKVector3MultiplyScalar(direction, 0.1f);
         
-        player = GLKVector2Add(player, direction);
+        [player translate:direction.x y:direction.y z:direction.z];
+        
         //set curDir to allow momentum
     }
     else{
         NSLog(@"C");
     }
-    */
     
     [renderer render:player];
     [renderer render:tongue];
@@ -82,40 +81,36 @@
 
 - (void)fireTongue:(float)x yPos:(float)y
 {
-    /*
     target.x = x;
     target.y = y;
-    NSLog([NSString stringWithFormat:@"Target: x=%1.2f y=%1.2f", target.x, target.y]);
+    //NSLog([NSString stringWithFormat:@"Target: x=%1.2f y=%1.2f", target.x, target.y]);
     
-    if(tongue.x != target.x){
-        tongue.x += 0.1f;
+    if(tongue.position.x != target.x){
+        [tongue translate:0.1 y:0 z:0];
     }
     else{
         NSLog(@"!!-!!");
     }
-    if(tongue.y != target.y){
-        tongue.y += 0.1f;
+    if(tongue.position.y != target.y){
+        [tongue translate:0 y:0.1 z:0];
     }
     else{
         NSLog(@"-!!-");
     }
 
-    NSLog([NSString stringWithFormat:@"Tounge: x=%1.2f y=%1.2f", tongue.x, tongue.y]);
-    */
+    //NSLog([NSString stringWithFormat:@"Tounge: x=%1.2f y=%1.2f", tongue.position.x, tongue.position.y]);
 }
 
 - (void)grapple
 {
-    /*
-    if(target.x == tongue.x && target.y == tongue.y){
-        if(player.x != tongue.x){
-            player.x += 0.1f;
+    if(target.x == tongue.position.x && target.y == tongue.position.y){
+        if(player.position.x != tongue.position.x){
+            [player translate:0.1 y:0 z:0];
         }
-        if(player.y != tongue.y){
-            player.y += 0.1f;
+        if(player.position.y != tongue.position.y){
+            [player translate:0 y:0.1 z:0];
         }
     }
-    */
 }
 
 @end

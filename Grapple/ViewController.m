@@ -71,9 +71,6 @@
         NSLog(@"Tap X = %f Y = %f", point.x, point.y);
         [gm setTapX:point.x];
         [gm setTapY:point.y];
-        
-        
-        
     }
 }
 

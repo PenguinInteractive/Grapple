@@ -15,7 +15,7 @@
 @interface Generator : NSObject
 
 -(void)setup:(Renderer*)renderer;
--(void)Generate:(float)deltaTime tX:(float)tapX tY:(float)tapY;
+-(void)Generate:(float)deltaTime;
 
 @end
 
