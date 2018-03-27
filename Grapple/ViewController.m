@@ -45,7 +45,8 @@
 }
 
 - (IBAction)Pause:(id)sender {
-    [gm setIsPaused:![gm isPaused]];
+    
+    [gm pause];
     [_PauseMenu setHidden:![_PauseMenu isHidden]];
     
 }

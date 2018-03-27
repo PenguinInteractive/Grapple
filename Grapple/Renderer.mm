@@ -166,6 +166,7 @@ float backClip = 20.0f;
     [m setNormals:normals];
     [m setTexCoords:texCoords];
     [m setIndices:indices];
+    [m setMMatrix:GLKMatrix4Identity];
     
     return m;
 }

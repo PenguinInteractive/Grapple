@@ -49,7 +49,11 @@
     [generate Generate:timeElapsed tX:_tapX tY:_tapY];
 }
 
-- (void) pause {
+- (void) pause
+{
+    if(_isPaused)
+        lastTime = std::chrono::steady_clock::now();
+        
     _isPaused = !_isPaused;
 }
 

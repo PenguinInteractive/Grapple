@@ -43,8 +43,6 @@
     [grapples addObject:model];
     model = [renderer genCube];
     [grapples addObject:model];
-    
-    [model setMMatrix:GLKMatrix4Translate(GLKMatrix4Identity, 0, 0, 0)];
 }
 
 -(void) Generate:(float)deltaTime tX:(float)tapX tY:(float)tapY
