@@ -28,9 +28,14 @@
     player = [renderer genCube];
     tongue = [renderer genCube];
     
+    [player setMMatrix:GLKMatrix4Translate(player.mMatrix, 0.4, 0, 0)];
+    [tongue setMMatrix:GLKMatrix4Translate(tongue.mMatrix, 0.35, -0.2, 0)];
+    
     target = GLKVector2Make(0, 0);
     curDir = GLKVector2Make(0, 0);
     momentum = GLKVector2Make(0,0);
+    
+    
 }
 
 - (void)movePlayer:(float)deltaTime
@@ -39,8 +44,8 @@
     //NSLog(@"Time: %f", deltaTime);
     
     //Shift everything to the left
-    [player setMMatrix:GLKMatrix4Translate(player.mMatrix, -screenShift, 0, 0)];
-    [tongue setMMatrix:GLKMatrix4Translate(tongue.mMatrix, -screenShift, 0, 0)];
+    [player setMMatrix:GLKMatrix4Translate(player.mMatrix, screenShift, 0, 0)];
+    [tongue setMMatrix:GLKMatrix4Translate(tongue.mMatrix, screenShift, 0, 0)];
     target.x += screenShift;
     
     /*
