@@ -9,13 +9,13 @@
 #ifndef Renderer_h
 #define Renderer_h
 #import <GLKit/GLKit.h>
+#import "Model.h"
 
 @interface Renderer : NSObject
 
 - (void)update;
-- (void)setup:view;
-- (void)render:(NSString*)objFile xPos:(float)x yPos:(float)y;
-- (void)renderCube:(float)x yPos:(float)y;
+- (void)setup:(GLKView*)view;
+- (void)render:(Model*)m;
 
 @end
 

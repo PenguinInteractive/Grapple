@@ -10,8 +10,11 @@
 
 @interface Player()
 {
-    GLKVector2 player, tongue, target, curDir;
+    GLKVector2 target, curDir;
     Renderer* renderer;
+    
+    Model* player;
+    Model* tongue;
 }
 
 @end
@@ -22,8 +25,8 @@
 {
     renderer = render;
     
-    player = GLKVector2Make(0, 0);
-    tongue = GLKVector2Make(0, 0);
+    //USE CREATE CUBE FUNCTION IN MODEL TO INITIALIZE PLAYER AND TONGUE
+    
     target = GLKVector2Make(0, 0);
     curDir = GLKVector2Make(0, 0);
 }
@@ -33,9 +36,10 @@
     float screenShift = 0.001f * deltaTime;
     
     //Shift everything to the left
-    //player.x += screenShift;
-    tongue.x += screenShift;
+    //player.x += screenShift; DO THIS TO MMATRICES
+    //tongue.x += screenShift;
     target.x += screenShift;
+    
     /*
     //If the tongue is not yet at the target move it towards the target
     if(tongue.x != target.x || tongue.y != target.y)
@@ -64,8 +68,9 @@
         
     }
     */
-    NSLog([NSString stringWithFormat:@"x=%1.2f scrnshft=%1.2f", player.x, screenShift]);
-    [renderer renderCube:player.x yPos:player.y];
+    
+    [renderer render:player];
+    [renderer render:tongue];
 }
 
 - (void)fireTongue:(float)x yPos:(float)y
@@ -74,16 +79,16 @@
     target.y = y;
     
     //don't do this later once actual tongue firing is implemented
-    tongue.x = x;
-    tongue.y = y;
+    //tongue.x = x;
+    //tongue.y = y;
 }
 
 - (void)grapple
 {
-    target.x = player.x;
-    tongue.x = player.x;
-    target.y = player.y;
-    tongue.y = player.y;
+    //target.x = player.x;
+    //tongue.x = player.x;
+    //target.y = player.y;
+    //tongue.y = player.y;
 }
 
 @end

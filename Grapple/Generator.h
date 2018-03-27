@@ -9,6 +9,7 @@
 #ifndef Generator_h
 #define Generator_h
 #import "Renderer.h"
+#import "Player.h"
 
 @interface Generator : NSObject
 

@@ -6,17 +6,15 @@
 //  Copyright © 2018 Penguin Interactive. All rights reserved.
 //
 
-#include <stdio.h>
 #import "Game.h"
-#import "Renderer.h"
-#import "Player.h"
-#include <chrono>
+
+//USE THIS IF YOU WANT COLLISION STUFF
+//#include <Box2D/Box2D.h>
 
 @interface Game() {
     std::chrono::time_point<std::chrono::steady_clock> lastTime;
     Renderer* render;
     Generator *generate;
-    Player* player;
     float timeElapsed;
 }
 
@@ -34,7 +32,6 @@
     
     [render update];
     
-    [player movePlayer:timeElapsed];
     [generate Generate:timeElapsed];
 }
 
@@ -60,9 +57,6 @@
 {
     generate = [[Generator alloc] init];
     [generate setup:renderer];
-    
-    player = [[Player alloc] init];
-    [player setup:renderer];
     
     render = renderer;
 }

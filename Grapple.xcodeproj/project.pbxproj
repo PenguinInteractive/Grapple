@@ -23,6 +23,8 @@
 		A591326A204365B700C18577 /* Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5913269204365B700C18577 /* Renderer.mm */; };
 		C168DE6B204275690055988B /* GameScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C168DE6A204275690055988B /* GameScreen.storyboard */; };
 		C168DE6D20427C950055988B /* Game.mm in Sources */ = {isa = PBXBuildFile; fileRef = C168DE6C20427C950055988B /* Game.mm */; };
+		DB0CAE302062EC9600852765 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0CAE2F2062EC9600852765 /* libBox2D.a */; };
+		DB644F972069C2EC00EC0541 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = DB644F962069C2EC00EC0541 /* Model.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,9 @@
 		C168DE6A204275690055988B /* GameScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GameScreen.storyboard; sourceTree = "<group>"; };
 		C168DE6C20427C950055988B /* Game.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Game.mm; sourceTree = "<group>"; };
 		C168DE6E20427CA20055988B /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		DB0CAE2F2062EC9600852765 /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBox2D.a; path = Libraries/lib/libBox2D.a; sourceTree = "<group>"; };
+		DB644F962069C2EC00EC0541 /* Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
+		DB644F982069C38900EC0541 /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB0CAE302062EC9600852765 /* libBox2D.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,10 +108,12 @@
 		A528A2532037FA400062D60A = {
 			isa = PBXGroup;
 			children = (
+				DB0CAE2B2062EBF300852765 /* Libraries */,
 				A528A25E2037FA400062D60A /* Grapple */,
 				A528A2772037FA410062D60A /* GrappleTests */,
 				A528A2822037FA410062D60A /* GrappleUITests */,
 				A528A25D2037FA400062D60A /* Products */,
+				DB0CAE2E2062EC9600852765 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,6 +152,8 @@
 				1B5736A92042D0D000F8B398 /* Generator.m */,
 				A54DDB4C2046494A00197B6E /* Player.m */,
 				A54DDB4E204649DF00197B6E /* Player.h */,
+				DB644F962069C2EC00EC0541 /* Model.m */,
+				DB644F982069C38900EC0541 /* Model.h */,
 			);
 			path = Grapple;
 			sourceTree = "<group>";
@@ -164,6 +174,37 @@
 				A528A2852037FA410062D60A /* Info.plist */,
 			);
 			path = GrappleUITests;
+			sourceTree = "<group>";
+		};
+		DB0CAE2B2062EBF300852765 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				DB0CAE2D2062EC1100852765 /* include */,
+				DB0CAE2C2062EC0200852765 /* lib */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		DB0CAE2C2062EC0200852765 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		DB0CAE2D2062EC1100852765 /* include */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		DB0CAE2E2062EC9600852765 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB0CAE2F2062EC9600852765 /* libBox2D.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +346,7 @@
 				A591326A204365B700C18577 /* Renderer.mm in Sources */,
 				A528A2642037FA410062D60A /* ViewController.m in Sources */,
 				A528A26F2037FA410062D60A /* main.m in Sources */,
+				DB644F972069C2EC00EC0541 /* Model.m in Sources */,
 				A54DDB552046B1BC00197B6E /* GLESRenderer.cpp in Sources */,
 				A528A2612037FA410062D60A /* AppDelegate.m in Sources */,
 				1B5736AA2042D0D000F8B398 /* Generator.m in Sources */,
@@ -473,9 +515,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Libraries/include";
 				INFOPLIST_FILE = Grapple/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Libraries/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = PI.Grapple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -487,9 +534,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Libraries/include";
 				INFOPLIST_FILE = Grapple/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Libraries/lib",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = PI.Grapple;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
