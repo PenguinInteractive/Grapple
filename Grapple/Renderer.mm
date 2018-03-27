@@ -168,7 +168,7 @@ float backClip = 20.0f;
     [m setIndices:indices];
     [m setMMatrix:GLKMatrix4Identity];
     [m setPosition:GLKVector3Make(0, 0, 0)];
-    
+ //     [m setPosition:GLKVector3Make(1, 2, 3)];
     return m;
 }
 
