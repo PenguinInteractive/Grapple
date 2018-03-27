@@ -7,6 +7,7 @@
 //
 
 #import "Game.h"
+#include <chrono>
 
 //USE THIS IF YOU WANT COLLISION STUFF
 //#include <Box2D/Box2D.h>
@@ -15,6 +16,8 @@
     std::chrono::time_point<std::chrono::steady_clock> lastTime;
     Renderer* render;
     Generator *generate;
+    HighScore* hs;
+    
     float timeElapsed;
 }
 
@@ -26,13 +29,10 @@
     auto currentTime = std::chrono::steady_clock::now();
     timeElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime-lastTime).count();
     lastTime = currentTime;
-    _mult=2;
-    
-    [self increaseScore];
     
     [render update];
     
-    [generate Generate:timeElapsed];
+    [generate Generate:timeElapsed tX:_tapX tY:_tapY];
 }
 
 - (void) pause {
@@ -41,8 +41,26 @@
 
 -(void) increaseScore {
     if(!_isPaused){
-        _playerScore++;
+        _playerScore+=(20*_mult);
     }
+}
+
+-(void) grappleSpawn{
+    /*
+     if gapple is offscrean
+     mult=1;
+     */
+    _mult=1;
+    [hs addScore:_playerScore];
+}
+
+-(void) collectGrapple{
+    [self increaseScore];
+    if(_mult<5){
+        _mult++;
+    }
+    NSLog(@"%i",_mult);
+
 }
 
 -(void) setTimeelapsed : (float) te {
@@ -55,8 +73,13 @@
 
 - (void) startGame:(Renderer*)renderer
 {
+    auto currentTime = std::chrono::steady_clock::now();
+    lastTime = currentTime;
+    
     generate = [[Generator alloc] init];
     [generate setup:renderer];
+    
+    _mult=1;
     
     render = renderer;
 }

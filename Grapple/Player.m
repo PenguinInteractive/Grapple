@@ -10,7 +10,7 @@
 
 @interface Player()
 {
-    GLKVector2 target, curDir;
+    GLKVector2 target, curDir, momentum;
     Renderer* renderer;
     
     Model* player;
@@ -29,43 +29,44 @@
     
     target = GLKVector2Make(0, 0);
     curDir = GLKVector2Make(0, 0);
+    momentum = GLKVector2Make(0,0);
 }
 
 - (void)movePlayer:(float)deltaTime
 {
-    float screenShift = 0.001f * deltaTime;
-    
+    float screenShift = -0.001f * deltaTime;
+    NSLog(@"Time: %f", deltaTime);
+    //NSLog([NSString stringWithFormat:@"Tounge1: x=%f y=%f", tongue.x, tongue.y]);
     //Shift everything to the left
     //player.x += screenShift; DO THIS TO MMATRICES
     //tongue.x += screenShift;
     target.x += screenShift;
     
     /*
-    //If the tongue is not yet at the target move it towards the target
-    if(tongue.x != target.x || tongue.y != target.y)
-    {
-        //find unit vector of tongue to target and multiply by speed
+    if(tongue.x != target.x || tongue.y != target.y){
+        NSLog(@"A");
+        if(tongue.x - target.x <= 0.1f && tongue.x - target.x >= -0.1f){
+            tongue.x = target.x;
+        }
+        if(tongue.y - target.y <= 0.1f && tongue.y - target.y >= -0.1f){
+            tongue.y = target.y;
+        }
     }
-    //If the tongue is at the target but the player is not move the player towards the target
-    else if(player.x != target.x || player.y != target.y)
-    {
+    else if(player.x != target.x || player.y != target.y){
+        NSLog(@"B");
         if(player.x - target.x <= 0.1f && player.x - target.x >= -0.1f)
             player.x = target.x;
         if(player.y - target.y <= 0.1f && player.y - target.y >= -0.1f)
             player.y = target.y;
-        
         //find unit vector of player to tongue and multiply by speed
         GLKVector2 direction = GLKVector2Normalize(GLKVector2Subtract(target, player));
         direction = GLKVector2MultiplyScalar(direction, 0.1f);
         
         player = GLKVector2Add(player, direction);
-        
         //set curDir to allow momentum
     }
-    //If the player is not grappling at all just add the "momentum"
-    else
-    {
-        
+    else{
+        NSLog(@"C");
     }
     */
     
@@ -75,20 +76,40 @@
 
 - (void)fireTongue:(float)x yPos:(float)y
 {
+    /*
     target.x = x;
     target.y = y;
+    NSLog([NSString stringWithFormat:@"Target: x=%1.2f y=%1.2f", target.x, target.y]);
     
-    //don't do this later once actual tongue firing is implemented
-    //tongue.x = x;
-    //tongue.y = y;
+    if(tongue.x != target.x){
+        tongue.x += 0.1f;
+    }
+    else{
+        NSLog(@"!!-!!");
+    }
+    if(tongue.y != target.y){
+        tongue.y += 0.1f;
+    }
+    else{
+        NSLog(@"-!!-");
+    }
+
+    NSLog([NSString stringWithFormat:@"Tounge: x=%1.2f y=%1.2f", tongue.x, tongue.y]);
+    */
 }
 
 - (void)grapple
 {
-    //target.x = player.x;
-    //tongue.x = player.x;
-    //target.y = player.y;
-    //tongue.y = player.y;
+    /*
+    if(target.x == tongue.x && target.y == tongue.y){
+        if(player.x != tongue.x){
+            player.x += 0.1f;
+        }
+        if(player.y != tongue.y){
+            player.y += 0.1f;
+        }
+    }
+    */
 }
 
 @end

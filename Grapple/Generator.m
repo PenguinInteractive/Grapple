@@ -43,7 +43,11 @@
     */
 }
 
--(void) Generate:(float)deltaTime{
+-(void) Generate:(float)deltaTime tX:(float)tapX tY:(float)tapY
+{
+    [player movePlayer:deltaTime];
+    [player fireTongue:tapX yPos:tapY];
+    [player grapple];
     
     //determine if platforms should be spawned
         //if you need a new platform call SpawnPlatform or something

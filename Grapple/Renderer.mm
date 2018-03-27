@@ -152,6 +152,4 @@ float backClip = 20.0f;
     return true;
 }
 
-
-
 @end

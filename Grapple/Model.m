@@ -15,6 +15,7 @@
 + (Model*)copyObj:(Model*)base
 {
     //copy all the values from base and put them into this object except for mMatrix
+    return [[Model alloc] init];
 }
 
 + (Model*)readObj:(NSString*)path
@@ -61,10 +62,12 @@
 
     //for now don't worry about textures
     */
+    
+    return [[Model alloc] init];
 }
 
 //Fix this to return a cube model
-/*- (void)renderCube:(float)x yPos:(float)y
+/*- (void)genCube
 {
     NSLog([NSString stringWithFormat:@"x=%1.2f y=%1.2f", x, y]);
 

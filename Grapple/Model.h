@@ -21,7 +21,7 @@
 @property int numIndices;
 @property GLKMatrix4 mMatrix;
 
-+ (Model*)copyObj:(Model*)base;
++ (Model*)copyObj:(Model*)base;
 
 + (Model*)readObj:(NSString*)path;
 

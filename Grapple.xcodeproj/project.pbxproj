@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1B5736AA2042D0D000F8B398 /* Generator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B5736A92042D0D000F8B398 /* Generator.m */; };
+		8386CB842062FB5900227AA0 /* HighScores.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8386CB832062FB5900227AA0 /* HighScores.storyboard */; };
+		8386CB8A2063005600227AA0 /* HighScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8386CB892063005600227AA0 /* HighScore.m */; };
 		A528A2612037FA410062D60A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2602037FA410062D60A /* AppDelegate.m */; };
 		A528A2642037FA410062D60A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2632037FA410062D60A /* ViewController.m */; };
 		A528A2672037FA410062D60A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A528A2652037FA410062D60A /* Main.storyboard */; };
@@ -47,6 +49,9 @@
 /* Begin PBXFileReference section */
 		1B5736A82042D0C300F8B398 /* Generator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = "<group>"; };
 		1B5736A92042D0D000F8B398 /* Generator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Generator.m; sourceTree = "<group>"; };
+		8386CB832062FB5900227AA0 /* HighScores.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HighScores.storyboard; sourceTree = "<group>"; };
+		8386CB882063005600227AA0 /* HighScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HighScore.h; sourceTree = "<group>"; };
+		8386CB892063005600227AA0 /* HighScore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HighScore.m; sourceTree = "<group>"; };
 		A528A25C2037FA400062D60A /* Grapple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grapple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A528A25F2037FA410062D60A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A528A2602037FA410062D60A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -141,6 +146,8 @@
 				A528A2622037FA410062D60A /* ViewController.h */,
 				C168DE6C20427C950055988B /* Game.mm */,
 				C168DE6E20427CA20055988B /* Game.h */,
+				8386CB882063005600227AA0 /* HighScore.h */,
+				8386CB892063005600227AA0 /* HighScore.m */,
 				A528A2632037FA410062D60A /* ViewController.m */,
 				C168DE6A204275690055988B /* GameScreen.storyboard */,
 				A528A2652037FA410062D60A /* Main.storyboard */,
@@ -154,6 +161,7 @@
 				A54DDB4E204649DF00197B6E /* Player.h */,
 				DB644F962069C2EC00EC0541 /* Model.m */,
 				DB644F982069C38900EC0541 /* Model.h */,
+				8386CB832062FB5900227AA0 /* HighScores.storyboard */,
 			);
 			path = Grapple;
 			sourceTree = "<group>";
@@ -315,6 +323,7 @@
 			files = (
 				A54DDB522046A99B00197B6E /* Shader.fsh in Resources */,
 				A528A26C2037FA410062D60A /* LaunchScreen.storyboard in Resources */,
+				8386CB842062FB5900227AA0 /* HighScores.storyboard in Resources */,
 				A528A2692037FA410062D60A /* Assets.xcassets in Resources */,
 				C168DE6B204275690055988B /* GameScreen.storyboard in Resources */,
 				A528A2672037FA410062D60A /* Main.storyboard in Resources */,
@@ -352,6 +361,7 @@
 				1B5736AA2042D0D000F8B398 /* Generator.m in Sources */,
 				A54DDB4D2046494A00197B6E /* Player.m in Sources */,
 				C168DE6D20427C950055988B /* Game.mm in Sources */,
+				8386CB8A2063005600227AA0 /* HighScore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
