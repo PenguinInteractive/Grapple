@@ -6,19 +6,18 @@
 //  Copyright © 2018 Penguin Interactive. All rights reserved.
 //
 
-#include <stdio.h>
 #import "Game.h"
-#import "Renderer.h"
-#import "Player.h"
-#import "HighScore.h"
 #include <chrono>
+
+//USE THIS IF YOU WANT COLLISION STUFF
+//#include <Box2D/Box2D.h>
 
 @interface Game() {
     std::chrono::time_point<std::chrono::steady_clock> lastTime;
     Renderer* render;
     Generator *generate;
-    Player* player;
     HighScore* hs;
+    
     float timeElapsed;
 }
 
@@ -33,11 +32,7 @@
     
     [render update];
     
-    
-    [player movePlayer:timeElapsed];
-    [player fireTongue:_tapX yPos:_tapY];
-    [player grapple];
-    [generate Generate:timeElapsed];
+    [generate Generate:timeElapsed tX:_tapX tY:_tapY];
 }
 
 - (void) pause {
@@ -83,9 +78,9 @@
     
     generate = [[Generator alloc] init];
     [generate setup:renderer];
-    player = [[Player alloc] init];
-    [player setup:renderer];
+    
     _mult=1;
+    
     render = renderer;
 }
 @end

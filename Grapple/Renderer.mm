@@ -33,7 +33,7 @@ float backClip = 20.0f;
     GLESRenderer gles;
     
     //Product of the model, view, and projection matrices
-    GLKMatrix4 mvp;
+    GLKMatrix4 vp;
     GLKMatrix3 normalMatrix;
     
     float *vertices, *normals, *texCoords;
@@ -74,26 +74,27 @@ float backClip = 20.0f;
     //Enables the depth test
     glEnable(GL_DEPTH_TEST);
     
-    numIndices = gles.GenCube(1.0f, &vertices, &normals, &texCoords, &indices);
+    //Perspective Transformations
+    vp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -cameraDistance);
+    normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(vp), NULL);
 }
 
 - (void)update
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    //Perspective Transformations
-    mvp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -cameraDistance);
-    normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(mvp), NULL);
-    
     //Get the apect ratio of the window
     float aspect = (float)myView.drawableWidth / (float)myView.drawableHeight;
     GLKMatrix4 perspective = GLKMatrix4MakePerspective(fov * M_PI /180.0f, aspect, frontClip, backClip);
     
-    mvp = GLKMatrix4Multiply(perspective, mvp);
+    vp = GLKMatrix4Multiply(perspective, vp);
 }
 
-- (void)render:(NSString*)objPath xPos:(float)x yPos:(float)y
+- (void)render:(Model*)m
 {
+    //Multiply model matrix with view perspective matrix
+    GLKMatrix4 mvp = GLKMatrix4Multiply(vp, m.mMatrix);
+    
     //Updates the uniform values based on the matrices
     glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
     glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
@@ -111,7 +112,7 @@ float backClip = 20.0f;
     int numIndices;
     
     //Get the info from the obj file
-    numIndices = [self readObj:objPath vert:&vertices tex:&texCoords norm:&normals ind:&indices];
+    numIndices = [self readModel:m vert:&vertices tex:&texCoords norm:&normals ind:&indices];
     
     //Attribute 0: Vertices
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), vertices);
@@ -123,190 +124,14 @@ float backClip = 20.0f;
     //Attribute 2: Normals
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), normals);
     glEnableVertexAttribArray(2); //Enable array
-    
-    //Duplicate line? Is this necessary?
-    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
     
     //Draw the indices and fill the triangles between them
     glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, indices);
 }
 
-- (int)readObj:(NSString*)objPath vert:(float**)vertices tex:(float**)texCoords norm:(float**)normals ind:(int**)indices
+- (int)readModel:(Model*)m vert:(float**)vertices tex:(float**)texCoords norm:(float**)normals ind:(int**)indices
 {
-    //Puts the data from the OBJ file into a string
-    NSString* content = [NSString stringWithContentsOfFile:objPath encoding:NSUTF8StringEncoding error:NULL];
-    
-    //Separates the file into lines
-    NSArray* lines = [content componentsSeparatedByString:@"\n"];
-    NSMutableArray* tokens = [NSMutableArray arrayWithCapacity:[lines count]];
-    
-    //Separates the lines into tokens
-    for(int i = 0; i < [lines count]; i++)
-    {
-        tokens[i] = [lines[i] componentsSeparatedByString:@" "];
-    }
-    
-    //Skip lines 0-2
-    //i = 3
-    //while (token[0] is v)
-    //read tokens 1-3 into vertices array
-    //i++
-    
-    //while (token[0] is vt)
-    //read tokens 1-3 into texCoords array
-    //i++
-    
-    //while (token[0] is vn)
-    //read tokens 1-3 into normals array
-    //i++
-    
-    //read in the other lines (I don't remember what they do)
-    //i++ for each one
-    
-    //while (token[0] is f)
-    //read tokens 1-3 into indices array
-    //i++
-    
-    //something else needs to be done with the indices
-    //figure that out later
-    
-    return 1; //return numIndices
-}
-
-//YOU NEED TO MAKE A MODEL MATRIX AND PUT THE X AND Y IN IT, THEN MULTIPLY IT WITH THE MVP
-
-- (void)renderCube:(float)x yPos:(float)y
-{
-    NSLog([NSString stringWithFormat:@"x=%1.2f y=%1.2f", x, y]);
-    
-    //Updates the uniform values based on the matrices
-    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
-    glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, normalMatrix.m);
-    glUniform1i(uniforms[UNIFORM_PASSTHROUGH], false);
-    glUniform1i(uniforms[UNIFORM_SHADEINFRAG], true);
-    
-    //Sets the boundaries of the viewport
-    glViewport(0, 0, (int)myView.drawableWidth, (int)myView.drawableHeight);
-    
-    //Gives OpenGL the program object
-    glUseProgram(programObject);
-    
-    /*float vertices[] =
-    {
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        0.5f, -0.5f,  0.5f,
-        0.5f, -0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        -0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f, -0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f,  0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f, 0.5f,
-        -0.5f,  0.5f, 0.5f,
-        0.5f,  0.5f, 0.5f,
-        0.5f, -0.5f, 0.5f,
-        -0.5f, -0.5f, -0.5f,
-        -0.5f, -0.5f,  0.5f,
-        -0.5f,  0.5f,  0.5f,
-        -0.5f,  0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f, -0.5f,
-    };
-    
-    float normals[] =
-    {
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
-        0.0f, -1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, -1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f,
-        -1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-    };
-    
-    float texCoords[] =
-    {
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
-        1.0f, 0.0f,
-        1.0f, 1.0f,
-        0.0f, 1.0f,
-        0.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 1.0f,
-        1.0f, 1.0f,
-        1.0f, 0.0f,
-    };
-    
-    GLuint indices[] =
-    {
-        0, 2, 1,
-        0, 3, 2,
-        4, 5, 6,
-        4, 6, 7,
-        8, 9, 10,
-        8, 10, 11,
-        12, 15, 14,
-        12, 14, 13,
-        16, 17, 18,
-        16, 18, 19,
-        20, 23, 22,
-        20, 22, 21
-    };*/
-    
-    //Attribute 0: Vertices
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), vertices);
-    glEnableVertexAttribArray(0); //Enable array
-    
-    //Attribute 1: Colour?
-    glVertexAttrib4f(1, 1.0f, 0.0f, 0.0f, 1.0f);
-    
-    //Attribute 2: Normals
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), normals);
-    glEnableVertexAttribArray(2); //Enable array
-    
-    //Duplicate line? Is this necessary?
-    glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
-    
-    //Draw the indices and fill the triangles between them
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, indices);
+    return 1;
 }
 
 - (bool)setupShaders
@@ -326,7 +151,5 @@ float backClip = 20.0f;
     
     return true;
 }
-
-
 
 @end

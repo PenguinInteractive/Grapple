@@ -10,6 +10,7 @@
 #define Game_h
 #import <GLKit/GLKit.h>
 #import "Generator.h"
+#include <stdio.h>
 #import "Renderer.h"
 #import "HighScore.h"
 

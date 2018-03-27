@@ -11,14 +11,13 @@
 #import "Renderer.h"
 #import <GLKit/GLKit.h>
 
-
-
-
-@interface Generator(){
-    
+@interface Generator()
+{
+    Player* player;
     Renderer *render;
-    NSMutableArray *platformsX;
-    NSMutableArray *platformsY;
+    
+    NSMutableArray* platforms;
+    NSMutableArray* grapples;
 }
 @end
 
@@ -29,38 +28,61 @@
 - (void)setup:(Renderer*)renderer
 {
     render = renderer;
+    player = [[Player alloc] init];
+    [player setup:renderer];
     
-    platformsX = [[NSMutableArray alloc] initWithCapacity:2];
-    platformsY = [[NSMutableArray alloc] initWithCapacity:2];
+    platforms = [[NSMutableArray alloc] initWithCapacity:2];
+    grapples = [[NSMutableArray alloc] initWithCapacity:2];
     
-    //I'm just going to hardcode this for now
-    [platformsX addObject:[[NSNumber alloc] initWithFloat:0]];
-    [platformsY addObject:[[NSNumber alloc] initWithFloat:0]];
-    [platformsX addObject:[[NSNumber alloc] initWithFloat:0]];
-    [platformsY addObject:[[NSNumber alloc] initWithFloat:0.1f]];
+    /*
+    //Generate a cube with the genCube function in Model once that works
+    [platforms addObject:firstPlatform];
+    [platforms addObject:secondPlatform];
+    [grapples addObject:firstGrapple];
+    [grapples addObject:secondGrapple];
+    */
 }
 
--(void) Generate:(float)deltaTime{
+-(void) Generate:(float)deltaTime tX:(float)tapX tY:(float)tapY
+{
+    [player movePlayer:deltaTime];
+    [player fireTongue:tapX yPos:tapY];
+    [player grapple];
     
     //determine if platforms should be spawned
         //if you need a new platform call SpawnPlatform or something
     
     //[self movePlatforms:deltaTime];
     
+    /*
     for(int i = 0; i < [platformsX count]; i++)
     {
         
         [render renderCube:[platformsX[i] floatValue] yPos:[platformsY[i] floatValue]];
     }
+    */
 }
 
 
 -(void) movePlatforms:(float)deltaTime
 {
-    for(int i = 0; i < [platformsX count]; i++)
+    float moveAmount = deltaTime * 0.0001;
+    
+    for(int i = 0; i < [platforms count]; i++)
     {
-        platformsX[i] = [[NSNumber alloc] initWithFloat:[platformsX[i] floatValue]+(0.1f*deltaTime)];
+        //platforms[i].mMatrix = [GLKMatrix4Translate(platforms[i].mMatrix, moveAmount, 0, 0)]; IDK HOW TO USE NSARRAYS
     }
+    
+    //render all the platforms and grapples
+    /*
+    for(all)
+        [renderer render:platform[i]];
+    
+    for(all)
+        [renderer render:grapple[i]];
+    */
+    
+    [player movePlayer:deltaTime];
 }
 
 - (void)spawnPlatform
