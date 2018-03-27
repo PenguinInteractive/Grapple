@@ -10,7 +10,7 @@
 
 @implementation Model
 
-@synthesize vertices, normals, texCoords, indices, numIndices, mMatrix;
+@synthesize vertices, normals, texCoords, indices, numIndices, position, mMatrix;
 
 + (Model*)copyObj:(Model*)base
 {
@@ -21,7 +21,7 @@
 + (Model*)readObj:(NSString*)path
 {
     /*
-     //NOTE: THE CODE FOR FILL LINES/TOKENS ARRAYS IS NOT YET COMPATIBLE WITH THE CODE FILL OTHER ARRAYS
+    //NOTE: THE CODE FOR FILL LINES/TOKENS ARRAYS IS NOT YET COMPATIBLE WITH THE CODE FILL OTHER ARRAYS
     //Puts the data from the OBJ file into a string
     NSString* content = [NSString stringWithContentsOfFile:objPath encoding:NSUTF8StringEncoding error:NULL];
     
@@ -64,6 +64,15 @@
     */
     
     return [[Model alloc] init];
+}
+
+- (void)translate:(float)x y:(float)y z:(float)z
+{
+    position.x += x;
+    position.y += y;
+    position.z += z;
+    
+    mMatrix = GLKMatrix4Translate(mMatrix, x, y, z);
 }
 
 @end

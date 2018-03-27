@@ -19,13 +19,14 @@
 @property float* texCoords;
 @property int* indices;
 @property int numIndices;
+@property GLKVector3 position;
 @property GLKMatrix4 mMatrix;
 
 + (Model*)copyObj:(Model*)base;
 
 + (Model*)readObj:(NSString*)path;
 
-//later add a way to store different textures being mapped to different faces
+- (void)translate:(float)x y:(float)y z:(float)z;
 
 @end
 

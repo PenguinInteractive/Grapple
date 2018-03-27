@@ -46,7 +46,7 @@
     
     [render update];
     
-    [generate Generate:timeElapsed tX:_tapX tY:_tapY];
+    [generate Generate:timeElapsed];
 }
 
 - (void) pause
