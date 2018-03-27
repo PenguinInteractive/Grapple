@@ -36,7 +36,7 @@
 - (void)movePlayer:(float)deltaTime
 {
     float screenShift = -0.001f * deltaTime;
-    NSLog(@"Time: %f", deltaTime);
+    //NSLog(@"Time: %f", deltaTime);
     
     //Shift everything to the left
     [player setMMatrix:GLKMatrix4Translate(player.mMatrix, -screenShift, 0, 0)];
