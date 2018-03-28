@@ -11,6 +11,8 @@
 #import "Renderer.h"
 #import <GLKit/GLKit.h>
 
+float screenSpeed = -0.001f;
+
 @interface Generator()
 {
     Player* player;
@@ -36,97 +38,92 @@
     
     //Generate a cube with the genCube function in Model once that works
     Model* model = [renderer genCube];
+    
+    //Platforms
     [model translate:1.0 y:1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
     [platforms addObject:model];
     
     model = [renderer genCube];
+    [model setColour:GLKVector3Make(160,120,40)];
     [model translate:10 y:-1.5 z:0];
     [platforms addObject:model];
 
     model = [renderer genCube];
     [model translate:1.25 y:-1 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
     [platforms addObject:model];
     
     model = [renderer genCube];
     [model translate:4 y:-1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
     [platforms addObject:model];
     
     model = [renderer genCube];
     [model translate:7 y:-3 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
     [platforms addObject:model];
     
-    ///
+    //Grapples
     
     model = [renderer genCube];
     [model translate:0.5 y:1.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
 
     model = [renderer genCube];
     [model translate:1.5 y:-2.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
     
     model = [renderer genCube];
     [model translate:1.5 y:1.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
     
 }
 
 -(void) Generate:(float)deltaTime
 {
-    [player movePlayer:deltaTime];
+    [player movePlayer:deltaTime scrnSpd:screenSpeed];
     [self movePlatforms:deltaTime];
+    
     //determine if platforms should be spawned
         //if you need a new platform call SpawnPlatform or something
     
-    //[self movePlatforms:deltaTime];
-    
-    
    for(int i = 0; i < platforms.count; i++)
     {
-        
         [render render:platforms[i]];
     }
-    for(int j = 0; j <grapples.count; j++){
+    for(int j = 0; j <grapples.count; j++)
+    {
         [render render:grapples[j]];
     }
-    
-/*    for(int i = 0; i < grapples.count; i++)
-    {
-       Model *d;
-        d = grapples[i];
-        [render render:d];
-        
-        [d setPosition:GLKVector3Make(5, 5, 5)];
-        
-        [render render:grapples[i]];
-        NSLog(@"Grapple #%d",i);
-    }*/
 }
 
 
 -(void) movePlatforms:(float)deltaTime
 {
-    float moveAmount = deltaTime * -0.001;
+    float screenShift = deltaTime * screenSpeed;
     
     for(int i = 0; i < [platforms count]; i++)
     {
-        //platforms[i].mMatrix = [GLKMatrix4Translate(platforms[i].mMatrix, moveAmount, 0, 0)]; IDK HOW TO USE NSARRAYS
-//        [GLKMatrix4Translate(d.mMatrix, moveAmount, 0, 0)];
-         [platforms[i] translate:moveAmount y:0 z:0];
+         [platforms[i] translate:screenShift y:0 z:0];
     }
     for(int j = 0; j < grapples.count; j++)
     {
-        [grapples[j] translate:moveAmount y:0 z:0];
+        [grapples[j] translate:screenShift y:0 z:0];
     }
+}
+
+- (void)fireTongue:(float)x yPos:(float)y
+{
+    [player fireTongue:x yPos:y];
+}
+
+- (void)letGo
+{
     
-    //render all the platforms and grapples
-    /*
-    for(all)
-        [renderer render:platform[i]];
-    
-    for(all)
-        [renderer render:grapple[i]];
-    */
 }
 
 - (void)spawnPlatform

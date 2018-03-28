@@ -22,17 +22,19 @@
 @property float tapX;
 @property float tapY;
 
-- (void) update;
-- (void) pause;
+- (void)update;
+- (void)pause;
 
--(void) startGame:(Renderer*)render;
+- (void)startGame:(Renderer*)render;
 
--(void) setTimeelapsed : (float) te;
--(float) timeElapsed;
+- (void)setTimeelapsed : (float) te;
+- (float)timeElapsed;
 
--(void) increaseScore;
--(void) grappleSpawn;
--(void) collectGrapple;
+- (void)increaseScore;
+- (void)grappleSpawn;
+- (void)collectGrapple;
+- (void)fireTongue:(float)x yPos:(float)y;
+- (void)letGo;
 
 @end
 #endif /* Game_h */
