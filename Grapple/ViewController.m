@@ -12,7 +12,6 @@
 @interface ViewController (){
     Game *gm;
     Renderer* glesRenderer;
-    bool press;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *Score;
@@ -68,23 +67,13 @@
 {
     NSLog(@"Tap");
     
-    if(press)
+    NSLog(@"PRESS BEGAN");
+    if(![gm isPaused])
     {
-        NSLog(@"PRESS ENDED");
-        if(![gm isPaused])
-            [gm letGo];
+        CGPoint point = [sender locationInView:self.view];
+        NSLog(@"Tap X = %f Y = %f", point.x, point.y);
+        [gm fireTongue:point.x yPos:point.y];
     }
-    else
-    {
-        NSLog(@"PRESS BEGAN");
-        if(![gm isPaused])
-        {
-            CGPoint point = [sender locationInView:self.view];
-            NSLog(@"Tap X = %f Y = %f", point.x, point.y);
-            [gm fireTongue:point.x yPos:point.y];
-        }
-    }
-    press = !press;
 }
 
 - (IBAction)CG:(id)sender {

@@ -121,11 +121,6 @@ float screenSpeed = -0.001f;
     [player fireTongue:x yPos:y];
 }
 
-- (void)letGo
-{
-    
-}
-
 - (void)spawnPlatform
 {
     //SpawnPlatform will pick a random y value then add a new vector2 with the xposition equal to the right side of the screen and yposition equal to the random y
