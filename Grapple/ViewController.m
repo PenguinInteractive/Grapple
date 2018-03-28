@@ -12,6 +12,7 @@
 @interface ViewController (){
     Game *gm;
     Renderer* glesRenderer;
+    bool press;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *Score;
@@ -44,11 +45,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)Pause:(id)sender {
-    
+- (IBAction)Pause:(id)sender
+{
     [gm pause];
     [_PauseMenu setHidden:![_PauseMenu isHidden]];
-    
 }
 
 
@@ -63,15 +63,28 @@
     }
     
 }
-- (IBAction)OnTap:(id)sender {
-    NSLog(@"F");
-    if(![gm isPaused]){
-        
-        CGPoint point = [sender locationInView:self.view];
-        NSLog(@"Tap X = %f Y = %f", point.x, point.y);
-        [gm setTapX:point.x];
-        [gm setTapY:point.y];
+
+- (IBAction)tap:(UITapGestureRecognizer *)sender
+{
+    NSLog(@"Tap");
+    
+    if(press)
+    {
+        NSLog(@"PRESS ENDED");
+        if(![gm isPaused])
+            [gm letGo];
     }
+    else
+    {
+        NSLog(@"PRESS BEGAN");
+        if(![gm isPaused])
+        {
+            CGPoint point = [sender locationInView:self.view];
+            NSLog(@"Tap X = %f Y = %f", point.x, point.y);
+            [gm fireTongue:point.x yPos:point.y];
+        }
+    }
+    press = !press;
 }
 
 - (IBAction)CG:(id)sender {
