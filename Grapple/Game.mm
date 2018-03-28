@@ -54,11 +54,6 @@
     [generate fireTongue:x yPos:y];
 }
 
-- (void)letGo
-{
-    
-}
-
 - (void)pause
 {
     if(_isPaused)

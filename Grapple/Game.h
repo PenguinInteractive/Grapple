@@ -34,7 +34,6 @@
 - (void)grappleSpawn;
 - (void)collectGrapple;
 - (void)fireTongue:(float)x yPos:(float)y;
-- (void)letGo;
 
 @end
 #endif /* Game_h */

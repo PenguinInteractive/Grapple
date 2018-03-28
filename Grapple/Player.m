@@ -16,8 +16,8 @@ enum
     NUM_STATES
 };
 
-float moveSpeed = 0.005;
-float drag = 0.00002;
+float moveSpeed = 0.008;
+float drag = 0.00001;
 
 @interface Player()
 {
@@ -145,17 +145,6 @@ float drag = 0.00002;
 
 - (void)fireTongue:(float)x yPos:(float)y
 {
-    target.x = x/700*14-7;
-    target.y = -(y/400*14-5);
-    
-    playerState = STATE_FIRING;
-    NSLog(@"FIRING");
-    
-    NSLog(@"Target: x=%1.2f y=%1.2f", target.x, target.y);
-}
-
-- (void)letGo
-{
     if(playerState == STATE_FIRING)
     {
         playerState = STATE_FREEFALL;
@@ -171,6 +160,16 @@ float drag = 0.00002;
         //Retract tongue
         [tongue setMMatrix:player.mMatrix];
         [tongue setPosition:player.position];
+    }
+    else
+    {
+        target.x = x/700*14-7;
+        target.y = -(y/400*14-5);
+        
+        playerState = STATE_FIRING;
+        NSLog(@"FIRING");
+        
+        NSLog(@"Target: x=%1.2f y=%1.2f", target.x, target.y);
     }
 }
 

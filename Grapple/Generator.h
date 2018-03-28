@@ -17,7 +17,6 @@
 - (void)setup:(Renderer*)renderer;
 - (void)Generate:(float)deltaTime;
 - (void)fireTongue:(float)x yPos:(float)y;
-- (void)letGo;
 
 @end
 

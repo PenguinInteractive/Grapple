@@ -18,7 +18,6 @@
 - (void)setup:(Renderer*)render;
 - (void)movePlayer:(float)deltaTime scrnSpd:(float)screenSpeed;
 - (void)fireTongue:(float)x yPos:(float)y;
-- (void)letGo;
 
 @end
 
