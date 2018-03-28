@@ -41,36 +41,44 @@ float screenSpeed = -0.001f;
     
     //Platforms
     [model translate:1.0 y:1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
     [platforms addObject:model];
     
     model = [renderer genCube];
+    [model setColour:GLKVector3Make(160,120,40)];
     [model translate:10 y:-1.5 z:0];
     [platforms addObject:model];
 
     model = [renderer genCube];
     [model translate:1.25 y:-1 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
     [platforms addObject:model];
     
     model = [renderer genCube];
     [model translate:4 y:-1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
     [platforms addObject:model];
     
     model = [renderer genCube];
     [model translate:7 y:-3 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
     [platforms addObject:model];
     
     //Grapples
     
     model = [renderer genCube];
     [model translate:0.5 y:1.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
 
     model = [renderer genCube];
     [model translate:1.5 y:-2.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
     
     model = [renderer genCube];
     [model translate:1.5 y:1.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
     
 }

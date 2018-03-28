@@ -20,6 +20,7 @@
 @property int* indices;
 @property int numIndices;
 @property GLKVector3 position;
+@property GLKVector3 colour;
 @property GLKMatrix4 mMatrix;
 
 + (Model*)copyObj:(Model*)base;

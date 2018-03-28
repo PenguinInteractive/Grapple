@@ -10,7 +10,7 @@
 
 @implementation Model
 
-@synthesize vertices, normals, texCoords, indices, numIndices, position, mMatrix;
+@synthesize vertices, normals, texCoords, indices, numIndices, position, colour, mMatrix;
 
 + (Model*)copyObj:(Model*)base
 {
