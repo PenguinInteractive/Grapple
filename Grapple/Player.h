@@ -11,13 +11,13 @@
 
 #import <GLKit/GLKit.h>
 #import "Renderer.h"
+#import "Model.h"
 
 @interface Player : NSObject
 
 - (void)setup:(Renderer*)render;
-- (void)movePlayer:(float)deltaTime;
+- (void)movePlayer:(float)deltaTime scrnSpd:(float)screenSpeed;
 - (void)fireTongue:(float)x yPos:(float)y;
-- (void)grapple;
 
 @end
 
