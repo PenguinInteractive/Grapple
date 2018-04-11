@@ -33,17 +33,10 @@ float drag = 0.00001;
 
 @implementation Player
 
-- (void)setup:(Renderer*)render
+- (void)setup:(Model*)p tongue:(Model*)t;
 {
-    renderer = render;
-    
-    player = [renderer genCube];
-    tongue = [renderer genCube];
-    
-    [player translate:0.4 y:0 z:0];
-    [player setColour:GLKVector3Make(20,170,230)];
-    [tongue translate:0.35 y:-0.2 z:0];
-    [tongue setColour:GLKVector3Make(255,180,255)];
+    player = p;
+    tongue = t;
     
     target = GLKVector3Make(0, 0, 0);
     curDir = GLKVector3Make(0, 0, 0);
@@ -135,12 +128,6 @@ float drag = 0.00001;
         [tongue setMMatrix:player.mMatrix];
         [tongue setPosition:player.position];
     }
-    
-    //NSLog(@"Velocity: x=%1.2f y=%1.2f" , velocity.x, velocity.y);
-    //NSLog(@"Player: x=%1.2f y=%1.2f", player.position.x, player.position.y);
-    
-    [renderer render:player];
-    [renderer render:tongue];
 }
 
 - (void)fireTongue:(float)x yPos:(float)y

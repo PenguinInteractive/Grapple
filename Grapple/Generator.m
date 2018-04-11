@@ -17,9 +17,13 @@ float screenSpeed = -0.001f;
 {
     Player* player;
     Renderer *render;
+    Collisions* collide;
+    Model* testCollisions;
     
     NSMutableArray* platforms;
     NSMutableArray* grapples;
+    Model* playerModel;
+    Model* tongue;
 }
 @end
 
@@ -27,11 +31,27 @@ float screenSpeed = -0.001f;
 @implementation Generator
 
 //Setup platforms with a reasonable capacity later
+//EACH MODEL NEEDS TO HAVE ITS POSITION AND HITBOX FED INTO THE COLLISIONS CLASS THEN YOU NEED TO SAVE THE BODY IN THE MODEL
 - (void)setup:(Renderer*)renderer
 {
     render = renderer;
     player = [[Player alloc] init];
-    [player setup:renderer];
+    
+    playerModel = [render genCube];
+    tongue = [render genCube];
+    
+    [playerModel translate:0.4 y:0 z:0];
+    [playerModel setColour:GLKVector3Make(20,170,230)];
+    [tongue translate:0.35 y:-0.2 z:0];
+    [tongue setColour:GLKVector3Make(255,180,255)];
+    
+    [player setup:playerModel tongue:tongue];
+    
+    //collide = [[Collisions alloc] init];
+    //[collide initWorld];
+    //testCollisions = [renderer genCube];
+    //[testCollisions setColour:GLKVector3Make(255, 100, 180)];
+    //[collide addBody:0.0f y:0.0f];
     
     platforms = [[NSMutableArray alloc] initWithCapacity:5];
     grapples = [[NSMutableArray alloc] initWithCapacity:3];
@@ -50,7 +70,7 @@ float screenSpeed = -0.001f;
     [platforms addObject:model];
 
     model = [renderer genCube];
-    [model translate:1.25 y:-1 z:0];
+    [model translate:6 y:1 z:0];
     [model setColour:GLKVector3Make(160,120,40)];
     [platforms addObject:model];
     
@@ -67,17 +87,17 @@ float screenSpeed = -0.001f;
     //Grapples
     
     model = [renderer genCube];
-    [model translate:0.5 y:1.5 z:0];
+    [model translate:0 y:1.5 z:0];
     [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
 
     model = [renderer genCube];
-    [model translate:1.5 y:-2.5 z:0];
+    [model translate:8 y:1.2 z:0];
     [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
     
     model = [renderer genCube];
-    [model translate:1.5 y:1.5 z:0];
+    [model translate:2 y:1.5 z:0];
     [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
     
@@ -88,6 +108,10 @@ float screenSpeed = -0.001f;
     [player movePlayer:deltaTime scrnSpd:screenSpeed];
     [self movePlatforms:deltaTime];
     
+    //GLKVector2 move = GLKVector2DivideScalar([collide getBodyMove], 100);
+    //GLKMatrix4 moveM = GLKMatrix4Translate(GLKMatrix4Identity, move.x, 0, move.y);
+    //[testCollisions setPosition:GLKMatrix4Multiply(moveM, testCollisions.position)];
+    
     //determine if platforms should be spawned
         //if you need a new platform call SpawnPlatform or something
     
@@ -95,10 +119,13 @@ float screenSpeed = -0.001f;
     {
         [render render:platforms[i]];
     }
-    for(int j = 0; j <grapples.count; j++)
+    for(int j = 0; j < grapples.count; j++)
     {
         [render render:grapples[j]];
     }
+    
+    [render render:playerModel];
+    [render render:tongue];
 }
 
 

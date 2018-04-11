@@ -26,7 +26,8 @@
 		C168DE6B204275690055988B /* GameScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C168DE6A204275690055988B /* GameScreen.storyboard */; };
 		C168DE6D20427C950055988B /* Game.mm in Sources */ = {isa = PBXBuildFile; fileRef = C168DE6C20427C950055988B /* Game.mm */; };
 		DB0CAE302062EC9600852765 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0CAE2F2062EC9600852765 /* libBox2D.a */; };
-		DB644F972069C2EC00EC0541 /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = DB644F962069C2EC00EC0541 /* Model.m */; };
+		DB644F972069C2EC00EC0541 /* Model.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB644F962069C2EC00EC0541 /* Model.mm */; };
+		DB80194D207694CE0076E4E7 /* Collisions.mm in Sources */ = {isa = PBXBuildFile; fileRef = DB80194C207694CE0076E4E7 /* Collisions.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,8 +81,10 @@
 		C168DE6C20427C950055988B /* Game.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Game.mm; sourceTree = "<group>"; };
 		C168DE6E20427CA20055988B /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		DB0CAE2F2062EC9600852765 /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBox2D.a; path = Libraries/lib/libBox2D.a; sourceTree = "<group>"; };
-		DB644F962069C2EC00EC0541 /* Model.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
+		DB644F962069C2EC00EC0541 /* Model.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Model.mm; sourceTree = "<group>"; };
 		DB644F982069C38900EC0541 /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		DB80194C207694CE0076E4E7 /* Collisions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Collisions.mm; sourceTree = "<group>"; };
+		DB80194F207694F50076E4E7 /* Collisions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Collisions.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,9 +162,11 @@
 				1B5736A92042D0D000F8B398 /* Generator.m */,
 				A54DDB4C2046494A00197B6E /* Player.m */,
 				A54DDB4E204649DF00197B6E /* Player.h */,
-				DB644F962069C2EC00EC0541 /* Model.m */,
+				DB644F962069C2EC00EC0541 /* Model.mm */,
 				DB644F982069C38900EC0541 /* Model.h */,
 				8386CB832062FB5900227AA0 /* HighScores.storyboard */,
+				DB80194C207694CE0076E4E7 /* Collisions.mm */,
+				DB80194F207694F50076E4E7 /* Collisions.h */,
 			);
 			path = Grapple;
 			sourceTree = "<group>";
@@ -355,7 +360,8 @@
 				A591326A204365B700C18577 /* Renderer.mm in Sources */,
 				A528A2642037FA410062D60A /* ViewController.m in Sources */,
 				A528A26F2037FA410062D60A /* main.m in Sources */,
-				DB644F972069C2EC00EC0541 /* Model.m in Sources */,
+				DB80194D207694CE0076E4E7 /* Collisions.mm in Sources */,
+				DB644F972069C2EC00EC0541 /* Model.mm in Sources */,
 				A54DDB552046B1BC00197B6E /* GLESRenderer.cpp in Sources */,
 				A528A2612037FA410062D60A /* AppDelegate.m in Sources */,
 				1B5736AA2042D0D000F8B398 /* Generator.m in Sources */,

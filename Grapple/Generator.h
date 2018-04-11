@@ -11,6 +11,7 @@
 #import "Renderer.h"
 #import "Player.h"
 #import "Model.h"
+#import "Collisions.h"
 
 @interface Generator : NSObject
 
