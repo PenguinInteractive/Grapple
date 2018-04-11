@@ -8,10 +8,22 @@
 
 #import "Player.h"
 
+enum
+{
+    STATE_FREEFALL,
+    STATE_FIRING,
+    STATE_GRAPPLING,
+    NUM_STATES
+};
+
+float moveSpeed = 0.008;
+float drag = 0.00001;
+
 @interface Player()
 {
-    GLKVector3 target, curDir, momentum;
+    GLKVector3 target, curDir, velocity, gravity;
     Renderer* renderer;
+    int playerState;
     
     Model* player;
     Model* tongue;
@@ -21,95 +33,130 @@
 
 @implementation Player
 
-- (void)setup:(Renderer*)render
+- (void)setup:(Model*)p tongue:(Model*)t;
 {
-    renderer = render;
-    
-    player = [renderer genCube];
-    tongue = [renderer genCube];
-    
-    [player translate:0.4 y:0 z:0];
-    [tongue translate:0.35 y:-0.2 z:0];
+    player = p;
+    tongue = t;
     
     target = GLKVector3Make(0, 0, 0);
     curDir = GLKVector3Make(0, 0, 0);
-    momentum = GLKVector3Make(0, 0, 0);
+    velocity = GLKVector3Make(0, 0, 0);
+    gravity = GLKVector3Make(0, -0.001, 0);
 }
 
-- (void)movePlayer:(float)deltaTime
+- (void)movePlayer:(float)deltaTime scrnSpd:(float)screenSpeed
 {
-    float screenShift = -0.001f * deltaTime;
-    NSLog(@"Screenshift: %f", screenShift);
+    float screenShift = screenSpeed * deltaTime;
+    //NSLog(@"Screenshift: %f", screenShift);
     
     //Shift everything to the left
     [player translate:screenShift y:0 z:0];
-    NSLog(@"player: %f, %f, %f", player.position.x, player.position.y, player.position.z);
+    //NSLog(@"player: %f, %f, %f", player.position.x, player.position.y, player.position.z);
     [tongue translate:screenShift y:0 z:0];
-    NSLog(@"tongue: %f, %f, %f", tongue.position.x, tongue.position.y, tongue.position.z);
+    //NSLog(@"tongue: %f, %f, %f", tongue.position.x, tongue.position.y, tongue.position.z);
     target.x += screenShift;
     
-    if(tongue.position.x != target.x || tongue.position.y != target.y){
-        NSLog(@"A");
-        if(tongue.position.x - target.x <= 0.1f && tongue.position.x - target.x >= -0.1f){
+    if(playerState == STATE_FIRING)
+    {
+        //Once collision is implemented, set target to collision point and swap to grappling
+        
+        //If the tongue is close enough to the target just set them to be the same
+        if(tongue.position.x - target.x <= 0.1f && tongue.position.x - target.x >= -0.1f)
             [tongue translate:target.x-tongue.position.x y:0 z:0];
-        }
-        if(tongue.position.y - target.y <= 0.1f && tongue.position.y - target.y >= -0.1f){
+        if(tongue.position.y - target.y <= 0.1f && tongue.position.y - target.y >= -0.1f)
             [tongue translate:0 y:target.y-tongue.position.y z:0];
+        
+        //If the tongue reached the target successfully
+        if(GLKVector3Distance(tongue.position, target) <= 0.1f)
+        {
+            playerState = STATE_GRAPPLING;
+            NSLog(@"GRAPPLING");
+        }
+        else
+        {
+            //Move tongue towards target
+            //Find unit vector of tongue to target and multiply by speed
+            GLKVector3 direction = GLKVector3Normalize(GLKVector3Subtract(target, tongue.position));
+            direction = GLKVector3MultiplyScalar(direction, deltaTime*moveSpeed);
+            
+            [tongue translate:direction.x y:direction.y z:direction.z];
+            //NSLog(@"Tongue: x=%1.2f y=%1.2f", tongue.position.x, tongue.position.y);
         }
     }
-    else if(player.position.x != target.x || player.position.y != target.y){
-        NSLog(@"B");
+    else if(playerState == STATE_GRAPPLING)
+    {
+        //If the player is close enough to the target just set them to be the same
         if(player.position.x - target.x <= 0.1f && player.position.x - target.x >= -0.1f)
             [player translate:target.x-player.position.x y:0 z:0];
         if(player.position.y - target.y <= 0.1f && player.position.y - target.y >= -0.1f)
             [player translate:0 y:target.y-player.position.y z:0];
-        //find unit vector of player to tongue and multiply by speed
-        GLKVector3 direction = GLKVector3Normalize(GLKVector3Subtract(target, player.position));
-        direction = GLKVector3MultiplyScalar(direction, 0.1f);
         
-        [player translate:direction.x y:direction.y z:direction.z];
-        
-        //set curDir to allow momentum
+        //If the player reached the target successfully
+        if(GLKVector3Distance(player.position, target) <= 0.1f)
+        {
+            playerState = STATE_FREEFALL;
+        }
+        else
+        {
+            //Modify velocity of player based on direction towards target
+            //Find unit vector of player to target and multiply by speed
+            velocity = GLKVector3Normalize(GLKVector3Subtract(target, player.position));
+            velocity = GLKVector3MultiplyScalar(velocity, deltaTime*moveSpeed);
+        }
     }
-    else{
-        NSLog(@"C");
+    else
+    {
+        velocity = GLKVector3Add(velocity, GLKVector3MultiplyScalar(gravity, deltaTime));
+        
+        //Reduce velocity by a drag factor
+        if(velocity.x >= drag*deltaTime)
+            velocity.x -= drag*deltaTime;
+        else if(velocity.x <= -drag*deltaTime)
+            velocity.x += drag*deltaTime;
     }
     
-    [renderer render:player];
-    [renderer render:tongue];
+    [player translate:velocity.x y:velocity.y z:velocity.z];
+    
+    if(player.position.y < -3)
+    {
+        [player translate:0 y:-3-player.position.y z:0];
+        velocity.x = 0;
+    }
+    
+    if(playerState == STATE_FREEFALL)
+    {
+        [tongue setMMatrix:player.mMatrix];
+        [tongue setPosition:player.position];
+    }
 }
 
 - (void)fireTongue:(float)x yPos:(float)y
 {
-    target.x = x;
-    target.y = y;
-    //NSLog([NSString stringWithFormat:@"Target: x=%1.2f y=%1.2f", target.x, target.y]);
-    
-    if(tongue.position.x != target.x){
-        [tongue translate:0.1 y:0 z:0];
+    if(playerState == STATE_FIRING)
+    {
+        playerState = STATE_FREEFALL;
+        NSLog(@"FREEFALL");
+        //Retract tongue
+        [tongue setMMatrix:player.mMatrix];
+        [tongue setPosition:player.position];
     }
-    else{
-        NSLog(@"!!-!!");
+    else if(playerState == STATE_GRAPPLING)
+    {
+        playerState = STATE_FREEFALL;
+        NSLog(@"FREEFALL");
+        //Retract tongue
+        [tongue setMMatrix:player.mMatrix];
+        [tongue setPosition:player.position];
     }
-    if(tongue.position.y != target.y){
-        [tongue translate:0 y:0.1 z:0];
-    }
-    else{
-        NSLog(@"-!!-");
-    }
-
-    //NSLog([NSString stringWithFormat:@"Tounge: x=%1.2f y=%1.2f", tongue.position.x, tongue.position.y]);
-}
-
-- (void)grapple
-{
-    if(target.x == tongue.position.x && target.y == tongue.position.y){
-        if(player.position.x != tongue.position.x){
-            [player translate:0.1 y:0 z:0];
-        }
-        if(player.position.y != tongue.position.y){
-            [player translate:0 y:0.1 z:0];
-        }
+    else
+    {
+        target.x = x/700*14-7;
+        target.y = -(y/400*14-5);
+        
+        playerState = STATE_FIRING;
+        NSLog(@"FIRING");
+        
+        NSLog(@"Target: x=%1.2f y=%1.2f", target.x, target.y);
     }
 }
 

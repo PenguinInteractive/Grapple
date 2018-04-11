@@ -15,10 +15,9 @@
 
 @interface Player : NSObject
 
-- (void)setup:(Renderer*)render;
-- (void)movePlayer:(float)deltaTime;
+- (void)setup:(Model*)p tongue:(Model*)t;
+- (void)movePlayer:(float)deltaTime scrnSpd:(float)screenSpeed;
 - (void)fireTongue:(float)x yPos:(float)y;
-- (void)grapple;
 
 @end
 

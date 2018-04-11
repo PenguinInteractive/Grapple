@@ -44,11 +44,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)Pause:(id)sender {
-    
+- (IBAction)Pause:(id)sender
+{
     [gm pause];
     [_PauseMenu setHidden:![_PauseMenu isHidden]];
-    
 }
 
 
@@ -63,14 +62,17 @@
     }
     
 }
-- (IBAction)OnTap:(id)sender {
-    NSLog(@"F");
-    if(![gm isPaused]){
-        
+
+- (IBAction)tap:(UITapGestureRecognizer *)sender
+{
+    NSLog(@"Tap");
+    
+    NSLog(@"PRESS BEGAN");
+    if(![gm isPaused])
+    {
         CGPoint point = [sender locationInView:self.view];
         NSLog(@"Tap X = %f Y = %f", point.x, point.y);
-        [gm setTapX:point.x];
-        [gm setTapY:point.y];
+        [gm fireTongue:point.x yPos:point.y];
     }
 }
 

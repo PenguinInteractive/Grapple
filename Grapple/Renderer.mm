@@ -68,7 +68,7 @@ float backClip = 20.0f;
     }
     
     //Makes the default background grey
-    glClearColor(0.7f, 0.7f, 0.7f, 1.0f);
+    glClearColor(210.0f/255, 250.0f/255, 250.0f/255, 1.0f);
     
     //Enables the depth test
     glEnable(GL_DEPTH_TEST);
@@ -123,8 +123,8 @@ float backClip = 20.0f;
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), m.vertices);
     glEnableVertexAttribArray(0); //Enable array
     
-    //Attribute 1: Colour (red)
-    glVertexAttrib4f(1, 1.0f, 0.0f, 0.0f, 1.0f);
+    //Attribute 1: Colour
+    glVertexAttrib4f(1, m.colour.x/255, m.colour.y/255, m.colour.z/255, 1.0f);
     
     //Attribute 2: Normals
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), m.normals);
@@ -168,7 +168,7 @@ float backClip = 20.0f;
     [m setIndices:indices];
     [m setMMatrix:GLKMatrix4Identity];
     [m setPosition:GLKVector3Make(0, 0, 0)];
-    
+ //     [m setPosition:GLKVector3Make(1, 2, 3)];
     return m;
 }
 

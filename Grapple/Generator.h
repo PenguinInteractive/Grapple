@@ -11,11 +11,13 @@
 #import "Renderer.h"
 #import "Player.h"
 #import "Model.h"
+#import "Collisions.h"
 
 @interface Generator : NSObject
 
--(void)setup:(Renderer*)renderer;
--(void)Generate:(float)deltaTime;
+- (void)setup:(Renderer*)renderer;
+- (void)Generate:(float)deltaTime;
+- (void)fireTongue:(float)x yPos:(float)y;
 
 @end
 
