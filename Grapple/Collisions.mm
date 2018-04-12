@@ -14,6 +14,9 @@
 {
     b2World* world;
     GLKVector2 bodyMove;
+    
+    NSMutableArray* platforms;
+    NSMutableArray* grapples;
 }
 
 - (void)initWorld

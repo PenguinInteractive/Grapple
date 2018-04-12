@@ -10,6 +10,7 @@
 #import "Generator.h"
 #import "Renderer.h"
 #import <GLKit/GLKit.h>
+#include <Box2D/Box2D.h>
 
 float screenSpeed = -0.001f;
 
@@ -18,7 +19,6 @@ float screenSpeed = -0.001f;
     Player* player;
     Renderer *render;
     Collisions* collide;
-    Model* testCollisions;
     
     NSMutableArray* platforms;
     NSMutableArray* grapples;
@@ -47,11 +47,8 @@ float screenSpeed = -0.001f;
     
     [player setup:playerModel tongue:tongue];
     
-    //collide = [[Collisions alloc] init];
-    //[collide initWorld];
-    //testCollisions = [renderer genCube];
-    //[testCollisions setColour:GLKVector3Make(255, 100, 180)];
-    //[collide addBody:0.0f y:0.0f];
+    collide = [[Collisions alloc] init];
+    [collide initWorld];
     
     platforms = [[NSMutableArray alloc] initWithCapacity:5];
     grapples = [[NSMutableArray alloc] initWithCapacity:3];
@@ -62,6 +59,8 @@ float screenSpeed = -0.001f;
     //Platforms
     [model translate:1.0 y:1.5 z:0];
     [model setColour:GLKVector3Make(160,120,40)];
+    
+    [collide makeBody:1.0 yPos:1.5 width:1.0 height:1.0 type:b2_staticBody];
     [platforms addObject:model];
     
     model = [renderer genCube];
