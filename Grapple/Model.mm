@@ -7,8 +7,12 @@
 //
 
 #import "Model.h"
+#include <Box2D/Box2D.h>
 
 @implementation Model
+{
+    b2Body* body;
+}
 
 @synthesize vertices, normals, texCoords, indices, numIndices, position, colour, mMatrix;
 

@@ -70,7 +70,7 @@
 
 - (void)grappleSpawn{
     /*
-     if gapple is offscrean
+     if gapple is offscreen
      mult=1;
      */
     _mult=1;
