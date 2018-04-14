@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIView *PauseMenu;
 @property (strong, nonatomic) IBOutlet UILabel *Multiplier;
 
+
 @end
 
 @implementation ViewController
@@ -31,7 +32,7 @@
     [glesRenderer setup:view];
     
     gm = [[Game alloc] init];
-    
+
     [_PauseMenu setHidden:true];
     [gm setIsPaused:false];
     
@@ -85,6 +86,7 @@
 - (IBAction)DS:(id)sender {
     [gm grappleSpawn];
 }
+
 
 @end
 
