@@ -12,10 +12,11 @@
 #import <GLKit/GLKit.h>
 #import "Renderer.h"
 #import "Model.h"
+#import "Collisions.h"
 
 @interface Player : NSObject
 
-- (void)setup:(Renderer*)render;
+- (void)setup:(Model*)p tongue:(Model*)t collide:(Collisions*)c;
 - (void)movePlayer:(float)deltaTime scrnSpd:(float)screenSpeed;
 - (void)fireTongue:(float)x yPos:(float)y;
 
