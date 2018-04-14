@@ -23,6 +23,7 @@ float drag = 0.00001;
 {
     GLKVector3 target, curDir, velocity, gravity;
     Renderer* renderer;
+    Collisions* collide;
     int playerState;
     
     Model* player;
@@ -33,10 +34,11 @@ float drag = 0.00001;
 
 @implementation Player
 
-- (void)setup:(Model*)p tongue:(Model*)t;
+- (void)setup:(Model*)p tongue:(Model*)t collide:(Collisions*)c
 {
     player = p;
     tongue = t;
+    collide = c;
     
     target = GLKVector3Make(0, 0, 0);
     curDir = GLKVector3Make(0, 0, 0);
