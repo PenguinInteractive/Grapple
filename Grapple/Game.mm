@@ -16,7 +16,7 @@
     std::chrono::time_point<std::chrono::steady_clock> lastTime;
     Renderer* render;
     Generator *generate;
-    HighScore* hs;
+    HighScores* hs;
     
     float timeElapsed;
 }
@@ -74,7 +74,6 @@
      mult=1;
      */
     _mult=1;
-    [hs addScore:_playerScore];
 }
 
 - (void)collectGrapple{

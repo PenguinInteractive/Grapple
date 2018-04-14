@@ -12,7 +12,7 @@
 #import "Generator.h"
 #include <stdio.h>
 #import "Renderer.h"
-#import "HighScore.h"
+#import "HighScores.h"
 
 @interface Game : NSObject
 

@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1B5736AA2042D0D000F8B398 /* Generator.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B5736A92042D0D000F8B398 /* Generator.m */; };
+		835F08DE20827CA2007D7F75 /* HighScores.m in Sources */ = {isa = PBXBuildFile; fileRef = 835F08DD20827CA2007D7F75 /* HighScores.m */; };
 		8386CB842062FB5900227AA0 /* HighScores.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8386CB832062FB5900227AA0 /* HighScores.storyboard */; };
-		8386CB8A2063005600227AA0 /* HighScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8386CB892063005600227AA0 /* HighScore.m */; };
 		A528A2612037FA410062D60A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2602037FA410062D60A /* AppDelegate.m */; };
 		A528A2642037FA410062D60A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A528A2632037FA410062D60A /* ViewController.m */; };
 		A528A2672037FA410062D60A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A528A2652037FA410062D60A /* Main.storyboard */; };
@@ -49,9 +49,9 @@
 /* Begin PBXFileReference section */
 		1B5736A82042D0C300F8B398 /* Generator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = "<group>"; };
 		1B5736A92042D0D000F8B398 /* Generator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Generator.m; sourceTree = "<group>"; };
+		835F08DC20827CA2007D7F75 /* HighScores.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HighScores.h; sourceTree = "<group>"; };
+		835F08DD20827CA2007D7F75 /* HighScores.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HighScores.m; sourceTree = "<group>"; };
 		8386CB832062FB5900227AA0 /* HighScores.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HighScores.storyboard; sourceTree = "<group>"; };
-		8386CB882063005600227AA0 /* HighScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HighScore.h; sourceTree = "<group>"; };
-		8386CB892063005600227AA0 /* HighScore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HighScore.m; sourceTree = "<group>"; };
 		A528A25C2037FA400062D60A /* Grapple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grapple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A528A25F2037FA410062D60A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A528A2602037FA410062D60A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -146,8 +146,6 @@
 				A528A2622037FA410062D60A /* ViewController.h */,
 				C168DE6C20427C950055988B /* Game.mm */,
 				C168DE6E20427CA20055988B /* Game.h */,
-				8386CB882063005600227AA0 /* HighScore.h */,
-				8386CB892063005600227AA0 /* HighScore.m */,
 				A528A2632037FA410062D60A /* ViewController.m */,
 				C168DE6A204275690055988B /* GameScreen.storyboard */,
 				A528A2652037FA410062D60A /* Main.storyboard */,
@@ -162,6 +160,8 @@
 				DB644F962069C2EC00EC0541 /* Model.m */,
 				DB644F982069C38900EC0541 /* Model.h */,
 				8386CB832062FB5900227AA0 /* HighScores.storyboard */,
+				835F08DC20827CA2007D7F75 /* HighScores.h */,
+				835F08DD20827CA2007D7F75 /* HighScores.m */,
 			);
 			path = Grapple;
 			sourceTree = "<group>";
@@ -352,6 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				835F08DE20827CA2007D7F75 /* HighScores.m in Sources */,
 				A591326A204365B700C18577 /* Renderer.mm in Sources */,
 				A528A2642037FA410062D60A /* ViewController.m in Sources */,
 				A528A26F2037FA410062D60A /* main.m in Sources */,
@@ -361,7 +362,6 @@
 				1B5736AA2042D0D000F8B398 /* Generator.m in Sources */,
 				A54DDB4D2046494A00197B6E /* Player.m in Sources */,
 				C168DE6D20427C950055988B /* Game.mm in Sources */,
-				8386CB8A2063005600227AA0 /* HighScore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
