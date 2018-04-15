@@ -21,14 +21,19 @@
 
 - (void)initWorld
 {
-    b2Vec2 gravity(0, -10);
+    b2Vec2 gravity(0, -0.1);
     
     world = new b2World(gravity);
+    
+    [self createWalls];
+    
+    platforms = [[NSMutableArray alloc] initWithCapacity:20];
+    grapples = [[NSMutableArray alloc] initWithCapacity:20];
 }
 
 - (void)update:(float)deltaTime
 {
-    const float ts = 1.0f/60.0f;
+    const float ts = 1.0f/6.0f;
     float t = 0;
     
     while(t+ts <= deltaTime)
@@ -39,6 +44,33 @@
     
     if(t < deltaTime)
         world->Step(deltaTime-t, 10, 10);
+}
+
+- (void)createWalls
+{
+    //Make the walls
+    b2BodyDef wallsDef;
+    wallsDef.type = b2_staticBody;
+    wallsDef.position.Set(0, 0);
+    
+    b2Body* walls = world->CreateBody(&wallsDef);
+    
+    //define fixture
+    b2EdgeShape edge;
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &edge;
+    
+    edge.Set(b2Vec2(-10, -3.5), b2Vec2(10, -3.5));
+    walls->CreateFixture(&fixtureDef);
+    
+    edge.Set(b2Vec2(10, -3.5), b2Vec2(10, 10));
+    walls->CreateFixture(&fixtureDef);
+    
+    edge.Set(b2Vec2(10, 10), b2Vec2(-10, 10));
+    walls->CreateFixture(&fixtureDef);
+    
+    edge.Set(b2Vec2(-10, 10), b2Vec2(-10, -3.5));
+    walls->CreateFixture(&fixtureDef);
 }
 
 - (void)makeBody:(float)x yPos:(float)y width:(float)w height:(float)h type:(int)t
@@ -180,6 +212,28 @@
 - (void)setPlayerVelocity:(float)x vY:(float)y
 {
     player->SetLinearVelocity(b2Vec2(x, y));
+}
+
+- (void)adjustPlayerPos:(float)x yPos:(float)y
+{
+    b2Vec2 pos = player->GetPosition();
+    pos.x += x;
+    pos.y += y;
+    player->SetTransform(pos, 0);
+}
+
+- (void)adjustTonguePos:(float)x yPos:(float)y
+{
+    b2Vec2 pos = tongue->GetPosition();
+    pos.x += x;
+    pos.y += y;
+    tongue->SetTransform(pos, 0);
+}
+
+- (void)retractTongue
+{
+    b2Vec2 pos = player->GetPosition();
+    tongue->SetTransform(pos, 0);
 }
 
 @end

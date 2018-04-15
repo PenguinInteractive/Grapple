@@ -26,6 +26,8 @@ enum
 
 - (void)initWorld;
 
+- (void)update:(float)deltaTime;
+
 - (void)makeBody:(float)x yPos:(float)y width:(float)w height:(float)h type:(int)t;
 
 - (GLKVector2)getPosition:(int)type index:(int)i;
@@ -37,6 +39,12 @@ enum
 - (void)setTongueVelocity:(float)x vY:(float)y;
 
 - (void)setPlayerVelocity:(float)x vY:(float)y;
+
+- (void)adjustPlayerPos:(float)x yPos:(float)y;
+
+- (void)adjustTonguePos:(float)x yPos:(float)y;
+
+- (void)retractTongue;
 
 @end
 

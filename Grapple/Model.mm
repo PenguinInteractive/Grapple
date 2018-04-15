@@ -79,4 +79,9 @@
     mMatrix = GLKMatrix4Translate(mMatrix, x, y, z);
 }
 
+- (void)moveTo:(float)x y:(float)y z:(float)z
+{
+    mMatrix = GLKMatrix4Translate(GLKMatrix4Identity, x, y, z);
+}
+
 @end

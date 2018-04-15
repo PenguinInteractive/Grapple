@@ -29,6 +29,8 @@
 
 - (void)translate:(float)x y:(float)y z:(float)z;
 
+- (void)moveTo:(float)x y:(float)y z:(float)z;
+
 @end
 
 #endif /* Model_h */
