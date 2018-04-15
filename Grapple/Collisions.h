@@ -13,10 +13,10 @@
 
 enum
 {
-    PLATFORM,
-    GRAPPLE,
+    TONGUE,
     PLAYER,
-    TONGUE
+    PLATFORM,
+    GRAPPLE
 };
 
 @interface Collisions : NSObject

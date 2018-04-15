@@ -23,6 +23,7 @@
     Model* playerModel;
     Model* tongue;
     float screenSpeed;
+    float offScreen;
 }
 @end
 
@@ -32,7 +33,8 @@
 //Setup platforms with a reasonable capacity later
 - (void)setup:(Renderer*)renderer
 {
-    screenSpeed = -0.001f;
+    //screenSpeed = -0.001f;
+    offScreen = -7;
     
     render = renderer;
     player = [[Player alloc] init];
@@ -78,7 +80,7 @@
     //determine if platforms should be spawned
         //if you need a new platform call SpawnPlatform or something
     
-   for(int i = 0; i < platforms.count; i++)
+    for(int i = 0; i < platforms.count; i++)
     {
         [render render:platforms[i]];
     }
@@ -97,7 +99,15 @@
     for(int i = 0; i < [platforms count]; i++)
     {
         GLKVector2 newPos = [collide getPosition:PLATFORM index:i];
-        [platforms[i] moveTo:newPos.x y:newPos.y z:0];
+        
+        if(newPos.x < offScreen)
+        {
+            [collide removeBody:PLATFORM index:i];
+        }
+        else
+        {
+            [platforms[i] moveTo:newPos.x y:newPos.y z:0];
+        }
     }
     for(int j = 0; j < grapples.count; j++)
     {

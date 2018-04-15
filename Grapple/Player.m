@@ -16,8 +16,7 @@ enum
     NUM_STATES
 };
 
-float moveSpeed = 0.008;
-float drag = 0.00001;
+float drag = 0.01;
 
 @interface Player()
 {
@@ -81,10 +80,10 @@ float drag = 0.00001;
             //Move tongue towards target
             //Find unit vector of tongue to target and multiply by speed
             GLKVector3 direction = GLKVector3Normalize(GLKVector3Subtract(target, tongue.position));
-            direction = GLKVector3MultiplyScalar(direction, moveSpeed);
             
             [collide setTongueVelocity:direction.x vY:direction.y];
-            //NSLog(@"Tongue: x=%1.2f y=%1.2f", tongue.position.x, tongue.position.y);
+            NSLog(@"Tongue Dir: x=%1.2f y=%1.2f", direction.x, direction.y);
+            NSLog(@"Tongue: x=%1.2f y=%1.2f", tongue.position.x, tongue.position.y);
         }
     }
     else if(playerState == STATE_GRAPPLING)
@@ -111,7 +110,6 @@ float drag = 0.00001;
             //Modify velocity of player based on direction towards target
             //Find unit vector of player to target and multiply by speed
             velocity = GLKVector3Normalize(GLKVector3Subtract(target, player.position));
-            velocity = GLKVector3MultiplyScalar(velocity, moveSpeed);
         }
     }
     else
@@ -123,13 +121,15 @@ float drag = 0.00001;
             velocity.x += drag;
     }
     
+    //NSLog(@"Velocity = %1.2f, %1.2f", velocity.x, velocity.y);
+    
     [collide setPlayerVelocity:velocity.x vY:velocity.y];
     
     //RUN THE COLLISIONS UPDATE LOOP
     [collide update:deltaTime];
     
-    //if(playerState == STATE_FREEFALL)
-        //[collide retractTongue];
+    if(playerState == STATE_FREEFALL)
+        [collide retractTongue];
     
     //Update the actual positions of the player and tongue
     newPos = [collide getPosition:PLAYER index:0];
@@ -137,8 +137,8 @@ float drag = 0.00001;
     newPos = [collide getPosition:TONGUE index:0];
     [tongue moveTo:newPos.x y:newPos.y z:0];
     
-    NSLog(@"Player: x=%1.2f y=%1.2f", player.position.x, player.position.y);
-    NSLog(@"Tongue: x=%1.2f y=%1.2f", tongue.position.x, tongue.position.y);
+    //NSLog(@"Player: x=%1.2f y=%1.2f", player.position.x, player.position.y);
+    //NSLog(@"Tongue: x=%1.2f y=%1.2f", tongue.position.x, tongue.position.y);
 }
 
 - (void)fireTongue:(float)x yPos:(float)y
@@ -148,16 +148,14 @@ float drag = 0.00001;
         playerState = STATE_FREEFALL;
         NSLog(@"FREEFALL");
         //Retract tongue
-        [tongue setMMatrix:player.mMatrix];
-        [tongue setPosition:player.position];
+        [collide retractTongue];
     }
     else if(playerState == STATE_GRAPPLING)
     {
         playerState = STATE_FREEFALL;
         NSLog(@"FREEFALL");
         //Retract tongue
-        [tongue setMMatrix:player.mMatrix];
-        [tongue setPosition:player.position];
+        [collide retractTongue];
     }
     else
     {

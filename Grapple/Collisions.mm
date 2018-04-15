@@ -59,6 +59,9 @@
     b2EdgeShape edge;
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &edge;
+    fixtureDef.filter.categoryBits = (short)PLATFORM;
+    fixtureDef.filter.maskBits = (short)PLAYER;
+    
     
     edge.Set(b2Vec2(-10, -3.5), b2Vec2(10, -3.5));
     walls->CreateFixture(&fixtureDef);
@@ -108,6 +111,26 @@
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
     fixtureDef.restitution = 0.6f;
+    
+    switch(t)
+    {
+        case PLAYER:
+            fixtureDef.filter.categoryBits = (short)PLAYER;
+            fixtureDef.filter.maskBits = (short)PLATFORM;
+            break;
+        case TONGUE:
+            fixtureDef.filter.categoryBits = (short)PLAYER;
+            fixtureDef.filter.maskBits = (short)PLATFORM;
+            break;
+        case GRAPPLE:
+            fixtureDef.filter.categoryBits = (short)PLATFORM;
+            fixtureDef.filter.maskBits = (short)PLAYER;
+            break;
+        case PLATFORM:
+            fixtureDef.filter.categoryBits = (short)PLATFORM;
+            fixtureDef.filter.maskBits = (short)PLAYER;
+            break;
+    }
     
     body->CreateFixture(&fixtureDef);
     
