@@ -9,15 +9,14 @@
 #ifndef Generator_h
 #define Generator_h
 #import "Renderer.h"
-#import "Player.h"
-#import "Model.h"
 #import "Collisions.h"
 
 @interface Generator : NSObject
 
-- (void)setup:(Renderer*)renderer;
+- (void)setup:(Renderer*)renderer col:(Collisions*)collider;
 - (void)Generate:(float)deltaTime;
 - (void)fireTongue:(float)x yPos:(float)y;
+- (void)attachTongue;
 
 @end
 

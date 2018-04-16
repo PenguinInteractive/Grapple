@@ -11,6 +11,8 @@
 #import "Renderer.h"
 #import <GLKit/GLKit.h>
 #include <Box2D/Box2D.h>
+#import "Player.h"
+#import "Model.h"
 
 @interface Generator()
 {
@@ -31,7 +33,7 @@
 @implementation Generator
 
 //Setup platforms with a reasonable capacity later
-- (void)setup:(Renderer*)renderer
+- (void)setup:(Renderer*)renderer col:(Collisions*)collider
 {
     //screenSpeed = -0.001f;
     offScreen = -7;
@@ -42,8 +44,7 @@
     playerModel = [render genCube];
     tongue = [render genCube];
     
-    collide = [[Collisions alloc] init];
-    [collide initWorld];
+    collide = collider;
     
     [playerModel translate:0.4 y:0 z:0];
     [playerModel setColour:GLKVector3Make(20,170,230)];
@@ -178,6 +179,11 @@
     [model setColour:GLKVector3Make(170,30,190)];
     [grapples addObject:model];
     [collide makeBody:2 yPos:1.5 width:0.5 height:0.5 type:GRAPPLE];
+}
+
+- (void)attachTongue
+{
+    [player attachTongue];
 }
 
 @end

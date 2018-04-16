@@ -8,6 +8,8 @@
 
 #import "Collisions.h"
 #include <Box2D/Box2D.h>
+#include "CContactListener.hpp"
+#import "Game.h"
 
 @implementation Collisions
 {
@@ -17,13 +19,18 @@
     
     NSMutableArray* platforms;
     NSMutableArray* grapples;
+    
+    Game* game;
 }
 
-- (void)initWorld
+- (void)initWorld:(Game*)g
 {
+    game = g;
+    
     b2Vec2 gravity(0, -0.1);
     
     world = new b2World(gravity);
+    world->SetContactListener(new CContactListener());
     
     [self createWalls];
     
@@ -117,37 +124,28 @@
         case PLAYER:
             fixtureDef.filter.categoryBits = (short)PLAYER;
             fixtureDef.filter.maskBits = (short)PLATFORM;
+            body->CreateFixture(&fixtureDef)->SetUserData((int*)PLAYER);
+            player = body;
             break;
         case TONGUE:
             fixtureDef.filter.categoryBits = (short)PLAYER;
             fixtureDef.filter.maskBits = (short)PLATFORM;
+            body->CreateFixture(&fixtureDef)->SetUserData((int*)TONGUE);
+            tongue = body;
             break;
         case GRAPPLE:
             fixtureDef.filter.categoryBits = (short)PLATFORM;
             fixtureDef.filter.maskBits = (short)PLAYER;
-            break;
-        case PLATFORM:
-            fixtureDef.filter.categoryBits = (short)PLATFORM;
-            fixtureDef.filter.maskBits = (short)PLAYER;
-            break;
-    }
-    
-    body->CreateFixture(&fixtureDef);
-    
-    //retrieve value from array with [[myArray objectAtIndex:index] pointerValue];
-    switch(t)
-    {
-        case PLATFORM:
-            [platforms addObject:[NSValue valueWithPointer:body]];
-            break;
-        case GRAPPLE:
+            //Passes in index in array as well as type
+            body->CreateFixture(&fixtureDef)->SetUserData((int*)GRAPPLE+(10*[grapples count]));
             [grapples addObject:[NSValue valueWithPointer:body]];
             break;
-        case PLAYER:
-            player = body;
-            break;
-        case TONGUE:
-            tongue = body;
+        case PLATFORM:
+            fixtureDef.filter.categoryBits = (short)PLATFORM;
+            fixtureDef.filter.maskBits = (short)PLAYER;
+            //Passes in index in array as well as type
+            body->CreateFixture(&fixtureDef)->SetUserData((int*)PLATFORM+(10*[platforms count]));
+            [platforms addObject:[NSValue valueWithPointer:body]];
             break;
     }
 }
@@ -259,29 +257,14 @@
     tongue->SetTransform(pos, 0);
 }
 
-@end
-
-/*class CContactListener : public b2ContactListener
+- (void)collectGrapple
 {
-public:
-    void BeginContact(b2Contact* contact) {};
-    void EndContact(b2Contact* contact) {};
-    void PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
-    {
-        b2WorldManifold worldManifold;
-        contact->GetWorldManifold(&worldManifold);
-        b2PointState state1[2], state2[2];
-        b2GetPointStates(state1, state2, oldManifold, contact->GetManifold());
-        if (state2[0] == b2_addState)
-        {
-            //If player collides with grapple
-            //b2Body* bodyA = contact->GetFixtureA()->GetBody();
-            //bodyA->GetWorld()->DestroyBody(bodyA);
-            
-            b2Body* bodyA = contact->GetFixtureA()->GetBody();
-            CBox2D *parentObj = (__bridge CBox2D *)(bodyA->GetUserData());
-            [parentObj RegisterHit];
-        }
-    }
-    void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {};
-};*/
+    [game collectGrapple];
+}
+
+- (void)attachTongue
+{
+    [game attachTongue];
+}
+
+@end

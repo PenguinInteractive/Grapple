@@ -8,6 +8,7 @@
 
 #import "Game.h"
 #include <chrono>
+#import "Generator.h"
 
 //USE THIS IF YOU WANT COLLISION STUFF
 //#include <Box2D/Box2D.h>
@@ -30,8 +31,11 @@
     auto currentTime = std::chrono::steady_clock::now();
     lastTime = currentTime;
     
+    Collisions* collide = [[Collisions alloc] init];
+    [collide initWorld:self];
+    
     generate = [[Generator alloc] init];
-    [generate setup:renderer];
+    [generate setup:renderer col:collide];
     
     _mult=1;
     
@@ -91,6 +95,11 @@
 
 - (float)timeElapsed{
     return timeElapsed;
+}
+
+- (void)attachTongue
+{
+    [generate attachTongue];
 }
 
 @end

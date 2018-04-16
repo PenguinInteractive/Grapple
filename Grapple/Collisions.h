@@ -10,6 +10,7 @@
 #define Collisions_h
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
+#import "Game.h"
 
 enum
 {
@@ -24,7 +25,7 @@ enum
     
 }
 
-- (void)initWorld;
+- (void)initWorld:(Game*)g;
 
 - (void)update:(float)deltaTime;
 
@@ -45,6 +46,10 @@ enum
 - (void)adjustTonguePos:(float)x yPos:(float)y;
 
 - (void)retractTongue;
+
+- (void)collectGrapple;
+
+- (void)attachTongue;
 
 @end
 
