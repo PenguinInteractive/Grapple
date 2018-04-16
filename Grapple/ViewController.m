@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *Score;
 @property (weak, nonatomic) IBOutlet UIView *PauseMenu;
 @property (strong, nonatomic) IBOutlet UILabel *Multiplier;
+@property (strong, nonatomic) IBOutlet UIView *GameOver;
 
 
 @end
@@ -34,6 +35,7 @@
     gm = [[Game alloc] init];
 
     [_PauseMenu setHidden:true];
+    [_GameOver setHidden:true];
     [gm setIsPaused:false];
     
     [gm startGame:glesRenderer];
@@ -57,7 +59,10 @@
     //Pass update call onto Renderer
     if(![gm isPaused]){
         [gm update];
-
+        if([gm Loosing]){
+            [gm pause];
+            [_GameOver setHidden:false];
+        }
         _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
         _Multiplier.text=[NSString stringWithFormat:@"%c%i",'x',[gm mult]];
     }

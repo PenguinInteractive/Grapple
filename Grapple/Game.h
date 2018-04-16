@@ -13,7 +13,7 @@
 #include <stdio.h>
 #import "Renderer.h"
 #import "HighScores.h"
-
+#import "Player.h"
 @interface Game : NSObject
 
 @property bool isPaused;
@@ -34,6 +34,8 @@
 - (void)grappleSpawn;
 - (void)collectGrapple;
 - (void)fireTongue:(float)x yPos:(float)y;
+
+- (bool)Loosing;
 
 @end
 #endif /* Game_h */

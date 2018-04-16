@@ -15,11 +15,11 @@
 #import "Collisions.h"
 
 @interface Player : NSObject
+@property bool isLost;
 
 - (void)setup:(Model*)p tongue:(Model*)t collide:(Collisions*)c;
 - (void)movePlayer:(float)deltaTime scrnSpd:(float)screenSpeed;
 - (void)fireTongue:(float)x yPos:(float)y;
-
 @end
 
 #endif /* Player_h */
