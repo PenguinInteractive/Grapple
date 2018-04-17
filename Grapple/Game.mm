@@ -31,7 +31,10 @@ int times;
     lastTime = currentTime;
     
     generate = [[Generator alloc] init];
-    [generate setup:renderer];
+    
+    player = [[Player alloc] init];
+    [generate setup:renderer p:player];
+    
     
     _mult=1;
     times = 0;
@@ -47,6 +50,8 @@ int times;
     [render update];
     
     [self Loosing];
+    if([player isLost])
+        NSLog(@"hello");
     
     [generate Generate:timeElapsed];
 }

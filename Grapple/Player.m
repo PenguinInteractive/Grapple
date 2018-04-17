@@ -135,7 +135,7 @@ float drag = 0.00001;
     
     if(player.position.x < -6.5){
         NSLog(@"LOSE");
-        _isLost = true;
+        [self setIsLost:true];
     }
     else{
         NSLog(@"Keep Playing");

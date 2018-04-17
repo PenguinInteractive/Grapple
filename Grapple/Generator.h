@@ -15,7 +15,7 @@
 
 @interface Generator : NSObject
 
-- (void)setup:(Renderer*)renderer;
+- (void)setup:(Renderer*)renderer p:(Player *)plar;
 - (void)Generate:(float)deltaTime;
 - (void)fireTongue:(float)x yPos:(float)y;
 

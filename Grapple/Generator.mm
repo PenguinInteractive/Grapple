@@ -31,12 +31,12 @@
 Model* model;
 
 //Setup platforms with a reasonable capacity later
-- (void)setup:(Renderer*)renderer
+- (void)setup:(Renderer*)renderer p:(Player *)plar
 {
     screenSpeed = -0.001f;
     
     render = renderer;
-    player = [[Player alloc] init];
+    player = plar;
     
     playerModel = [render genCube];
     tongue = [render genCube];
