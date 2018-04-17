@@ -17,24 +17,27 @@
     Renderer* render;
     Generator *generate;
     HighScores* hs;
-    
+    Player* player;
     float timeElapsed;
 }
 
 @end
 
 @implementation Game
-
+int times;
 - (void)startGame:(Renderer*)renderer
 {
     auto currentTime = std::chrono::steady_clock::now();
     lastTime = currentTime;
     
     generate = [[Generator alloc] init];
-    [generate setup:renderer];
+    
+    player = [[Player alloc] init];
+    [generate setup:renderer p:player];
+    
     
     _mult=1;
-    
+    times = 0;
     render = renderer;
 }
 
@@ -45,6 +48,10 @@
     lastTime = currentTime;
     
     [render update];
+    
+    [self Loosing];
+    if([player isLost])
+        NSLog(@"hello");
     
     [generate Generate:timeElapsed];
 }
@@ -93,5 +100,14 @@
     return timeElapsed;
 }
 
+- (bool) Loosing{
+    if([player isLost]){
+        [hs addScore:_playerScore called:(times)];
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 @end
 

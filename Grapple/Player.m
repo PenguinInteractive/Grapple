@@ -40,6 +40,8 @@ float drag = 0.00001;
     tongue = t;
     collide = c;
     
+    _isLost = false;
+    
     target = GLKVector3Make(0, 0, 0);
     curDir = GLKVector3Make(0, 0, 0);
     velocity = GLKVector3Make(0, 0, 0);
@@ -130,6 +132,15 @@ float drag = 0.00001;
         [tongue setMMatrix:player.mMatrix];
         [tongue setPosition:player.position];
     }
+    
+    if(player.position.x < -6.5){
+        NSLog(@"LOSE");
+        [self setIsLost:true];
+    }
+    else{
+        NSLog(@"Keep Playing");
+    }
+    
 }
 
 - (void)fireTongue:(float)x yPos:(float)y
