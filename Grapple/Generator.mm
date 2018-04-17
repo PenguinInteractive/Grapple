@@ -11,6 +11,7 @@
 #import "Renderer.h"
 #import <GLKit/GLKit.h>
 #include <Box2D/Box2D.h>
+#include <stdlib.h>
 
 @interface Generator()
 {
@@ -60,11 +61,11 @@ Model* model;
     //Generate a cube with the genCube function in Model once that works
     
     //Platforms
-//    [self spawnPlatform];
+    [self spawnPlatform];
     
     //Grapples
     
-//    [self spawnGrapple];
+    [self spawnGrapple];
     
 }
 
@@ -127,89 +128,53 @@ Model* model;
     return (((float) (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * diff) + smallNumber;
 }
 
+float coordY[5] = {-2.75,-1.5,-0.25,1,2.25};
+float coordX[10] = {-6,-4.75,-3.5,-2.25,-1,0.25,1.5,2.75,4,5.25};
+bool occupied[5][10] = {false};
+
 - (void)spawnPlatform
 {
     //SpawnPlatform will pick a random y value then add a new vector2 with the xposition equal to the right side of the screen and yposition equal to the random y
     //Store it in the array
-    float x = -5;
-    float y = -4;
-    float coordX[20] = {NULL}, coordY[20] = {NULL};
     
-    for(int i = 0; i < 20;  i++){
-        int w = 0;
-        while(w==0){
-            x = [self generateNumber:-4 a:15];
-            y = [self generateNumber:-4 a:3.25f];
-            
-            for(int j = 0; j < 20; j++){
-                if((coordY[j] - y) > 1.25 || (coordY[j] - y) < -1.25){
-                    break;
-                }
-                if((coordX[j] - x) > 1.25 || (coordX[j] - x) < -1.25){
-                    break;
+    for(int i = 0; i < 10; i++){
+        for(int j = 0; j < 5; j++){
+            int ran = arc4random_uniform(2);
+            if(ran == 1){
+                if(occupied[i][j-1]==false){
+                    model = [render genCube];
+                    [model translate:coordX[i] y:coordY[j] z:0];
+                    [model setColour:GLKVector3Make(160,120,40)];
+                    [platforms addObject:model];
+                    occupied[i][j] = true;
+                    NSLog(@"PLATFORM COORDANATES: %f, %f", coordX[i],coordY[j]);
                 }
             }
-            
-//            NSLog(@"X: %f Y: %f", coordX[i],coordY[i]);
-            coordX[i] = x;
-            coordY[i] = y;
-            
-//            NSLog(@"X: %f Y: %f", coordX[i],coordY[i]);
-            w = 1;
         }
 
     }
-
-    for(int i = 0; i < 20; i++){
-        model = [render genCube];
-        [model translate:coordX[i] y:coordY[i] z:0];
-        [model setColour:GLKVector3Make(160,120,40)];
-        [platforms addObject:model];
-        [collide makeBody:10 yPos:-1.5 width:0.5 height:0.5 type:PLATFORM];
-    }
-
-
-    
 }
 
 -(void)spawnGrapple{
-    float x = -5;
-    float y = -4;
-    float coordX[20] = {NULL}, coordY[20] = {NULL};
-    
-    for(int i = 0; i < 20;  i++){
-        int w = 0;
-        while(w==0){
-            x = [self generateNumber:-4 a:15];
-            y = [self generateNumber:-4 a:3.25f];
-            
-            for(int j = 0; j < 20; j++){
-                if((coordY[j] - y) > 1.25 || (coordY[j] - y) < -1.25){
-                    break;
-                }
-                if((coordX[j] - x) > 1.25 || (coordX[j] - x) < -1.25){
-                    break;
+    for(int i = 0; i < 10; i++){
+        for(int j = 0; j < 5; j++){
+            int ran = arc4random_uniform(2);
+                
+            if(ran == 1){
+                if(occupied[i][j]==false){
+                    model = [render genCube];
+                    [model translate:coordX[i] y:coordY[j] z:0];
+                    [model setColour:GLKVector3Make(160,120,40)];
+                    [platforms addObject:model];
+                    NSLog(@"B GRAPPLE COORDANATES: %f, %f", coordX[i],coordY[j]);
+                    j++;
                 }
             }
             
-            NSLog(@"X: %f Y: %f", coordX[i],coordY[i]);
-            coordX[i] = x;
-            coordY[i] = y;
-            
-            NSLog(@"X: %f Y: %f", coordX[i],coordY[i]);
-            w = 1;
+            NSLog(@"j = %d", j);
         }
         
     }
-    
-    for(int i = 0; i < 20; i++){
-        model = [render genCube];
-        [model translate:coordX[i] y:coordY[i] z:0];
-        [model setColour:GLKVector3Make(170,30,190)];
-        [grapples addObject:model];
-        [collide makeBody:0 yPos:1.5 width:0.5 height:0.5 type:GRAPPLE];
-    }
-    
 
 }
 

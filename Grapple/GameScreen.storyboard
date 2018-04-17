@@ -80,6 +80,9 @@
                                         <rect key="frame" x="85" y="112" width="80" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Main Menu"/>
+                                        <connections>
+                                            <segue destination="gnZ-jn-dTb" kind="show" id="4bM-Vh-Pla"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yic-QX-pen">
                                         <rect key="frame" x="85" y="85" width="80" height="30"/>
@@ -122,6 +125,7 @@
                         </connections>
                     </glkView>
                     <connections>
+                        <outlet property="EndScore" destination="hbX-E2-1h0" id="dhv-xj-lFp"/>
                         <outlet property="GameOver" destination="hO9-se-9pt" id="dnL-Du-Zmu"/>
                         <outlet property="Multiplier" destination="NVH-vy-mRC" id="kyC-aj-nuR"/>
                         <outlet property="PauseMenu" destination="1MU-N0-Pna" id="m67-zR-41H"/>
@@ -145,6 +149,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bv0-Db-SGz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="678" y="107"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="hgZ-4k-eet">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" id="gnZ-jn-dTb" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uby-oC-wg3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="456" y="718"/>
         </scene>
     </scenes>
 </document>
