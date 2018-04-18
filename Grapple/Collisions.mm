@@ -24,6 +24,10 @@
     b2Vec2 gravity(0, -10);
     
     world = new b2World(gravity);
+    
+    platforms = [[NSMutableArray alloc] initWithCapacity:20];
+    grapples = [[NSMutableArray alloc] initWithCapacity:20];
+    
 }
 
 - (void)update:(float)deltaTime
@@ -111,6 +115,8 @@
             break;
         case PLATFORM:
             body = (b2Body*)[[platforms objectAtIndex:i] pointerValue];
+            NSLog(@"INDEX OF PLATFORM: %d", i);
+            NSLog(@"NUM PLATFORMS: %d", [platforms count]);
             break;
         case GRAPPLE:
             body = (b2Body*)[[grapples objectAtIndex:i] pointerValue];
