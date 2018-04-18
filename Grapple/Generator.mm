@@ -25,7 +25,6 @@
     Model* playerModel;
     Model* tongue;
     float screenSpeed;
-    float offScreen;
 }
 @end
 
@@ -36,7 +35,6 @@
 - (void)setup:(Renderer*)renderer col:(Collisions*)collider
 {
     //screenSpeed = -0.001f;
-    offScreen = -7;
     
     render = renderer;
     player = [[Player alloc] init];
@@ -50,9 +48,9 @@
     [playerModel setColour:GLKVector3Make(20,170,230)];
     [collide makeBody:0.4 yPos:0 width:0.5 height:0.5 type:PLAYER];
     
-    [tongue translate:0.35 y:1.5 z:0];
+    [tongue translate:0.35 y:0 z:0];
     [tongue setColour:GLKVector3Make(255,180,255)];
-    [collide makeBody:0.35 yPos:1.5 width:0.5 height:0.5 type:TONGUE];
+    [collide makeBody:0.35 yPos:0 width:0.5 height:0.5 type:TONGUE];
     
     [player setup:playerModel tongue:tongue collide:collide];
     
@@ -101,7 +99,7 @@
     {
         GLKVector2 newPos = [collide getPosition:PLATFORM index:i];
         
-        if(newPos.x < offScreen)
+        if(newPos.x < -6)
         {
             [collide removeBody:PLATFORM index:i];
         }

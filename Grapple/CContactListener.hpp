@@ -16,14 +16,19 @@ class CContactListener : public b2ContactListener
 {
 private:
     bool collided;
-    int collider;
+    //int collider;
+    float xDynamic, yDynamic, xKinematic, yKinematic;
 public:
     void BeginContact(b2Contact* contact);
     void EndContact(b2Contact* contact);
     void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
     void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
     bool hasCollided();
-    int getCollider();
+    //int getCollider();
+    float getDynamicX();
+    float getDynamicY();
+    float getKinematicX();
+    float getKinematicY();
 };
 
 #endif /* CContactListener_hpp */

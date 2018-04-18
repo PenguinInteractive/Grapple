@@ -41,9 +41,9 @@ enum
 
 - (void)setPlayerVelocity:(float)x vY:(float)y;
 
-- (void)adjustPlayerPos:(float)x yPos:(float)y;
+- (void)setPlayerPos:(float)x yPos:(float)y;
 
-- (void)adjustTonguePos:(float)x yPos:(float)y;
+- (void)setTonguePos:(float)x yPos:(float)y;
 
 - (void)retractTongue;
 

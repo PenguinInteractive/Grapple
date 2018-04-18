@@ -82,6 +82,7 @@
 - (void)moveTo:(float)x y:(float)y z:(float)z
 {
     mMatrix = GLKMatrix4Translate(GLKMatrix4Identity, x, y, z);
+    position = GLKVector3Make(x, y, z);
 }
 
 @end

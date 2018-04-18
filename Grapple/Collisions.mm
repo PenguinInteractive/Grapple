@@ -21,13 +21,18 @@
     NSMutableArray* grapples;
     
     Game* game;
+    int* objectCodes;
+    int numCodes;
 }
 
 - (void)initWorld:(Game*)g
 {
     game = g;
     
-    b2Vec2 gravity(0, -0.1);
+    b2Vec2 gravity(0, 0);
+    
+    objectCodes = (int*)malloc(42*sizeof(int));
+    numCodes = 0;
     
     world = new b2World(gravity);
     world->SetContactListener(new CContactListener());
@@ -40,7 +45,7 @@
 
 - (void)update:(float)deltaTime
 {
-    const float ts = 1.0f/6.0f;
+    const float ts = 1.0f/60.0f;
     float t = 0;
     
     while(t+ts <= deltaTime)
@@ -70,16 +75,16 @@
     fixtureDef.filter.maskBits = (short)PLAYER;
     
     
-    edge.Set(b2Vec2(-10, -3.5), b2Vec2(10, -3.5));
+    edge.Set(b2Vec2(-7.5, -4), b2Vec2(7.5, -4));
     walls->CreateFixture(&fixtureDef);
     
-    edge.Set(b2Vec2(10, -3.5), b2Vec2(10, 10));
+    edge.Set(b2Vec2(7.5, -4), b2Vec2(7.5, 4));
     walls->CreateFixture(&fixtureDef);
     
-    edge.Set(b2Vec2(10, 10), b2Vec2(-10, 10));
+    edge.Set(b2Vec2(7.5, 4), b2Vec2(-7.5, 4));
     walls->CreateFixture(&fixtureDef);
     
-    edge.Set(b2Vec2(-10, 10), b2Vec2(-10, -3.5));
+    edge.Set(b2Vec2(-7.5, 4), b2Vec2(-7.5, -4));
     walls->CreateFixture(&fixtureDef);
 }
 
@@ -119,35 +124,55 @@
     fixtureDef.friction = 0.3f;
     fixtureDef.restitution = 0.6f;
     
+    int data;
+    
     switch(t)
     {
         case PLAYER:
             fixtureDef.filter.categoryBits = (short)PLAYER;
             fixtureDef.filter.maskBits = (short)PLATFORM;
-            body->CreateFixture(&fixtureDef)->SetUserData((int*)PLAYER);
+            
+            //data = (int)PLAYER;
+            //objectCodes[numCodes] = data;
+            body->CreateFixture(&fixtureDef);//->SetUserData(objectCodes[numCodes]);
             player = body;
+            NSLog(@"PLAYER: %d", PLAYER);
             break;
         case TONGUE:
             fixtureDef.filter.categoryBits = (short)PLAYER;
             fixtureDef.filter.maskBits = (short)PLATFORM;
-            body->CreateFixture(&fixtureDef)->SetUserData((int*)TONGUE);
+            
+            //data = (int)TONGUE;
+            //objectCodes[numCodes] = data;
+            body->CreateFixture(&fixtureDef);//->SetUserData(&data);
             tongue = body;
+            NSLog(@"TONGUE: %d", TONGUE);
             break;
         case GRAPPLE:
             fixtureDef.filter.categoryBits = (short)PLATFORM;
             fixtureDef.filter.maskBits = (short)PLAYER;
+            
             //Passes in index in array as well as type
-            body->CreateFixture(&fixtureDef)->SetUserData((int*)GRAPPLE+(10*[grapples count]));
+            //data = GRAPPLE+(10*(int)[grapples count]);
+            //objectCodes[numCodes] = data;
+            body->CreateFixture(&fixtureDef);//->SetUserData(&data);
             [grapples addObject:[NSValue valueWithPointer:body]];
+            NSLog(@"GRAPPLE %d: %d", (int)[grapples count]-1, GRAPPLE+(10*(int)[grapples count]));
             break;
         case PLATFORM:
             fixtureDef.filter.categoryBits = (short)PLATFORM;
             fixtureDef.filter.maskBits = (short)PLAYER;
+            
             //Passes in index in array as well as type
-            body->CreateFixture(&fixtureDef)->SetUserData((int*)PLATFORM+(10*[platforms count]));
+            //data = PLATFORM+(10*(int)[platforms count]);
+            //objectCodes[numCodes] = data;
+            body->CreateFixture(&fixtureDef);//->SetUserData(&data);
             [platforms addObject:[NSValue valueWithPointer:body]];
+            NSLog(@"PLATFORM %d: %d", (int)[platforms count]-1, PLATFORM+(10*(int)[platforms count]));
             break;
     }
+    
+    numCodes++;
 }
 
 - (GLKVector2)getPosition:(int)type index:(int)i
@@ -235,19 +260,15 @@
     player->SetLinearVelocity(b2Vec2(x, y));
 }
 
-- (void)adjustPlayerPos:(float)x yPos:(float)y
+- (void)setPlayerPos:(float)x yPos:(float)y
 {
-    b2Vec2 pos = player->GetPosition();
-    pos.x += x;
-    pos.y += y;
+    b2Vec2 pos = b2Vec2(x, y);
     player->SetTransform(pos, 0);
 }
 
-- (void)adjustTonguePos:(float)x yPos:(float)y
+- (void)setTonguePos:(float)x yPos:(float)y
 {
-    b2Vec2 pos = tongue->GetPosition();
-    pos.x += x;
-    pos.y += y;
+    b2Vec2 pos = b2Vec2(x, y);
     tongue->SetTransform(pos, 0);
 }
 
