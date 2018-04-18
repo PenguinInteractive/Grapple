@@ -65,7 +65,7 @@ Model* model;
     
     //Grapples
     
-    [self spawnGrapple];
+//    [self spawnGrapple];
     
 }
 
@@ -105,7 +105,9 @@ Model* model;
     {
         //GLKVector2 newPos = [collide getPosition:PLATFORM index:i];
         //[platforms[i] translate:newPos.x y:0 z:0];
-        [platforms[i] translate:screenShift y:0 z:0];
+        
+        NSLog(@"%f", [collide getPosition:PLATFORM index:i].x);
+        
     }
     for(int j = 0; j < grapples.count; j++)
     {
@@ -113,6 +115,8 @@ Model* model;
         //[grapples[j] translate:newPos.x y:0 z:0];
         [grapples[j] translate:screenShift y:0 z:0];
     }
+    
+    
 }
 
 - (void)fireTongue:(float)x yPos:(float)y
@@ -146,6 +150,7 @@ bool occupied[5][10] = {false};
                     [model translate:coordX[i] y:coordY[j] z:0];
                     [model setColour:GLKVector3Make(160,120,40)];
                     [platforms addObject:model];
+                    [collide makeBody:coordX[i] yPos:coordY[j] width:0.5 height:0.5 type:PLATFORM];
                     occupied[i][j] = true;
                     NSLog(@"PLATFORM COORDANATES: %f, %f", coordX[i],coordY[j]);
                 }
@@ -166,6 +171,7 @@ bool occupied[5][10] = {false};
                     [model translate:coordX[i] y:coordY[j] z:0];
                     [model setColour:GLKVector3Make(160,120,40)];
                     [platforms addObject:model];
+                    [collide makeBody:coordX[i] yPos:coordY[j] width:0.5 height:0.5 type:GRAPPLE];
                     NSLog(@"B GRAPPLE COORDANATES: %f, %f", coordX[i],coordY[j]);
                     j++;
                 }
