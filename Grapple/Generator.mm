@@ -162,15 +162,15 @@
 //0.25 horiztonal gap
 //1.25 vertical gap
 //vertical range: -4 to 3.25
-- (float) generateNumber:(float)smallNumber a:(float)bigNumber
+- (float) generateNumber:(float)smallNumber a:(float)bigNumber //previously used to randomize location before grid system was used
 {
     float diff = bigNumber - smallNumber;
     return (((float) (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * diff) + smallNumber;
 }
 
-float coordY[5] = {-2.75,-1.5,-0.25,1,2.25};
-float coordX[10] = {-6,-4.75,-3.5,-2.25,-1,0.25,1.5,2.75,4,5.25};
-bool occupied[5][10] = {false};
+float coordY[5] = {-2.75,-1.5,-0.25,1,2.25}; //previously used array to set the location of an object's y axsis
+float coordX[10] = {-6,-4.75,-3.5,-2.25,-1,0.25,1.5,2.75,4,5.25}; //previously used array to set the location of an object's x axsis
+bool occupied[5][10] = {false}; //previously used array to see if location on screen is currently occupied in with an object
 
 - (void)spawnPlatform
 {

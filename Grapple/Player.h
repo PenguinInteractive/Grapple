@@ -15,7 +15,7 @@
 #import "Collisions.h"
 
 @interface Player : NSObject
-@property bool isLost;
+@property bool isLost; //set to true of Goshi is offscreen
 
 - (void)setup:(Model*)p tongue:(Model*)t collide:(Collisions*)c;
 - (void)movePlayer:(float)deltaTime shift:(float)screenShift;

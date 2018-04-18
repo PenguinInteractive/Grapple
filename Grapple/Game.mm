@@ -67,7 +67,7 @@
     [generate fireTongue:x yPos:y];
 }
 
-- (void)pause
+- (void)pause //checks to see if _isPaused was changed in ViewContoller
 {
     if(_isPaused)
         lastTime = std::chrono::steady_clock::now();
@@ -81,16 +81,16 @@
     }
 }
 
-- (void)grappleSpawn
+- (void)grappleSpawn //resets multiplier if grapple gets despawned
 {
     _mult=1;
 }
 
 - (void)collectGrapple:(int)i
 {
-    [self increaseScore];
+    [self increaseScore]; //increases score
     if(_mult<5){
-        _mult++;
+        _mult++; //multiplier increases if multipler is less than five
     }
     NSLog(@"%i",_mult);
     
