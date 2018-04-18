@@ -47,6 +47,8 @@ enum
 
 - (void)retractTongue;
 
+- (void)moveItem:(int)type index:(int)i xPos:(float)x;
+
 @end
 
 #endif /* Collisions_h */
