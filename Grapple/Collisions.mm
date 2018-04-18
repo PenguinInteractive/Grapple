@@ -306,6 +306,21 @@
     tongue->SetTransform(pos, 0);
 }
 
+- (void)moveItem:(int)type index:(int)i xPos:(float)x
+{
+    b2Body* body;
+    
+    if(type == GRAPPLE)
+        body = (b2Body*)[[grapples objectAtIndex:i] pointerValue];
+    else
+        body = (b2Body*)[[platforms objectAtIndex:i] pointerValue];
+    
+    b2Vec2 pos = body->GetPosition();
+    
+    pos.x = x;
+    body->SetTransform(pos, 0);
+}
+
 - (void)setTongueVelocity:(float)x vY:(float)y
 {
     tongue->SetLinearVelocity(b2Vec2(x, y));
