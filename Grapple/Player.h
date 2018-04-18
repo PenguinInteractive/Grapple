@@ -12,12 +12,16 @@
 #import <GLKit/GLKit.h>
 #import "Renderer.h"
 #import "Model.h"
+#import "Collisions.h"
 
 @interface Player : NSObject
+@property bool isLost;
 
-- (void)setup:(Renderer*)render;
-- (void)movePlayer:(float)deltaTime scrnSpd:(float)screenSpeed;
+- (void)setup:(Model*)p tongue:(Model*)t collide:(Collisions*)c;
+- (void)movePlayer:(float)deltaTime shift:(float)screenShift;
 - (void)fireTongue:(float)x yPos:(float)y;
+- (void)attachTongue;
+- (void)retractTongue;
 
 @end
 

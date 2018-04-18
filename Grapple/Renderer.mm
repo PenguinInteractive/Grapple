@@ -35,8 +35,6 @@ float backClip = 20.0f;
     
     //Product of the model, view, and projection matrices
     GLKMatrix4 vp;
-    
-    Model* tempModel;
 }
 
 @end
@@ -67,24 +65,11 @@ float backClip = 20.0f;
         return;
     }
     
-    //Makes the default background grey
+    //Changes the default background
     glClearColor(210.0f/255, 250.0f/255, 250.0f/255, 1.0f);
     
     //Enables the depth test
     glEnable(GL_DEPTH_TEST);
-    
-    float* vertices;
-    float* normals;
-    float* texCoords;
-    int* indices;
-    
-    tempModel = [[Model alloc] init];
-    [tempModel setNumIndices:(gles.GenCube(1.0f, &vertices, &normals, &texCoords, &indices))];
-    [tempModel setVertices:vertices];
-    [tempModel setNormals:normals];
-    [tempModel setTexCoords:texCoords];
-    [tempModel setIndices:indices];
-    [tempModel setMMatrix:GLKMatrix4Identity];
 }
 
 - (void)update
@@ -93,7 +78,7 @@ float backClip = 20.0f;
     
     //Perspective Transformations
     vp = GLKMatrix4Translate(GLKMatrix4Identity, 0.0f, 0.0f, -cameraDistance);
-    normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(vp), NULL);
+    //normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(vp), NULL);
     
     //Get the apect ratio of the window
     float aspect = (float)myView.drawableWidth / (float)myView.drawableHeight;
@@ -106,6 +91,7 @@ float backClip = 20.0f;
 {
     //Multiply model matrix with view perspective matrix
     GLKMatrix4 mvp = GLKMatrix4Multiply(vp, m.mMatrix);
+    normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(m.mMatrix), NULL);
     
     //Updates the uniform values based on the matrices
     glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, FALSE, (const float*)mvp.m);
@@ -168,7 +154,6 @@ float backClip = 20.0f;
     [m setIndices:indices];
     [m setMMatrix:GLKMatrix4Identity];
     [m setPosition:GLKVector3Make(0, 0, 0)];
- //     [m setPosition:GLKVector3Make(1, 2, 3)];
     return m;
 }
 

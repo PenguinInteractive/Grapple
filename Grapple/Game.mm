@@ -8,6 +8,8 @@
 
 #import "Game.h"
 #include <chrono>
+#import "Generator.h"
+#include <stdio.h>
 
 //USE THIS IF YOU WANT COLLISION STUFF
 //#include <Box2D/Box2D.h>
@@ -16,9 +18,9 @@
     std::chrono::time_point<std::chrono::steady_clock> lastTime;
     Renderer* render;
     Generator *generate;
-    HighScore* hs;
-    
+    HighScores* hs;
     float timeElapsed;
+    int times;
 }
 
 @end
@@ -30,11 +32,17 @@
     auto currentTime = std::chrono::steady_clock::now();
     lastTime = currentTime;
     
+    Collisions* collide = [[Collisions alloc] init];
+    [collide initWorld:self];
+    
     generate = [[Generator alloc] init];
-    [generate setup:renderer];
+    
+    [generate setup:renderer col:collide];
+    
+    hs = [[HighScores alloc] init];
     
     _mult=1;
-    
+    times = 0;
     render = renderer;
 }
 
@@ -46,7 +54,12 @@
     
     [render update];
     
+    [self Losing];
+    
     [generate Generate:timeElapsed];
+    
+    if([generate checkDespawn])
+        [self grappleSpawn];
 }
 
 - (void)fireTongue:(float)x yPos:(float)y
@@ -68,22 +81,20 @@
     }
 }
 
-- (void)grappleSpawn{
-    /*
-     if gapple is offscrean
-     mult=1;
-     */
+- (void)grappleSpawn
+{
     _mult=1;
-    [hs addScore:_playerScore];
 }
 
-- (void)collectGrapple{
+- (void)collectGrapple:(int)i
+{
     [self increaseScore];
     if(_mult<5){
         _mult++;
     }
     NSLog(@"%i",_mult);
-
+    
+    [generate collectGrapple:i];
 }
 
 - (void)setTimeelapsed : (float) te {
@@ -92,6 +103,21 @@
 
 - (float)timeElapsed{
     return timeElapsed;
+}
+
+- (void)attachTongue
+{
+    [generate attachTongue];
+}
+
+- (bool)Losing
+{
+    if([generate isLost])
+    {
+        [hs addScore:_playerScore called:(times)];
+        return true;
+    }
+    return false;
 }
 
 @end

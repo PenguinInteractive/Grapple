@@ -9,10 +9,8 @@
 #ifndef Game_h
 #define Game_h
 #import <GLKit/GLKit.h>
-#import "Generator.h"
-#include <stdio.h>
 #import "Renderer.h"
-#import "HighScore.h"
+#import "HighScores.h"
 
 @interface Game : NSObject
 
@@ -32,8 +30,11 @@
 
 - (void)increaseScore;
 - (void)grappleSpawn;
-- (void)collectGrapple;
+- (void)collectGrapple:(int)i;
 - (void)fireTongue:(float)x yPos:(float)y;
+- (void)attachTongue;
+
+- (bool)Losing;
 
 @end
 #endif /* Game_h */
