@@ -103,7 +103,9 @@
     model.indices = (int*)malloc(sizeof(int) * indices.count);
     
     for (int i = 0; i < finalVertices.count; i++) {
-        model.vertices[i] = [finalVertices[i] floatValue];
+        model.vertices[i] = [finalVertices[i] floatValue] / 100;
+        if(i % 3 == 1)
+            model.vertices[i] += 0.2;
     }
     for (int i = 0; i < finalNormals.count; i++) {
         model.normals[i] = [finalNormals[i] floatValue];
