@@ -36,7 +36,7 @@
 //Setup platforms with a reasonable capacity later
 - (void)setup:(Renderer*)renderer col:(Collisions*)collider
 {
-    //screenSpeed = -0.001f;
+    screenSpeed = -0.001f;
     despawn = false;
     
     render = renderer;
@@ -131,7 +131,9 @@
         
         if(newPos.x < -6)
         {
-            [collide removeBody:PLATFORM index:i];
+            //[collide removeBody:PLATFORM index:i];
+            
+            [collide moveItem:PLATFORM index:i xPos:7];
         }
         else
         {
@@ -144,7 +146,11 @@
             continue;
         
         GLKVector2 newPos = [collide getPosition:GRAPPLE index:j];
-        [grapples[j] moveTo:newPos.x y:newPos.y z:0];
+        
+        if(newPos.x < -6)
+            [collide moveItem:GRAPPLE index:j xPos:7];
+        else
+            [grapples[j] moveTo:newPos.x y:newPos.y z:0];
     }
 }
 
@@ -270,8 +276,10 @@ bool occupied[5][10] = {false};
 
 - (void)collectGrapple:(int)i
 {
-    [grapples removeObjectAtIndex:i];
-    [collide removeBody:GRAPPLE index:i];
+    //[grapples removeObjectAtIndex:i];
+    //[collide removeBody:GRAPPLE index:i];
+    [collide moveItem:GRAPPLE index:i xPos:7];
+    
     [player retractTongue];
 }
 
