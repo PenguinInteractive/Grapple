@@ -33,8 +33,9 @@ int times;
     generate = [[Generator alloc] init];
     
     player = [[Player alloc] init];
-    [generate setup:renderer p:player];
+    hs = [[HighScores alloc] init];
     
+    [generate setup:renderer p:player];
     
     _mult=1;
     times = 0;

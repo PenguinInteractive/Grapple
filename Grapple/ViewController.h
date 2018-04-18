@@ -8,6 +8,7 @@
 
 #import <GLKit/GLKit.h>
 #import "Renderer.h"
+#import "HighScores.h"
 
 @interface ViewController : GLKViewController
 
