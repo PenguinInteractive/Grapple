@@ -51,6 +51,9 @@
     [render update];
     
     [generate Generate:timeElapsed];
+    
+    if([generate checkDespawn])
+        [self grappleSpawn];
 }
 
 - (void)fireTongue:(float)x yPos:(float)y
@@ -72,21 +75,20 @@
     }
 }
 
-- (void)grappleSpawn{
-    /*
-     if gapple is offscreen
-     mult=1;
-     */
+- (void)grappleSpawn
+{
     _mult=1;
 }
 
-- (void)collectGrapple{
+- (void)collectGrapple:(int)i
+{
     [self increaseScore];
     if(_mult<5){
         _mult++;
     }
     NSLog(@"%i",_mult);
-
+    
+    [generate collectGrapple:i];
 }
 
 - (void)setTimeelapsed : (float) te {

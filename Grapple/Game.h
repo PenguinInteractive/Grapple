@@ -31,7 +31,7 @@
 
 - (void)increaseScore;
 - (void)grappleSpawn;
-- (void)collectGrapple;
+- (void)collectGrapple:(int)i;
 - (void)fireTongue:(float)x yPos:(float)y;
 - (void)attachTongue;
 

@@ -66,25 +66,25 @@
 
 - (IBAction)tap:(UITapGestureRecognizer *)sender
 {
-    NSLog(@"Tap");
+    //NSLog(@"Tap");
     
-    NSLog(@"PRESS BEGAN");
+    //NSLog(@"PRESS BEGAN");
     if(![gm isPaused])
     {
         CGPoint point = [sender locationInView:self.view];
-        NSLog(@"Tap X = %f Y = %f", point.x, point.y);
+        //NSLog(@"Tap X = %f Y = %f", point.x, point.y);
         [gm fireTongue:point.x yPos:point.y];
     }
 }
 
 - (IBAction)CG:(id)sender {
-    [gm collectGrapple];
+    //[gm collectGrapple];
     
 }
 
 
 - (IBAction)DS:(id)sender {
-    [gm grappleSpawn];
+    //[gm grappleSpawn];
 }
 
 

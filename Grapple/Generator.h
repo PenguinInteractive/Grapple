@@ -16,7 +16,9 @@
 - (void)setup:(Renderer*)renderer col:(Collisions*)collider;
 - (void)Generate:(float)deltaTime;
 - (void)fireTongue:(float)x yPos:(float)y;
+- (void)collectGrapple:(int)i;
 - (void)attachTongue;
+- (bool)checkDespawn;
 
 @end
 

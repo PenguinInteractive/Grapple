@@ -16,6 +16,7 @@
     b2World* world;
     b2Body* player;
     b2Body* tongue;
+    CContactListener* cListener;
     
     NSMutableArray* platforms;
     NSMutableArray* grapples;
@@ -35,7 +36,9 @@
     numCodes = 0;
     
     world = new b2World(gravity);
-    world->SetContactListener(new CContactListener());
+    cListener = new CContactListener();
+    cListener->setup();
+    world->SetContactListener(cListener);
     
     [self createWalls];
     
@@ -51,11 +54,15 @@
     while(t+ts <= deltaTime)
     {
         world->Step(ts, 10, 10);
+        [self checkCollisions];
         t += ts;
     }
     
     if(t < deltaTime)
+    {
         world->Step(deltaTime-t, 10, 10);
+        [self checkCollisions];
+    }
 }
 
 - (void)createWalls
@@ -124,7 +131,7 @@
     fixtureDef.friction = 0.3f;
     fixtureDef.restitution = 0.6f;
     
-    int data;
+    //int data;
     
     switch(t)
     {
@@ -132,47 +139,93 @@
             fixtureDef.filter.categoryBits = (short)PLAYER;
             fixtureDef.filter.maskBits = (short)PLATFORM;
             
-            //data = (int)PLAYER;
-            //objectCodes[numCodes] = data;
-            body->CreateFixture(&fixtureDef);//->SetUserData(objectCodes[numCodes]);
+            body->CreateFixture(&fixtureDef);
             player = body;
-            NSLog(@"PLAYER: %d", PLAYER);
             break;
         case TONGUE:
             fixtureDef.filter.categoryBits = (short)PLAYER;
             fixtureDef.filter.maskBits = (short)PLATFORM;
             
-            //data = (int)TONGUE;
-            //objectCodes[numCodes] = data;
-            body->CreateFixture(&fixtureDef);//->SetUserData(&data);
+            body->CreateFixture(&fixtureDef);
             tongue = body;
-            NSLog(@"TONGUE: %d", TONGUE);
             break;
         case GRAPPLE:
             fixtureDef.filter.categoryBits = (short)PLATFORM;
             fixtureDef.filter.maskBits = (short)PLAYER;
             
-            //Passes in index in array as well as type
-            //data = GRAPPLE+(10*(int)[grapples count]);
-            //objectCodes[numCodes] = data;
-            body->CreateFixture(&fixtureDef);//->SetUserData(&data);
+            body->CreateFixture(&fixtureDef);
             [grapples addObject:[NSValue valueWithPointer:body]];
-            NSLog(@"GRAPPLE %d: %d", (int)[grapples count]-1, GRAPPLE+(10*(int)[grapples count]));
             break;
         case PLATFORM:
             fixtureDef.filter.categoryBits = (short)PLATFORM;
             fixtureDef.filter.maskBits = (short)PLAYER;
             
-            //Passes in index in array as well as type
-            //data = PLATFORM+(10*(int)[platforms count]);
-            //objectCodes[numCodes] = data;
-            body->CreateFixture(&fixtureDef);//->SetUserData(&data);
+            body->CreateFixture(&fixtureDef);
             [platforms addObject:[NSValue valueWithPointer:body]];
-            NSLog(@"PLATFORM %d: %d", (int)[platforms count]-1, PLATFORM+(10*(int)[platforms count]));
             break;
     }
     
     numCodes++;
+}
+
+- (void)checkCollisions
+{
+    //If there are any unhandled collisions
+    if(cListener->hasCollided() == 0)
+        return;
+    
+    b2Body** dynamics = cListener->getDynamic();
+    b2Body** kinematics = cListener->getKinematic();
+    
+    for(int i = 0; i < cListener->hasCollided(); i++)
+    {
+        b2Body* d = dynamics[i];
+        b2Body* k = kinematics[i];
+        
+        bool wasTongue = false;
+        
+        //Determine whether collision involved player or tongue
+        if(d->GetPosition().x == tongue->GetPosition().x
+           && d->GetPosition().y == tongue->GetPosition().y)
+            wasTongue = true;
+        /*else if(d->GetPosition().x == player->GetPosition().x
+                && d->GetPosition().y == player->GetPosition().y)
+            wasTongue = false;
+        else
+            NSLog(@"Neither dynamic matches");*/
+        
+        //Determine which terrain object was involved in the collision
+        int which = [self whichGrapple:k->GetPosition().x yPos:k->GetPosition().y];
+        
+        //if it's a grapple, collect it
+        if(which >= 0)
+        {
+            //NSLog(@"COLLECTED GRAPPLE");
+            [game collectGrapple:which];
+        }
+        else
+        {
+            //if the player collided with a platform nothing happens
+            if(!wasTongue)
+                continue;
+            
+            //NSLog(@"ATTACHED TONGUE");
+            [game attachTongue];
+        }
+    }
+    
+    cListener->resetCollided();
+}
+
+- (int)whichGrapple:(float)x yPos:(float)y
+{
+    for(int i = 0; i < [grapples count]; i++)
+    {
+        b2Vec2 pos = ((b2Body*)[[grapples objectAtIndex:i] pointerValue])->GetPosition();
+        if(pos.x == x && pos.y == y)
+            return i;
+    }
+    return -1;
 }
 
 - (GLKVector2)getPosition:(int)type index:(int)i
@@ -276,16 +329,6 @@
 {
     b2Vec2 pos = player->GetPosition();
     tongue->SetTransform(pos, 0);
-}
-
-- (void)collectGrapple
-{
-    [game collectGrapple];
-}
-
-- (void)attachTongue
-{
-    [game attachTongue];
 }
 
 @end

@@ -193,7 +193,28 @@ enum
 
 - (void)attachTongue
 {
-    //tongue2Target = GLKVector3Subtract(target, tongue.position);
+    if(player.position.x == tongue.position.x && player.position.y == tongue.position.y)
+        return;
+    
+    [collide setTongueVelocity:0 vY:0];
+    [collide setPlayerVelocity:0 vY:0];
+    
+    playerState = STATE_GRAPPLING;
+    //NSLog(@"GRAPPLING");
+    
+    GLKVector2 tonPos = [collide getPosition:TONGUE index:0];
+    GLKVector3 tonPos3 = GLKVector3Make(tonPos.x, tonPos.y, 0);
+    
+    player2Tongue = GLKVector3Length(GLKVector3Subtract(tonPos3, player.position)) - 0.1;
+    playerStart = player.position;
+}
+
+- (void)retractTongue
+{
+    playerState = STATE_FREEFALL;
+    //NSLog(@"FREEFALL");
+    //Retract tongue
+    [collide retractTongue];
 }
 
 @end

@@ -15,20 +15,20 @@
 class CContactListener : public b2ContactListener
 {
 private:
-    bool collided;
-    //int collider;
-    float xDynamic, yDynamic, xKinematic, yKinematic;
+    int collided;
+    int arraySize;
+    b2Body **dynamic, **kinematic;
+    void enlargeArrays();
 public:
     void BeginContact(b2Contact* contact);
     void EndContact(b2Contact* contact);
     void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
     void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
-    bool hasCollided();
-    //int getCollider();
-    float getDynamicX();
-    float getDynamicY();
-    float getKinematicX();
-    float getKinematicY();
+    void setup();
+    int hasCollided();
+    void resetCollided();
+    b2Body** getDynamic();
+    b2Body** getKinematic();
 };
 
 #endif /* CContactListener_hpp */

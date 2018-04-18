@@ -47,10 +47,6 @@ enum
 
 - (void)retractTongue;
 
-- (void)collectGrapple;
-
-- (void)attachTongue;
-
 @end
 
 #endif /* Collisions_h */

@@ -20,6 +20,7 @@
 - (void)movePlayer:(float)deltaTime shift:(float)screenShift;
 - (void)fireTongue:(float)x yPos:(float)y;
 - (void)attachTongue;
+- (void)retractTongue;
 
 @end
 

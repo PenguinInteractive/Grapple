@@ -25,6 +25,7 @@
     Model* playerModel;
     Model* tongue;
     float screenSpeed;
+    bool despawn;
 }
 @end
 
@@ -35,11 +36,14 @@
 - (void)setup:(Renderer*)renderer col:(Collisions*)collider
 {
     //screenSpeed = -0.001f;
+    despawn = false;
     
     render = renderer;
     player = [[Player alloc] init];
     
-    playerModel = [render genCube];
+    //playerModel = [render genCube];
+    playerModel = [Model readObj:@"Frog"];
+    
     tongue = [render genCube];
     
     collide = collider;
@@ -81,10 +85,14 @@
     
     for(int i = 0; i < platforms.count; i++)
     {
+        if(platforms[i] == NULL)
+            continue;
         [render render:platforms[i]];
     }
     for(int j = 0; j < grapples.count; j++)
     {
+        if(grapples[j] == NULL)
+            continue;
         [render render:grapples[j]];
     }
     
@@ -97,6 +105,9 @@
 {
     for(int i = 0; i < [platforms count]; i++)
     {
+        if(platforms[i] == NULL)
+            continue;
+        
         GLKVector2 newPos = [collide getPosition:PLATFORM index:i];
         
         if(newPos.x < -6)
@@ -110,6 +121,9 @@
     }
     for(int j = 0; j < grapples.count; j++)
     {
+        if(grapples[j] == NULL)
+            continue;
+        
         GLKVector2 newPos = [collide getPosition:GRAPPLE index:j];
         [grapples[j] moveTo:newPos.x y:newPos.y z:0];
     }
@@ -179,9 +193,26 @@
     [collide makeBody:2 yPos:1.5 width:0.5 height:0.5 type:GRAPPLE];
 }
 
+- (void)collectGrapple:(int)i
+{
+    [grapples removeObjectAtIndex:i];
+    [collide removeBody:GRAPPLE index:i];
+    [player retractTongue];
+}
+
 - (void)attachTongue
 {
     [player attachTongue];
+}
+
+- (bool)checkDespawn
+{
+    if(despawn)
+    {
+        despawn = false;
+        return true;
+    }
+    return false;
 }
 
 @end
