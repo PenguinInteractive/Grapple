@@ -43,7 +43,7 @@
     player = [[Player alloc] init];
     
     playerModel = [Model readObj:@"Frog" scale: 0.01 x:0 y:0];
-    tongue = [Model readObj:@"tongue" scale:0.1 x:0 y:0];
+    tongue = [Model readObj:@"ball" scale:0.1 x:0 y:0];
     
     collide = collider;
     
@@ -65,7 +65,32 @@
     
     //Grapples
     
-    //[self spawnGrapple];
+    [self spawnGrapple];
+    
+    /*Model* model;
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:2.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:1.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:0.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:-0.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:-1.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:-2.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];*/
     
 }
 
@@ -145,7 +170,7 @@ bool occupied[5][10] = {false};
 {
     Model* model;
     
-    for(int i = 0; i < 10; i++)
+    /*for(int i = 0; i < 10; i++)
     {
         for(int j = 0; j < 5; j++)
         {
@@ -164,14 +189,44 @@ bool occupied[5][10] = {false};
                 }
             }
         }
-    }
+    }*/
+    
+    model = [render genCube];
+    [model translate:1.0 y:1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:1.0 yPos:1.5 width:0.5 height:0.5 type:PLATFORM];
+    
+    model = [render genCube];
+    [model translate:10 y:-1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:10 yPos:-1.5 width:0.5 height:0.5 type:PLATFORM];
+    
+    model = [render genCube];
+    [model translate:6 y:1 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:6 yPos:1 width:0.5 height:0.5 type:PLATFORM];
+    
+    model = [render genCube];
+    [model translate:4 y:-1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:4 yPos:-1.5 width:0.5 height:0.5 type:PLATFORM];
+    
+    model = [render genCube];
+    [model translate:7 y:-3 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:7 yPos:-3 width:0.5 height:0.5 type:PLATFORM];
 }
 
 -(void)spawnGrapple
 {
     Model* model;
     
-    for(int i = 0; i < 10; i++)
+    /*for(int i = 0; i < 10; i++)
     {
         for(int j = 0; j < 5; j++)
         {
@@ -192,7 +247,25 @@ bool occupied[5][10] = {false};
                 }
             }
         }
-    }
+    }*/
+    
+    model = [Model readObj:@"ball" scale: 0.2 x:0 y:0];
+    [model translate:0 y:1.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
+    [grapples addObject:model];
+    [collide makeBody:0 yPos:1.5 width:0.5 height:0.5 type:GRAPPLE];
+    
+    model = [Model readObj:@"ball" scale: 0.2 x:0 y:0];
+    [model translate:8 y:1.2 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
+    [grapples addObject:model];
+    [collide makeBody:8 yPos:1.2 width:0.5 height:0.5 type:GRAPPLE];
+    
+    model = [Model readObj:@"ball" scale: 0.2 x:0 y:0];
+    [model translate:2 y:1.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
+    [grapples addObject:model];
+    [collide makeBody:2 yPos:1.5 width:0.5 height:0.5 type:GRAPPLE];
 }
 
 - (void)collectGrapple:(int)i
