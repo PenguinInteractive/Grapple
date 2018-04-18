@@ -19,6 +19,7 @@
 - (void)collectGrapple:(int)i;
 - (void)attachTongue;
 - (bool)checkDespawn;
+- (bool)isLost;
 
 @end
 

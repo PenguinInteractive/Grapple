@@ -33,11 +33,11 @@ int sort(const void *x, const void *y) {
 
 - (void) viewDidLoad{
     [super viewDidLoad];
-    scores[0] = 65;
-    scores[1] = 134;
-    scores[2] = 548;
-    scores[3] = 23;
-    scores[4] = 246;
+//    scores[0] = 65;
+//    scores[1] = 134;
+//    scores[2] = 548;
+///    scores[3] = 23;
+//    scores[4] = 246;
     [self print];
 }
 -(void)addScore:(int)score called:(int)called{

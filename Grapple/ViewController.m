@@ -12,11 +12,14 @@
 @interface ViewController (){
     Game *gm;
     Renderer* glesRenderer;
+    HighScores* HS;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *Score;
 @property (weak, nonatomic) IBOutlet UIView *PauseMenu;
 @property (strong, nonatomic) IBOutlet UILabel *Multiplier;
+@property (strong, nonatomic) IBOutlet UIView *GameOver;
+@property (strong, nonatomic) IBOutlet UILabel *EndScore;
 
 
 @end
@@ -28,12 +31,15 @@
     
     //Setup the renderer object
     glesRenderer = [[Renderer alloc] init];
+    
     GLKView* view = (GLKView*)self.view;
     [glesRenderer setup:view];
     
     gm = [[Game alloc] init];
 
+    HS = [[HighScores alloc] init];
     [_PauseMenu setHidden:true];
+    [_GameOver setHidden:true];
     [gm setIsPaused:false];
     
     [gm startGame:glesRenderer];
@@ -57,9 +63,14 @@
     //Pass update call onto Renderer
     if(![gm isPaused]){
         [gm update];
-
+        if([gm Losing]){
+            [gm pause];
+            [_GameOver setHidden:false];
+            
+        }
         _Score.text= [NSString stringWithFormat:@"%d",[gm playerScore]];
         _Multiplier.text=[NSString stringWithFormat:@"%c%i",'x',[gm mult]];
+        _EndScore.text = [NSString stringWithFormat:@"%d",[gm playerScore]];
     }
     
 }

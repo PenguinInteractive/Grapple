@@ -13,6 +13,7 @@
 #include <Box2D/Box2D.h>
 #import "Player.h"
 #import "Model.h"
+#include <stdlib.h>
 
 @interface Generator()
 {
@@ -59,14 +60,12 @@
     platforms = [[NSMutableArray alloc] initWithCapacity:20];
     grapples = [[NSMutableArray alloc] initWithCapacity:20];
     
-    //Generate a cube with the genCube function in Model once that works
-    
     //Platforms
     [self spawnPlatform];
     
     //Grapples
     
-    [self spawnGrapple];
+    //[self spawnGrapple];
     
 }
 
@@ -77,9 +76,6 @@
     
     [player movePlayer:deltaTime shift:screenShift];
     [self movePlatforms];
-    
-    //determine if platforms should be spawned
-        //if you need a new platform call SpawnPlatform or something
     
     for(int i = 0; i < platforms.count; i++)
     {
@@ -132,63 +128,71 @@
     [player fireTongue:x yPos:y];
 }
 
+//0.25 horiztonal gap
+//1.25 vertical gap
+//vertical range: -4 to 3.25
+- (float) generateNumber:(float)smallNumber a:(float)bigNumber
+{
+    float diff = bigNumber - smallNumber;
+    return (((float) (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * diff) + smallNumber;
+}
+
+float coordY[5] = {-2.75,-1.5,-0.25,1,2.25};
+float coordX[10] = {-6,-4.75,-3.5,-2.25,-1,0.25,1.5,2.75,4,5.25};
+bool occupied[5][10] = {false};
+
 - (void)spawnPlatform
 {
-    //SpawnPlatform will pick a random y value then add a new vector2 with the xposition equal to the right side of the screen and yposition equal to the random y
     Model* model;
     
-    model = [render genCube];
-    [model translate:1.0 y:1.5 z:0];
-    [model setColour:GLKVector3Make(160,120,40)];
-    [platforms addObject:model];
-    [collide makeBody:1.0 yPos:1.5 width:0.5 height:0.5 type:PLATFORM];
-    
-    model = [render genCube];
-    [model translate:10 y:-1.5 z:0];
-    [model setColour:GLKVector3Make(160,120,40)];
-    [platforms addObject:model];
-    [collide makeBody:10 yPos:-1.5 width:0.5 height:0.5 type:PLATFORM];
-    
-    model = [render genCube];
-    [model translate:6 y:1 z:0];
-    [model setColour:GLKVector3Make(160,120,40)];
-    [platforms addObject:model];
-    [collide makeBody:6 yPos:1 width:0.5 height:0.5 type:PLATFORM];
-    
-    model = [render genCube];
-    [model translate:4 y:-1.5 z:0];
-    [model setColour:GLKVector3Make(160,120,40)];
-    [platforms addObject:model];
-    [collide makeBody:4 yPos:-1.5 width:0.5 height:0.5 type:PLATFORM];
-    
-    model = [render genCube];
-    [model translate:7 y:-3 z:0];
-    [model setColour:GLKVector3Make(160,120,40)];
-    [platforms addObject:model];
-    [collide makeBody:7 yPos:-3 width:0.5 height:0.5 type:PLATFORM];
+    for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 5; j++)
+        {
+            int ran = arc4random_uniform(2);
+            
+            if(ran == 1){
+                if(occupied[i][j-1]==false)
+                {
+                    model = [render genCube];
+                    [model translate:coordX[i] y:coordY[j] z:0];
+                    [model setColour:GLKVector3Make(160,120,40)];
+                    [platforms addObject:model];
+                    [collide makeBody:coordX[i] yPos:coordY[j] width:0.5 height:0.5 type:PLATFORM];
+                    occupied[i][j] = true;
+                    //NSLog(@"PLATFORM COORDINATES: %f, %f", coordX[i],coordY[j]);
+                }
+            }
+        }
+    }
 }
 
 -(void)spawnGrapple
 {
     Model* model;
     
-    model = [render genCube];
-    [model translate:0 y:1.5 z:0];
-    [model setColour:GLKVector3Make(170,30,190)];
-    [grapples addObject:model];
-    [collide makeBody:0 yPos:1.5 width:0.5 height:0.5 type:GRAPPLE];
-    
-    model = [render genCube];
-    [model translate:8 y:1.2 z:0];
-    [model setColour:GLKVector3Make(170,30,190)];
-    [grapples addObject:model];
-    [collide makeBody:8 yPos:1.2 width:0.5 height:0.5 type:GRAPPLE];
-    
-    model = [render genCube];
-    [model translate:2 y:1.5 z:0];
-    [model setColour:GLKVector3Make(170,30,190)];
-    [grapples addObject:model];
-    [collide makeBody:2 yPos:1.5 width:0.5 height:0.5 type:GRAPPLE];
+    for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 5; j++)
+        {
+            int ran = arc4random_uniform(2);
+            
+            if(ran == 1)
+            {
+                if(occupied[i][j]==false)
+                {
+                    model = [render genCube];
+                    [model translate:coordX[i] y:coordY[j] z:0];
+                    [model setColour:GLKVector3Make(160,120,40)];
+                    [platforms addObject:model];
+                    [collide makeBody:coordX[i] yPos:coordY[j] width:0.5 height:0.5 type:GRAPPLE];
+                    occupied[i][j] = true;
+                    //NSLog(@"GRAPPLE COORDINATES: %f, %f", coordX[i],coordY[j]);
+                    j++;
+                }
+            }
+        }
+    }
 }
 
 - (void)collectGrapple:(int)i
@@ -211,6 +215,21 @@
         return true;
     }
     return false;
+}
+
+- (bool)isLost
+{
+    return [player isLost];
+}
+
+- (void)grappleRespawn
+{
+    
+}
+
+- (void)platformRespawn
+{
+    
 }
 
 @end

@@ -15,6 +15,7 @@
 #import "Collisions.h"
 
 @interface Player : NSObject
+@property bool isLost;
 
 - (void)setup:(Model*)p tongue:(Model*)t collide:(Collisions*)c;
 - (void)movePlayer:(float)deltaTime shift:(float)screenShift;

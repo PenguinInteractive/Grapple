@@ -9,6 +9,7 @@
 #import "Game.h"
 #include <chrono>
 #import "Generator.h"
+#include <stdio.h>
 
 //USE THIS IF YOU WANT COLLISION STUFF
 //#include <Box2D/Box2D.h>
@@ -18,8 +19,8 @@
     Renderer* render;
     Generator *generate;
     HighScores* hs;
-    
     float timeElapsed;
+    int times;
 }
 
 @end
@@ -35,10 +36,13 @@
     [collide initWorld:self];
     
     generate = [[Generator alloc] init];
+    
     [generate setup:renderer col:collide];
     
-    _mult=1;
+    hs = [[HighScores alloc] init];
     
+    _mult=1;
+    times = 0;
     render = renderer;
 }
 
@@ -49,6 +53,8 @@
     lastTime = currentTime;
     
     [render update];
+    
+    [self Losing];
     
     [generate Generate:timeElapsed];
     
@@ -102,6 +108,16 @@
 - (void)attachTongue
 {
     [generate attachTongue];
+}
+
+- (bool)Losing
+{
+    if([generate isLost])
+    {
+        [hs addScore:_playerScore called:(times)];
+        return true;
+    }
+    return false;
 }
 
 @end

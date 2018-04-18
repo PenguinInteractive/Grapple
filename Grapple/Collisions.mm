@@ -36,6 +36,7 @@
     numCodes = 0;
     
     world = new b2World(gravity);
+
     cListener = new CContactListener();
     cListener->setup();
     world->SetContactListener(cListener);
@@ -241,6 +242,8 @@
             body = tongue;
             break;
         case PLATFORM:
+            NSLog(@"INDEX OF PLATFORM: %d", i);
+            NSLog(@"NUM PLATFORMS: %d", [platforms count]);
             body = (b2Body*)[[platforms objectAtIndex:i] pointerValue];
             break;
         case GRAPPLE:

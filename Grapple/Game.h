@@ -9,7 +9,6 @@
 #ifndef Game_h
 #define Game_h
 #import <GLKit/GLKit.h>
-#include <stdio.h>
 #import "Renderer.h"
 #import "HighScores.h"
 
@@ -34,6 +33,8 @@
 - (void)collectGrapple:(int)i;
 - (void)fireTongue:(float)x yPos:(float)y;
 - (void)attachTongue;
+
+- (bool)Losing;
 
 @end
 #endif /* Game_h */

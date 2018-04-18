@@ -42,6 +42,7 @@ enum
     
     speed = 0.02;
     drag = 0.005;
+    _isLost = false;
     
     target = GLKVector3Make(0, 0, 0);
     velocity = GLKVector3Make(0, 0, 0);
@@ -156,6 +157,12 @@ enum
     
     //NSLog(@"Player: x=%1.2f y=%1.2f", player.position.x, player.position.y);
     //NSLog(@"Tongue: x=%1.2f y=%1.2f", tongue.position.x, tongue.position.y);
+    
+    if(player.position.x < -6.5)
+    {
+        NSLog(@"LOSE");
+        [self setIsLost:true];
+    }
 }
 
 - (void)fireTongue:(float)x yPos:(float)y
