@@ -8,26 +8,43 @@
 
 #import "Collisions.h"
 #include <Box2D/Box2D.h>
+#include "CContactListener.hpp"
+#import "Game.h"
 
 @implementation Collisions
 {
     b2World* world;
     b2Body* player;
     b2Body* tongue;
+    CContactListener* cListener;
     
     NSMutableArray* platforms;
     NSMutableArray* grapples;
+    
+    Game* game;
+    int* objectCodes;
+    int numCodes;
 }
 
-- (void)initWorld
+- (void)initWorld:(Game*)g
 {
-    b2Vec2 gravity(0, -10);
+    game = g;
+    
+    b2Vec2 gravity(0, 0);
+    
+    objectCodes = (int*)malloc(42*sizeof(int));
+    numCodes = 0;
     
     world = new b2World(gravity);
+
+    cListener = new CContactListener();
+    cListener->setup();
+    world->SetContactListener(cListener);
+    
+    [self createWalls];
     
     platforms = [[NSMutableArray alloc] initWithCapacity:20];
     grapples = [[NSMutableArray alloc] initWithCapacity:20];
-    
 }
 
 - (void)update:(float)deltaTime
@@ -38,11 +55,45 @@
     while(t+ts <= deltaTime)
     {
         world->Step(ts, 10, 10);
+        [self checkCollisions];
         t += ts;
     }
     
     if(t < deltaTime)
+    {
         world->Step(deltaTime-t, 10, 10);
+        [self checkCollisions];
+    }
+}
+
+- (void)createWalls
+{
+    //Make the walls
+    b2BodyDef wallsDef;
+    wallsDef.type = b2_staticBody;
+    wallsDef.position.Set(0, 0);
+    
+    b2Body* walls = world->CreateBody(&wallsDef);
+    
+    //define fixture
+    b2EdgeShape edge;
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &edge;
+    fixtureDef.filter.categoryBits = (short)PLATFORM;
+    fixtureDef.filter.maskBits = (short)PLAYER;
+    
+    
+    edge.Set(b2Vec2(-7.5, -4), b2Vec2(7.5, -4));
+    walls->CreateFixture(&fixtureDef);
+    
+    edge.Set(b2Vec2(7.5, -4), b2Vec2(7.5, 4));
+    walls->CreateFixture(&fixtureDef);
+    
+    edge.Set(b2Vec2(7.5, 4), b2Vec2(-7.5, 4));
+    walls->CreateFixture(&fixtureDef);
+    
+    edge.Set(b2Vec2(-7.5, 4), b2Vec2(-7.5, -4));
+    walls->CreateFixture(&fixtureDef);
 }
 
 - (void)makeBody:(float)x yPos:(float)y width:(float)w height:(float)h type:(int)t
@@ -81,24 +132,101 @@
     fixtureDef.friction = 0.3f;
     fixtureDef.restitution = 0.6f;
     
-    body->CreateFixture(&fixtureDef);
+    //int data;
     
-    //retrieve value from array with [[myArray objectAtIndex:index] pointerValue];
     switch(t)
     {
-        case PLATFORM:
-            [platforms addObject:[NSValue valueWithPointer:body]];
-            break;
-        case GRAPPLE:
-            [grapples addObject:[NSValue valueWithPointer:body]];
-            break;
         case PLAYER:
+            fixtureDef.filter.categoryBits = (short)PLAYER;
+            fixtureDef.filter.maskBits = (short)PLATFORM;
+            
+            body->CreateFixture(&fixtureDef);
             player = body;
             break;
         case TONGUE:
+            fixtureDef.filter.categoryBits = (short)PLAYER;
+            fixtureDef.filter.maskBits = (short)PLATFORM;
+            
+            body->CreateFixture(&fixtureDef);
             tongue = body;
             break;
+        case GRAPPLE:
+            fixtureDef.filter.categoryBits = (short)PLATFORM;
+            fixtureDef.filter.maskBits = (short)PLAYER;
+            
+            body->CreateFixture(&fixtureDef);
+            [grapples addObject:[NSValue valueWithPointer:body]];
+            break;
+        case PLATFORM:
+            fixtureDef.filter.categoryBits = (short)PLATFORM;
+            fixtureDef.filter.maskBits = (short)PLAYER;
+            
+            body->CreateFixture(&fixtureDef);
+            [platforms addObject:[NSValue valueWithPointer:body]];
+            break;
     }
+    
+    numCodes++;
+}
+
+- (void)checkCollisions
+{
+    //If there are any unhandled collisions
+    if(cListener->hasCollided() == 0)
+        return;
+    
+    b2Body** dynamics = cListener->getDynamic();
+    b2Body** kinematics = cListener->getKinematic();
+    
+    for(int i = 0; i < cListener->hasCollided(); i++)
+    {
+        b2Body* d = dynamics[i];
+        b2Body* k = kinematics[i];
+        
+        bool wasTongue = false;
+        
+        //Determine whether collision involved player or tongue
+        if(d->GetPosition().x == tongue->GetPosition().x
+           && d->GetPosition().y == tongue->GetPosition().y)
+            wasTongue = true;
+        /*else if(d->GetPosition().x == player->GetPosition().x
+                && d->GetPosition().y == player->GetPosition().y)
+            wasTongue = false;
+        else
+            NSLog(@"Neither dynamic matches");*/
+        
+        //Determine which terrain object was involved in the collision
+        int which = [self whichGrapple:k->GetPosition().x yPos:k->GetPosition().y];
+        
+        //if it's a grapple, collect it
+        if(which >= 0)
+        {
+            //NSLog(@"COLLECTED GRAPPLE");
+            [game collectGrapple:which];
+        }
+        else
+        {
+            //if the player collided with a platform nothing happens
+            if(!wasTongue)
+                continue;
+            
+            //NSLog(@"ATTACHED TONGUE");
+            [game attachTongue];
+        }
+    }
+    
+    cListener->resetCollided();
+}
+
+- (int)whichGrapple:(float)x yPos:(float)y
+{
+    for(int i = 0; i < [grapples count]; i++)
+    {
+        b2Vec2 pos = ((b2Body*)[[grapples objectAtIndex:i] pointerValue])->GetPosition();
+        if(pos.x == x && pos.y == y)
+            return i;
+    }
+    return -1;
 }
 
 - (GLKVector2)getPosition:(int)type index:(int)i
@@ -114,9 +242,9 @@
             body = tongue;
             break;
         case PLATFORM:
-            body = (b2Body*)[[platforms objectAtIndex:i] pointerValue];
             NSLog(@"INDEX OF PLATFORM: %d", i);
             NSLog(@"NUM PLATFORMS: %d", [platforms count]);
+            body = (b2Body*)[[platforms objectAtIndex:i] pointerValue];
             break;
         case GRAPPLE:
             body = (b2Body*)[[grapples objectAtIndex:i] pointerValue];
@@ -188,29 +316,22 @@
     player->SetLinearVelocity(b2Vec2(x, y));
 }
 
-@end
-
-/*class CContactListener : public b2ContactListener
+- (void)setPlayerPos:(float)x yPos:(float)y
 {
-public:
-    void BeginContact(b2Contact* contact) {};
-    void EndContact(b2Contact* contact) {};
-    void PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
-    {
-        b2WorldManifold worldManifold;
-        contact->GetWorldManifold(&worldManifold);
-        b2PointState state1[2], state2[2];
-        b2GetPointStates(state1, state2, oldManifold, contact->GetManifold());
-        if (state2[0] == b2_addState)
-        {
-            //If player collides with grapple
-            //b2Body* bodyA = contact->GetFixtureA()->GetBody();
-            //bodyA->GetWorld()->DestroyBody(bodyA);
-            
-            b2Body* bodyA = contact->GetFixtureA()->GetBody();
-            CBox2D *parentObj = (__bridge CBox2D *)(bodyA->GetUserData());
-            [parentObj RegisterHit];
-        }
-    }
-    void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {};
-};*/
+    b2Vec2 pos = b2Vec2(x, y);
+    player->SetTransform(pos, 0);
+}
+
+- (void)setTonguePos:(float)x yPos:(float)y
+{
+    b2Vec2 pos = b2Vec2(x, y);
+    tongue->SetTransform(pos, 0);
+}
+
+- (void)retractTongue
+{
+    b2Vec2 pos = player->GetPosition();
+    tongue->SetTransform(pos, 0);
+}
+
+@end

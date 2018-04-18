@@ -18,8 +18,11 @@
 @property bool isLost;
 
 - (void)setup:(Model*)p tongue:(Model*)t collide:(Collisions*)c;
-- (void)movePlayer:(float)deltaTime scrnSpd:(float)screenSpeed;
+- (void)movePlayer:(float)deltaTime shift:(float)screenShift;
 - (void)fireTongue:(float)x yPos:(float)y;
+- (void)attachTongue;
+- (void)retractTongue;
+
 @end
 
 #endif /* Player_h */

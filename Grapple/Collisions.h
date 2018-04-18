@@ -10,13 +10,14 @@
 #define Collisions_h
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
+#import "Game.h"
 
 enum
 {
-    PLATFORM,
-    GRAPPLE,
+    TONGUE,
     PLAYER,
-    TONGUE
+    PLATFORM,
+    GRAPPLE
 };
 
 @interface Collisions : NSObject
@@ -24,7 +25,9 @@ enum
     
 }
 
-- (void)initWorld;
+- (void)initWorld:(Game*)g;
+
+- (void)update:(float)deltaTime;
 
 - (void)makeBody:(float)x yPos:(float)y width:(float)w height:(float)h type:(int)t;
 
@@ -37,6 +40,12 @@ enum
 - (void)setTongueVelocity:(float)x vY:(float)y;
 
 - (void)setPlayerVelocity:(float)x vY:(float)y;
+
+- (void)setPlayerPos:(float)x yPos:(float)y;
+
+- (void)setTonguePos:(float)x yPos:(float)y;
+
+- (void)retractTongue;
 
 @end
 

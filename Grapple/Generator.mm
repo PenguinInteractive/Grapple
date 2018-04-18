@@ -11,6 +11,8 @@
 #import "Renderer.h"
 #import <GLKit/GLKit.h>
 #include <Box2D/Box2D.h>
+#import "Player.h"
+#import "Model.h"
 #include <stdlib.h>
 
 @interface Generator()
@@ -24,70 +26,92 @@
     Model* playerModel;
     Model* tongue;
     float screenSpeed;
+    bool despawn;
 }
 @end
 
 
 @implementation Generator
-Model* model;
 
 //Setup platforms with a reasonable capacity later
-- (void)setup:(Renderer*)renderer p:(Player *)plar
+- (void)setup:(Renderer*)renderer col:(Collisions*)collider
 {
-    screenSpeed = -0.001f;
+    //screenSpeed = -0.001f;
+    despawn = false;
     
     render = renderer;
-    player = plar;
+    player = [[Player alloc] init];
     
-    playerModel = [render genCube];
-    tongue = [render genCube];
+    playerModel = [Model readObj:@"Frog" scale: 0.01 x:0 y:0];
+    tongue = [Model readObj:@"ball" scale:0.1 x:0 y:0];
     
-    collide = [[Collisions alloc] init];
-    [collide initWorld];
+    collide = collider;
     
     [playerModel translate:0.4 y:0 z:0];
     [playerModel setColour:GLKVector3Make(20,170,230)];
     [collide makeBody:0.4 yPos:0 width:0.5 height:0.5 type:PLAYER];
     
-    [tongue translate:0.35 y:-0.2 z:0];
+    [tongue translate:0.35 y:0 z:0];
     [tongue setColour:GLKVector3Make(255,180,255)];
-    [collide makeBody:0.35 yPos:-0.2 width:0.5 height:0.5 type:TONGUE];
+    [collide makeBody:0.35 yPos:0 width:0.5 height:0.5 type:TONGUE];
     
     [player setup:playerModel tongue:tongue collide:collide];
     
     platforms = [[NSMutableArray alloc] initWithCapacity:20];
     grapples = [[NSMutableArray alloc] initWithCapacity:20];
     
-    //Generate a cube with the genCube function in Model once that works
-    
     //Platforms
     [self spawnPlatform];
     
     //Grapples
     
-//    [self spawnGrapple];
+    [self spawnGrapple];
+    
+    /*Model* model;
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:2.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:1.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:0.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:-0.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:-1.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];
+    
+    model = [Model readObj:@"bee" scale: 1 x:0 y:0];
+    [model translate:-6.5 y:-2.5 z:0];
+    [model setColour:GLKVector3Make(255,255,0)];*/
     
 }
 
 -(void) Generate:(float)deltaTime
 {
-    [player movePlayer:deltaTime scrnSpd:screenSpeed];
-    [self movePlatforms:deltaTime];
+    float screenShift = screenSpeed * deltaTime;
+    [collide shiftAll:screenShift];
     
- //   NSLog(@"Player Position X: %f", [player getPositionX]);
-    //GLKVector2 move = GLKVector2DivideScalar([collide getBodyMove], 100);
-    //GLKMatrix4 moveM = GLKMatrix4Translate(GLKMatrix4Identity, move.x, 0, move.y);
-    //[testCollisions setPosition:GLKMatrix4Multiply(moveM, testCollisions.position)];
+    [player movePlayer:deltaTime shift:screenShift];
+    [self movePlatforms];
     
-    //determine if platforms should be spawned
-        //if you need a new platform call SpawnPlatform or something
-    
-   for(int i = 0; i < platforms.count; i++)
+    for(int i = 0; i < platforms.count; i++)
     {
+        if(platforms[i] == NULL)
+            continue;
         [render render:platforms[i]];
     }
     for(int j = 0; j < grapples.count; j++)
     {
+        if(grapples[j] == NULL)
+            continue;
         [render render:grapples[j]];
     }
     
@@ -96,38 +120,44 @@ Model* model;
 }
 
 
--(void) movePlatforms:(float)deltaTime
+-(void) movePlatforms
 {
-    float screenShift = screenSpeed * deltaTime;
-    [collide shiftAll:screenShift];
-    
     for(int i = 0; i < [platforms count]; i++)
     {
-        //GLKVector2 newPos = [collide getPosition:PLATFORM index:i];
-        //[platforms[i] translate:newPos.x y:0 z:0];
+        if(platforms[i] == NULL)
+            continue;
         
-        NSLog(@"%f", [collide getPosition:PLATFORM index:i].x);
+        GLKVector2 newPos = [collide getPosition:PLATFORM index:i];
         
+        if(newPos.x < -6)
+        {
+            [collide removeBody:PLATFORM index:i];
+        }
+        else
+        {
+            [platforms[i] moveTo:newPos.x y:newPos.y z:0];
+        }
     }
     for(int j = 0; j < grapples.count; j++)
     {
-        //GLKVector2 newPos = [collide getPosition:GRAPPLE index:j];
-        //[grapples[j] translate:newPos.x y:0 z:0];
-        [grapples[j] translate:screenShift y:0 z:0];
+        if(grapples[j] == NULL)
+            continue;
+        
+        GLKVector2 newPos = [collide getPosition:GRAPPLE index:j];
+        [grapples[j] moveTo:newPos.x y:newPos.y z:0];
     }
-    
-    
 }
 
 - (void)fireTongue:(float)x yPos:(float)y
 {
     [player fireTongue:x yPos:y];
 }
+
 //0.25 horiztonal gap
 //1.25 vertical gap
 //vertical range: -4 to 3.25
-
-- (float) generateNumber:(float)smallNumber a:(float)bigNumber{
+- (float) generateNumber:(float)smallNumber a:(float)bigNumber
+{
     float diff = bigNumber - smallNumber;
     return (((float) (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * diff) + smallNumber;
 }
@@ -138,50 +168,141 @@ bool occupied[5][10] = {false};
 
 - (void)spawnPlatform
 {
-    //SpawnPlatform will pick a random y value then add a new vector2 with the xposition equal to the right side of the screen and yposition equal to the random y
-    //Store it in the array
+    Model* model;
     
-    for(int i = 0; i < 10; i++){
-        for(int j = 0; j < 5; j++){
+    /*for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 5; j++)
+        {
             int ran = arc4random_uniform(2);
+            
             if(ran == 1){
-                if(occupied[i][j-1]==false){
+                if(occupied[i][j-1]==false)
+                {
                     model = [render genCube];
                     [model translate:coordX[i] y:coordY[j] z:0];
                     [model setColour:GLKVector3Make(160,120,40)];
                     [platforms addObject:model];
                     [collide makeBody:coordX[i] yPos:coordY[j] width:0.5 height:0.5 type:PLATFORM];
                     occupied[i][j] = true;
-                    NSLog(@"PLATFORM COORDANATES: %f, %f", coordX[i],coordY[j]);
+                    //NSLog(@"PLATFORM COORDINATES: %f, %f", coordX[i],coordY[j]);
                 }
             }
         }
-
-    }
+    }*/
+    
+    model = [render genCube];
+    [model translate:1.0 y:1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:1.0 yPos:1.5 width:0.5 height:0.5 type:PLATFORM];
+    
+    model = [render genCube];
+    [model translate:10 y:-1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:10 yPos:-1.5 width:0.5 height:0.5 type:PLATFORM];
+    
+    model = [render genCube];
+    [model translate:6 y:1 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:6 yPos:1 width:0.5 height:0.5 type:PLATFORM];
+    
+    model = [render genCube];
+    [model translate:4 y:-1.5 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:4 yPos:-1.5 width:0.5 height:0.5 type:PLATFORM];
+    
+    model = [render genCube];
+    [model translate:7 y:-3 z:0];
+    [model setColour:GLKVector3Make(160,120,40)];
+    [platforms addObject:model];
+    [collide makeBody:7 yPos:-3 width:0.5 height:0.5 type:PLATFORM];
 }
 
--(void)spawnGrapple{
-    for(int i = 0; i < 10; i++){
-        for(int j = 0; j < 5; j++){
+-(void)spawnGrapple
+{
+    Model* model;
+    
+    /*for(int i = 0; i < 10; i++)
+    {
+        for(int j = 0; j < 5; j++)
+        {
             int ran = arc4random_uniform(2);
-                
-            if(ran == 1){
-                if(occupied[i][j]==false){
+            
+            if(ran == 1)
+            {
+                if(occupied[i][j]==false)
+                {
                     model = [render genCube];
                     [model translate:coordX[i] y:coordY[j] z:0];
                     [model setColour:GLKVector3Make(160,120,40)];
                     [platforms addObject:model];
                     [collide makeBody:coordX[i] yPos:coordY[j] width:0.5 height:0.5 type:GRAPPLE];
-                    NSLog(@"B GRAPPLE COORDANATES: %f, %f", coordX[i],coordY[j]);
+                    occupied[i][j] = true;
+                    //NSLog(@"GRAPPLE COORDINATES: %f, %f", coordX[i],coordY[j]);
                     j++;
                 }
             }
-            
-            NSLog(@"j = %d", j);
         }
-        
-    }
+    }*/
+    
+    model = [Model readObj:@"ball" scale: 0.2 x:0 y:0];
+    [model translate:0 y:1.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
+    [grapples addObject:model];
+    [collide makeBody:0 yPos:1.5 width:0.5 height:0.5 type:GRAPPLE];
+    
+    model = [Model readObj:@"ball" scale: 0.2 x:0 y:0];
+    [model translate:8 y:1.2 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
+    [grapples addObject:model];
+    [collide makeBody:8 yPos:1.2 width:0.5 height:0.5 type:GRAPPLE];
+    
+    model = [Model readObj:@"ball" scale: 0.2 x:0 y:0];
+    [model translate:2 y:1.5 z:0];
+    [model setColour:GLKVector3Make(170,30,190)];
+    [grapples addObject:model];
+    [collide makeBody:2 yPos:1.5 width:0.5 height:0.5 type:GRAPPLE];
+}
 
+- (void)collectGrapple:(int)i
+{
+    [grapples removeObjectAtIndex:i];
+    [collide removeBody:GRAPPLE index:i];
+    [player retractTongue];
+}
+
+- (void)attachTongue
+{
+    [player attachTongue];
+}
+
+- (bool)checkDespawn
+{
+    if(despawn)
+    {
+        despawn = false;
+        return true;
+    }
+    return false;
+}
+
+- (bool)isLost
+{
+    return [player isLost];
+}
+
+- (void)grappleRespawn
+{
+    
+}
+
+- (void)platformRespawn
+{
+    
 }
 
 @end
