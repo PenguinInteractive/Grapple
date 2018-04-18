@@ -41,16 +41,12 @@
     render = renderer;
     player = [[Player alloc] init];
     
-    //playerModel = [render genCube];
-    playerModel = [Model readObj:@"Frog"];
-    
-    
-    tongue = [render genCube];
+    playerModel = [Model readObj:@"Frog" scale: 0.01 x:0 y:0];
+    tongue = [Model readObj:@"tongue" scale:0.1 x:0 y:0];
     
     collide = collider;
     
     [playerModel translate:0.4 y:0 z:0];
-    playerModel.mMatrix = GLKMatrix4Scale(playerModel.mMatrix, 0.001, 0.001, 0.001);
     [playerModel setColour:GLKVector3Make(20,170,230)];
     [collide makeBody:0.4 yPos:0 width:0.5 height:0.5 type:PLAYER];
     

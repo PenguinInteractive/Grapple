@@ -33,7 +33,7 @@
     return model;
 }
 
-+ (Model*)readObj:(NSString*)path
++ (Model*)readObj:(NSString*)path scale:(float)s x:(float)offX y:(float)offY
 {
     NSString* res = [[NSBundle mainBundle] pathForResource: path ofType: @"obj"];
     NSString* file = [NSString stringWithContentsOfFile:res encoding:NSUTF8StringEncoding error:NULL];
@@ -103,9 +103,11 @@
     model.indices = (int*)malloc(sizeof(int) * indices.count);
     
     for (int i = 0; i < finalVertices.count; i++) {
-        model.vertices[i] = [finalVertices[i] floatValue] / 100;
-        if(i % 3 == 1)
-            model.vertices[i] += 0.2;
+        model.vertices[i] = [finalVertices[i] floatValue] * s;
+        if(i % 3 == 0)
+            model.vertices[i] += offX;
+        else if(i % 3 == 1)
+            model.vertices[i] += offY;
     }
     for (int i = 0; i < finalNormals.count; i++) {
         model.normals[i] = [finalNormals[i] floatValue];

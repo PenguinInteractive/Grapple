@@ -23,8 +23,11 @@
 		A54DDB522046A99B00197B6E /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A54DDB502046A99B00197B6E /* Shader.fsh */; };
 		A54DDB552046B1BC00197B6E /* GLESRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A54DDB532046B1BB00197B6E /* GLESRenderer.cpp */; };
 		A591326A204365B700C18577 /* Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5913269204365B700C18577 /* Renderer.mm */; };
-		A5E793C420874F3400FF8209 /* Frog.mtl in Resources */ = {isa = PBXBuildFile; fileRef = A5E793C220874F3400FF8209 /* Frog.mtl */; };
 		A5E793C520874F3400FF8209 /* Frog.obj in Resources */ = {isa = PBXBuildFile; fileRef = A5E793C320874F3400FF8209 /* Frog.obj */; };
+		A5E793CE2087625500FF8209 /* Manzana.obj in Resources */ = {isa = PBXBuildFile; fileRef = A5E793C92087625400FF8209 /* Manzana.obj */; };
+		A5E793D2208762FF00FF8209 /* Bee.obj in Resources */ = {isa = PBXBuildFile; fileRef = A5E793D0208762FF00FF8209 /* Bee.obj */; };
+		A5E793D3208762FF00FF8209 /* BeeWing.obj in Resources */ = {isa = PBXBuildFile; fileRef = A5E793D1208762FF00FF8209 /* BeeWing.obj */; };
+		A5E793D52087659700FF8209 /* tongue.obj in Resources */ = {isa = PBXBuildFile; fileRef = A5E793D42087659700FF8209 /* tongue.obj */; };
 		A5F5451520840EE600F2006C /* CContactListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5F5451320840EE600F2006C /* CContactListener.cpp */; };
 		C168DE6B204275690055988B /* GameScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C168DE6A204275690055988B /* GameScreen.storyboard */; };
 		C168DE6D20427C950055988B /* Game.mm in Sources */ = {isa = PBXBuildFile; fileRef = C168DE6C20427C950055988B /* Game.mm */; };
@@ -128,8 +131,11 @@
 		A54DDB542046B1BC00197B6E /* GLESRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GLESRenderer.hpp; sourceTree = "<group>"; };
 		A5913268204365B700C18577 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		A5913269204365B700C18577 /* Renderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Renderer.mm; sourceTree = "<group>"; };
-		A5E793C220874F3400FF8209 /* Frog.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Frog.mtl; sourceTree = "<group>"; };
 		A5E793C320874F3400FF8209 /* Frog.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Frog.obj; sourceTree = "<group>"; };
+		A5E793C92087625400FF8209 /* Manzana.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Manzana.obj; sourceTree = "<group>"; };
+		A5E793D0208762FF00FF8209 /* Bee.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Bee.obj; sourceTree = "<group>"; };
+		A5E793D1208762FF00FF8209 /* BeeWing.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BeeWing.obj; sourceTree = "<group>"; };
+		A5E793D42087659700FF8209 /* tongue.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tongue.obj; sourceTree = "<group>"; };
 		A5F5451320840EE600F2006C /* CContactListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CContactListener.cpp; sourceTree = "<group>"; };
 		A5F5451420840EE600F2006C /* CContactListener.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CContactListener.hpp; sourceTree = "<group>"; };
 		C168DE6A204275690055988B /* GameScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GameScreen.storyboard; sourceTree = "<group>"; };
@@ -289,7 +295,10 @@
 		A528A25E2037FA400062D60A /* Grapple */ = {
 			isa = PBXGroup;
 			children = (
-				A5E793C220874F3400FF8209 /* Frog.mtl */,
+				A5E793D42087659700FF8209 /* tongue.obj */,
+				A5E793D0208762FF00FF8209 /* Bee.obj */,
+				A5E793D1208762FF00FF8209 /* BeeWing.obj */,
+				A5E793C92087625400FF8209 /* Manzana.obj */,
 				A5E793C320874F3400FF8209 /* Frog.obj */,
 				A54DDB532046B1BB00197B6E /* GLESRenderer.cpp */,
 				A54DDB542046B1BC00197B6E /* GLESRenderer.hpp */,
@@ -644,14 +653,17 @@
 				A54DDB522046A99B00197B6E /* Shader.fsh in Resources */,
 				A528A26C2037FA410062D60A /* LaunchScreen.storyboard in Resources */,
 				8386CB842062FB5900227AA0 /* HighScores.storyboard in Resources */,
+				A5E793D52087659700FF8209 /* tongue.obj in Resources */,
 				A528A2692037FA410062D60A /* Assets.xcassets in Resources */,
 				C168DE6B204275690055988B /* GameScreen.storyboard in Resources */,
+				A5E793D2208762FF00FF8209 /* Bee.obj in Resources */,
 				DB104E02208016240073C897 /* Box2DConfig.cmake in Resources */,
 				A528A2672037FA410062D60A /* Main.storyboard in Resources */,
 				A5E793C520874F3400FF8209 /* Frog.obj in Resources */,
-				A5E793C420874F3400FF8209 /* Frog.mtl in Resources */,
 				A54DDB512046A99B00197B6E /* Shader.vsh in Resources */,
+				A5E793CE2087625500FF8209 /* Manzana.obj in Resources */,
 				DB104E03208016240073C897 /* CMakeLists.txt in Resources */,
+				A5E793D3208762FF00FF8209 /* BeeWing.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

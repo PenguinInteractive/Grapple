@@ -25,7 +25,7 @@
 
 + (Model*)copyObj:(Model*)base;
 
-+ (Model*)readObj:(NSString*)path;
++ (Model*)readObj:(NSString*)path scale:(float)s x:(float)offX y:(float)offY;
 
 - (void)translate:(float)x y:(float)y z:(float)z;
 
