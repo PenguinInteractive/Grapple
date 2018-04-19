@@ -55,11 +55,11 @@ int sort(const void *x, const void *y) {
     //    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     data = [NSData dataWithBytes:CFBridgingRetain(data) length:50 * sizeof(int)];
     
-    [prefs setObject:data forKey:thribble];
+    [prefs setObject:data forKey:thribble]; //populates outside datafile with scores
     
 }
 
-- (void) print{
+- (void) print{ //prints top five scores
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSData *dataTwo;
     dataTwo = [prefs dataForKey:thribble];
